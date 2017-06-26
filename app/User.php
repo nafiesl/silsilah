@@ -31,6 +31,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'gender',
+    ];
+
+    public function getGenderAttribute()
+    {
+        return $this->gender_id == 1 ? 'Laki-laki' : 'Perempuan';
+    }
+
     public function setFather(User $father)
     {
         if ($father->gender_id === 1) {

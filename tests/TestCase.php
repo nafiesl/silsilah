@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\User;
 use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
