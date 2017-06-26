@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -12,13 +14,17 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
-
+$factory->define(User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'nickname' => $faker->name,
+        'gender_id' => rand(1, 2),
     ];
+});
+
+$factory->state(User::class, 'male', function (Faker\Generator $faker) {
+    return ['gender_id' => 1];
+});
+
+$factory->state(User::class, 'female', function (Faker\Generator $faker) {
+    return ['gender_id' => 2];
 });

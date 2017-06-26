@@ -15,7 +15,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nickname', 'gender_id', 'name',
+        'email', 'password',
+        'address', 'phone',
+        'dof', 'dod',
+        'father_id', 'mother_id', 'parent_id',
     ];
 
     /**
@@ -26,4 +30,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function setFather(User $father)
+    {
+        if ($father->gender_id === 1) {
+            $this->father_id = $father->id;
+            $this->save();
+
+            return $father;
+        }
+
+        return false;
+    }
+
+    public function setMother(User $mother)
+    {
+        if ($mother->gender_id === 2) {
+            $this->mother_id = $mother->id;
+            $this->save();
+
+            return $mother;
+        }
+
+        return false;
+    }
 }
