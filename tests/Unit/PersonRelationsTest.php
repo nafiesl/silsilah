@@ -15,7 +15,7 @@ class PersonRelationsTest extends TestCase
     {
         $person = factory(User::class)->create();
 
-        $this->assertDatabaseHas('users', [
+        $this->seeInDatabase('users', [
             'nickname' => $person->nickname,
             'gender_id' => $person->gender_id,
         ]);
@@ -28,10 +28,12 @@ class PersonRelationsTest extends TestCase
         $father = factory(User::class)->states('male')->create();
         $person->setFather($father);
 
-        $this->assertDatabaseHas('users', [
+        $this->seeInDatabase('users', [
             'id' => $person->id,
             'father_id' => $father->id,
         ]);
+
+        $this->assertEquals($father->name, $person->father->name);
     }
 
     /** @test */
@@ -41,9 +43,23 @@ class PersonRelationsTest extends TestCase
         $mother = factory(User::class)->states('female')->create();
         $person->setMother($mother);
 
-        $this->assertDatabaseHas('users', [
+        $this->seeInDatabase('users', [
             'id' => $person->id,
             'mother_id' => $mother->id,
         ]);
+
+        $this->assertEquals($mother->name, $person->mother->name);
+    }
+
+    /** @test */
+    public function person_can_many_childs()
+    {
+        $mother = factory(User::class)->states('female')->create();
+        $person = factory(User::class)->create();
+        $person->setMother($mother);
+        $person = factory(User::class)->create();
+        $person->setMother($mother);
+
+        $this->assertCount(2, $mother->childs);
     }
 }

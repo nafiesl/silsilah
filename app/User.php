@@ -54,4 +54,22 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function father()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function mother()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function childs()
+    {
+        if ($this->gender_id == 2)
+            return $this->hasMany(User::class, 'mother_id');
+
+        return $this->hasMany(User::class, 'father_id');
+    }
 }
