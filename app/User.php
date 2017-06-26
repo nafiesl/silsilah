@@ -43,6 +43,10 @@ class User extends Authenticatable
     public function setFather(User $father)
     {
         if ($father->gender_id === 1) {
+
+            if ($father->exists == false)
+                $father->save();
+
             $this->father_id = $father->id;
             $this->save();
 
@@ -55,6 +59,10 @@ class User extends Authenticatable
     public function setMother(User $mother)
     {
         if ($mother->gender_id === 2) {
+
+            if ($mother->exists == false)
+                $mother->save();
+
             $this->mother_id = $mother->id;
             $this->save();
 

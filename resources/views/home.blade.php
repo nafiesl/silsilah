@@ -26,13 +26,13 @@
                                 <th>Ayah</th>
                                 <td>
                                     @if ($currentUser->father_id)
-                                        {{ $currentUser->father->name }}
+                                        {{ $currentUser->father->nickname }}
                                     @else
-                                        {{ Form::open() }}
+                                        {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id]]) }}
                                         <div class="input-group">
                                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
-                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm']) }}
+                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
                                             </span>
                                         </div>
                                         {{ Form::close() }}
@@ -43,13 +43,13 @@
                                 <th>Ibu</th>
                                 <td>
                                     @if ($currentUser->mother_id)
-                                        {{ $currentUser->mother->name }}
+                                        {{ $currentUser->mother->nickname }}
                                     @else
-                                        {{ Form::open() }}
+                                        {{ Form::open(['route' => ['family-actions.set-mother', $currentUser->id]]) }}
                                         <div class="input-group">
                                             {{ Form::text('set_mother', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
-                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
+                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_mother_button']) }}
                                             </span>
                                         </div>
                                         {{ Form::close() }}
