@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function setFather(User $father)
     {
-        if ($father->gender_id === 1) {
+        if ($father->gender_id == 1) {
 
             if ($father->exists == false)
                 $father->save();
@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function setMother(User $mother)
     {
-        if ($mother->gender_id === 2) {
+        if ($mother->gender_id == 2) {
 
             if ($mother->exists == false)
                 $mother->save();
@@ -94,5 +94,35 @@ class User extends Authenticatable
     {
         $linkText = $this->name ?: $this->nickname;
         return link_to_route('users.show', $linkText, [$this->id]);
+    }
+
+    public function wifes()
+    {
+        return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id');
+    }
+
+    public function addWife(User $wife)
+    {
+        if ($this->gender_id == 1) {
+            $this->wifes()->save($wife);
+            return $wife;
+        }
+
+        return false;
+    }
+
+    public function husbands()
+    {
+        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id');
+    }
+
+    public function addHusband(User $husband)
+    {
+        if ($this->gender_id == 2) {
+            $this->husbands()->save($husband);
+            return $husband;
+        }
+
+        return false;
     }
 }

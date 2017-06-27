@@ -28,7 +28,7 @@
                                     @if ($currentUser->father_id)
                                         {{ $currentUser->father->profileLink() }}
                                     @else
-                                        {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id, $currentUser->id]]) }}
+                                        {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id]]) }}
                                         <div class="input-group">
                                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
@@ -56,6 +56,51 @@
                                     @endif
                                 </td>
                             </tr>
+                            @if ($currentUser->gender_id == 1)
+                            <tr>
+                                <th>Isteri</th>
+                                <td>
+                                    @if ($currentUser->wifes->isEmpty() == false)
+                                        <ul class="list-group">
+                                            @foreach($currentUser->wifes as $wife)
+                                            <li class="list-group-item">{{ $wife->profileLink() }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{ Form::open(['route' => ['family-actions.add-wife', $currentUser->id]]) }}
+                                        <div class="input-group">
+                                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm']) }}
+                                            <span class="input-group-btn">
+                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_wife_button']) }}
+                                            </span>
+                                        </div>
+                                        {{ Form::close() }}
+                                    @endif
+                                </td>
+                            </tr>
+                            @else
+                            <tr>
+                                <th>Suami</th>
+                                <td>
+                                    @if ($currentUser->husbands->isEmpty() == false)
+                                        <ul class="list-group">
+                                            @foreach($currentUser->husbands as $husband)
+                                            <li class="list-group-item">{{ $husband->profileLink() }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        {{ Form::open(['route' => ['family-actions.add-husband', $currentUser->id]]) }}
+                                        <div class="input-group">
+                                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm']) }}
+                                            <span class="input-group-btn">
+                                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_husband_button']) }}
+                                            </span>
+                                        </div>
+                                        {{ Form::close() }}
+                                    @endif
+                                </td>
+                            </tr>
+                            @endif
                             <tr>
                                 <th colspan="2">Anak-Anak</th>
                             </tr>

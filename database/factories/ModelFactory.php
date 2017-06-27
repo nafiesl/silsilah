@@ -15,8 +15,10 @@ use App\User;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(User::class, function (Faker\Generator $faker) {
+    $name = $faker->name;
     return [
-        'nickname' => $faker->name,
+        'name' => $name,
+        'nickname' => $name,
         'gender_id' => rand(1, 2),
     ];
 });

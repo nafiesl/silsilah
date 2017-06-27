@@ -2,8 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class ManageUserFamiliesTest extends TestCase
 {
@@ -63,6 +64,58 @@ class ManageUserFamiliesTest extends TestCase
             'nickname' => 'Nama Anak 1',
             'gender_id' => 1,
             'father_id' => $user->id,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_set_wife()
+    {
+        $user = $this->loginAsUser(['gender_id' => 1]);
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_wife']);
+
+
+        $this->submitForm('set_wife_button', [
+            'set_wife' => 'Nama Istri',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'nickname' => 'Nama Istri',
+            'gender_id' => 2,
+        ]);
+
+        $wife = User::orderBy('id', 'desc')->first();
+
+        $this->seeInDatabase('couples', [
+            'husband_id' => $user->id,
+            'wife_id' => $wife->id,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_set_husband()
+    {
+        $user = $this->loginAsUser(['gender_id' => 2]);
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_husband']);
+
+
+        $this->submitForm('set_husband_button', [
+            'set_husband' => 'Nama Suami',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'nickname' => 'Nama Suami',
+            'gender_id' => 1,
+        ]);
+
+        $husband = User::orderBy('id', 'desc')->first();
+
+        $this->seeInDatabase('couples', [
+            'husband_id' => $husband->id,
+            'wife_id' => $user->id,
         ]);
     }
 }
