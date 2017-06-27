@@ -34,12 +34,6 @@ class ManageUserFamiliesTest extends TestCase
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
 
-        // $this->see($user->nickname);
-        // $this->seeElement('input', ['name' => 'set_mother']);
-        $this->seeElement('input', ['name' => 'set_mother']);
-        // $this->seeElement('input', ['name' => 'add_child_name']);
-        // $this->seeElement('input', ['name' => 'add_child_gender_id']);
-
         $this->submitForm('set_mother_button', [
             'set_mother' => 'Nama Ibu',
         ]);
@@ -49,5 +43,26 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals('Nama Ibu', $user->fresh()->mother->nickname);
+    }
+
+    /** @test */
+    public function user_can_add_childrens()
+    {
+        $user = $this->loginAsUser(['gender_id' => 1]);
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'add_child_name']);
+        $this->seeElement('input', ['name' => 'add_child_gender_id']);
+
+        $this->submitForm('Tambah Anak', [
+            'add_child_name' => 'Nama Anak 1',
+            'add_child_gender_id' => 1,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'nickname' => 'Nama Anak 1',
+            'gender_id' => 1,
+            'father_id' => $user->id,
+        ]);
     }
 }

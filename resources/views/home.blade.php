@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Profile</div>
+                <div class="panel-heading">Profile : {{ $currentUser->name }}</div>
 
                 <div class="panel-body">
                     <table class="table table-condensed">
@@ -68,7 +68,7 @@
                                             </li>
                                         @endforeach
                                         <li class="list-group-item">
-                                            {{ Form::open() }}
+                                            {{ Form::open(['route' => ['family-actions.add-child', $currentUser->id]]) }}
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     {!! FormField::text('add_child_name', ['label' => 'Nama Anak']) !!}

@@ -11,9 +11,9 @@ abstract class TestCase extends BaseTestCase
 
     protected $baseUrl = 'http://localhost';
 
-    protected function loginAsUser()
+    protected function loginAsUser($overrides = [])
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create($overrides);
         $this->actingAs($user);
 
         return $user;
