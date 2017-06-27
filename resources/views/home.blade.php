@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Profile : {{ $currentUser->name ?: $currentUser->nickname }}</div>
 
@@ -29,6 +29,7 @@
                                         {{ $currentUser->father->profileLink() }}
                                     @else
                                         {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id]]) }}
+                                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false]) !!}
                                         <div class="input-group">
                                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
@@ -46,6 +47,7 @@
                                         {{ $currentUser->mother->profileLink() }}
                                     @else
                                         {{ Form::open(['route' => ['family-actions.set-mother', $currentUser->id]]) }}
+                                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false]) !!}
                                         <div class="input-group">
                                             {{ Form::text('set_mother', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
@@ -56,14 +58,26 @@
                                     @endif
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Keluarga</div>
+
+                <div class="panel-body">
+                    <table class="table table-condensed">
+                        <tbody>
                             @if ($currentUser->gender_id == 1)
                             <tr>
                                 <th>Isteri</th>
                                 <td>
                                     @if ($currentUser->wifes->isEmpty() == false)
-                                        <ul class="list-group">
+                                        <ul>
                                             @foreach($currentUser->wifes as $wife)
-                                            <li class="list-group-item">{{ $wife->profileLink() }}</li>
+                                            <li>{{ $wife->profileLink() }}</li>
                                             @endforeach
                                         </ul>
                                     @else
@@ -83,9 +97,9 @@
                                 <th>Suami</th>
                                 <td>
                                     @if ($currentUser->husbands->isEmpty() == false)
-                                        <ul class="list-group">
+                                        <ul>
                                             @foreach($currentUser->husbands as $husband)
-                                            <li class="list-group-item">{{ $husband->profileLink() }}</li>
+                                            <li>{{ $husband->profileLink() }}</li>
                                             @endforeach
                                         </ul>
                                     @else
@@ -101,41 +115,44 @@
                                 </td>
                             </tr>
                             @endif
-                            <tr>
-                                <th colspan="2">Anak-Anak</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <ul class="list-group">
-                                        @foreach($currentUser->childs as $child)
-                                            <li class="list-group-item">
-                                                {{ $child->profileLink() }} ({{ $child->gender }})
-                                            </li>
-                                        @endforeach
-                                        <li class="list-group-item">
-                                            {{ Form::open(['route' => ['family-actions.add-child', $currentUser->id]]) }}
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    {!! FormField::text('add_child_name', ['label' => 'Nama Anak']) !!}
-                                                </div>
-                                                <div class="col-md-5">
-                                                    {!! FormField::radios('add_child_gender_id', [1 => 'Laki-laki', 2 => 'Perempuan'], ['label' => 'Jenis Kelamin Anak']) !!}
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <br>
-                                                    {{ Form::submit('Tambah Anak', ['class' => 'btn btn-success btn-sm']) }}
-                                                </div>
-                                            </div>
-                                            {{ Form::close() }}
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
+                    <legend>Anak-Anak</legend>
+                    <ul class="list-group">
+                        @foreach($currentUser->childs as $child)
+                            <li class="list-group-item">
+                                {{ $child->profileLink() }} ({{ $child->gender }})
+                            </li>
+                        @endforeach
+                        <li class="list-group-item">
+                            {{ Form::open(['route' => ['family-actions.add-child', $currentUser->id]]) }}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {!! FormField::text('add_child_name', ['label' => 'Nama Anak']) !!}
+                                </div>
+                                <div class="col-md-4">
+                                    {!! FormField::radios('add_child_gender_id', [1 => 'Laki-laki', 2 => 'Perempuan'], ['label' => 'Jenis Kelamin Anak']) !!}
+                                </div>
+                                <div class="col-md-4">
+                                    {!! FormField::select('add_child_parent_id', $usersMariageList, ['label' => 'Dari Pernikahan']) !!}
+                                </div>
+                            </div>
+                            {{ Form::submit('Tambah Anak', ['class' => 'btn btn-success btn-sm']) }}
+                            {{ Form::close() }}
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </div>
 @endsection

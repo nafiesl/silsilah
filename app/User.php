@@ -98,7 +98,7 @@ class User extends Authenticatable
 
     public function wifes()
     {
-        return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id');
+        return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
     }
 
     public function addWife(User $wife)
@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function husbands()
     {
-        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id');
+        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
     }
 
     public function addHusband(User $husband)
@@ -124,5 +124,13 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function marriages()
+    {
+        if ($this->gender_id == 1)
+            return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
+
+        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
     }
 }

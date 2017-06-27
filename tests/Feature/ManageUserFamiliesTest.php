@@ -16,6 +16,7 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser();
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_father']);
 
         $this->submitForm('set_father_button', [
             'set_father' => 'Nama Ayah',
@@ -34,6 +35,7 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser();
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_mother']);
 
         $this->submitForm('set_mother_button', [
             'set_mother' => 'Nama Ibu',
@@ -54,16 +56,50 @@ class ManageUserFamiliesTest extends TestCase
         $this->seePageIs(route('profile'));
         $this->seeElement('input', ['name' => 'add_child_name']);
         $this->seeElement('input', ['name' => 'add_child_gender_id']);
+        $this->seeElement('select', ['name' => 'add_child_parent_id']);
 
         $this->submitForm('Tambah Anak', [
             'add_child_name' => 'Nama Anak 1',
             'add_child_gender_id' => 1,
+            'add_child_parent_id' => '',
         ]);
 
         $this->seeInDatabase('users', [
             'nickname' => 'Nama Anak 1',
             'gender_id' => 1,
             'father_id' => $user->id,
+            'mother_id' => null,
+            'parent_id' => null,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_add_childrens_with_parent_id_if_exist()
+    {
+        $husband = factory(User::class)->states('male')->create();
+        $wife = factory(User::class)->states('female')->create();
+        $husband->addWife($wife);
+
+        $marriageId = $husband->wifes->first()->pivot->id;
+        $this->actingAs($husband);
+
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'add_child_name']);
+        $this->seeElement('input', ['name' => 'add_child_gender_id']);
+        $this->seeElement('select', ['name' => 'add_child_parent_id']);
+
+        $this->submitForm('Tambah Anak', [
+            'add_child_name' => 'Nama Anak 1',
+            'add_child_gender_id' => 1,
+            'add_child_parent_id' => $marriageId,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'nickname' => 'Nama Anak 1',
+            'gender_id' => 1,
+            'father_id' => $husband->id,
+            'mother_id' => $wife->id,
         ]);
     }
 
@@ -117,5 +153,43 @@ class ManageUserFamiliesTest extends TestCase
             'husband_id' => $husband->id,
             'wife_id' => $user->id,
         ]);
+    }
+
+    /** @test */
+    public function user_can_pick_father_from_existing_user()
+    {
+        $user = $this->loginAsUser();
+        $father = factory(User::class)->states('male')->create();
+
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_father']);
+        $this->seeElement('select', ['name' => 'set_father_id']);
+
+        $this->submitForm('set_father_button', [
+            'set_father' => '',
+            'set_father_id' => $father->id,
+        ]);
+
+        $this->assertEquals($father->nickname, $user->fresh()->father->nickname);
+    }
+
+    /** @test */
+    public function user_can_pick_mother_from_existing_user()
+    {
+        $user = $this->loginAsUser();
+        $mother = factory(User::class)->states('female')->create();
+
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_mother']);
+        $this->seeElement('select', ['name' => 'set_mother_id']);
+
+        $this->submitForm('set_mother_button', [
+            'set_mother' => '',
+            'set_mother_id' => $mother->id,
+        ]);
+
+        $this->assertEquals($mother->nickname, $user->fresh()->mother->nickname);
     }
 }

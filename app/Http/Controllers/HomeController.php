@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['currentUser' => auth()->user()]);
+        $user = auth()->user();
+
+        $usersMariageList = [];
+        foreach ($user->marriages as $spouse) {
+            $usersMariageList[$spouse->pivot->id] = $user->name.' & '.$spouse->name;
+        }
+
+        $malePersonList = User::where('gender_id', 1)->pluck('nickname', 'id');
+        $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
+
+        return view('home', [
+            'currentUser' => $user,
+            'usersMariageList' => $usersMariageList,
+            'malePersonList' => $malePersonList,
+            'femalePersonList' => $femalePersonList
+        ]);
     }
 }
