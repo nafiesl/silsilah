@@ -5,18 +5,18 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Profile : {{ $currentUser->name }}</div>
+                <div class="panel-heading">Profile : {{ $currentUser->name ?: $currentUser->nickname }}</div>
 
                 <div class="panel-body">
                     <table class="table table-condensed">
                         <tbody>
                             <tr>
-                                <th>Nama Panggilan</th>
-                                <td>{{ $currentUser->nickname }}</td>
+                                <th class="col-sm-4">Nama Panggilan</th>
+                                <td class="col-sm-6">{{ $currentUser->nickname }}</td>
                             </tr>
                             <tr>
                                 <th>Nama</th>
-                                <td>{{ $currentUser->name }}</td>
+                                <td>{{ $currentUser->profileLink() }}</td>
                             </tr>
                             <tr>
                                 <th>Jenis Kelamin</th>
@@ -26,7 +26,7 @@
                                 <th>Ayah</th>
                                 <td>
                                     @if ($currentUser->father_id)
-                                        {{ $currentUser->father->nickname }}
+                                        {{ $currentUser->father->profileLink() }}
                                     @else
                                         {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id]]) }}
                                         <div class="input-group">
@@ -43,7 +43,7 @@
                                 <th>Ibu</th>
                                 <td>
                                     @if ($currentUser->mother_id)
-                                        {{ $currentUser->mother->nickname }}
+                                        {{ $currentUser->mother->profileLink() }}
                                     @else
                                         {{ Form::open(['route' => ['family-actions.set-mother', $currentUser->id]]) }}
                                         <div class="input-group">
@@ -64,7 +64,7 @@
                                     <ul class="list-group">
                                         @foreach($currentUser->childs as $child)
                                             <li class="list-group-item">
-                                                {{ $child->nickname }} ({{ $child->gender }})
+                                                {{ $child->profileLink() }} ({{ $child->gender }})
                                             </li>
                                         @endforeach
                                         <li class="list-group-item">

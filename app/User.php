@@ -89,4 +89,10 @@ class User extends Authenticatable
 
         return $this->hasMany(User::class, 'father_id');
     }
+
+    public function profileLink()
+    {
+        $linkText = $this->name ?: $this->nickname;
+        return link_to_route('users.show', $linkText, [$this->id]);
+    }
 }
