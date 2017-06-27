@@ -28,7 +28,7 @@
                                     @if ($currentUser->father_id)
                                         {{ $currentUser->father->profileLink() }}
                                     @else
-                                        {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id]]) }}
+                                        {{ Form::open(['route' => ['family-actions.set-father', $currentUser->id, $currentUser->id]]) }}
                                         <div class="input-group">
                                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">

@@ -37,7 +37,7 @@ class FamilyActionsController extends Controller
         return back();
     }
 
-    public function addChild(Request $request)
+    public function addChild(Request $request, User $user)
     {
         $this->validate($request, [
             'add_child_name' => 'required|string|max:255',
@@ -48,8 +48,6 @@ class FamilyActionsController extends Controller
         $child->nickname = $request->get('add_child_name');
         $child->gender_id = $request->get('add_child_gender_id');
         $child->save();
-
-        $user = auth()->user();
 
         if ($user->gender_id == 1)
             $child->setFather($user);
