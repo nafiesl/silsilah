@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Couple;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -51,6 +52,11 @@ class UsersController extends Controller
             $usersMariageList[$spouse->pivot->id] = $user->name.' & '.$spouse->name;
         }
 
+        $allMariageList = [];
+        foreach (Couple::with('husband','wife')->get() as $couple) {
+            $allMariageList[$couple->id] = $couple->husband->name.' & '.$couple->wife->name;
+        }
+
         $malePersonList = User::where('gender_id', 1)->pluck('nickname', 'id');
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
@@ -58,8 +64,34 @@ class UsersController extends Controller
             'currentUser' => $user,
             'usersMariageList' => $usersMariageList,
             'malePersonList' => $malePersonList,
-            'femalePersonList' => $femalePersonList
+            'femalePersonList' => $femalePersonList,
+            'allMariageList' => $allMariageList
         ]);
+    }
+
+    /**
+     * Display the user's family chart.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function chart(User $user)
+    {
+        $father = $user->father_id ? $user->father : null;
+        $mother = $user->mother_id ? $user->mother : null;
+
+        $fatherGrandpa = $father && $father->father_id ? $father->father : null;
+        $fatherGrandma = $father && $father->mother_id ? $father->mother : null;
+
+        $motherGrandpa = $mother && $mother->father_id ? $mother->father : null;
+        $motherGrandma = $mother && $mother->mother_id ? $mother->mother : null;
+
+        $childs = $user->childs;
+        $colspan = $childs->count();
+        $colspan = $colspan < 4 ? 4 : $colspan;
+
+        $siblings = $user->siblings();
+        return view('users.chart', compact('user', 'childs', 'father', 'mother', 'fatherGrandpa', 'fatherGrandma', 'motherGrandpa', 'motherGrandma', 'siblings', 'colspan'));
     }
 
     /**

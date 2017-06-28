@@ -90,9 +90,10 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'father_id');
     }
 
-    public function profileLink()
+    public function profileLink($type = 'profile')
     {
-        return link_to_route('users.show', $this->name, [$this->id]);
+        $type = ($type == 'chart') ? 'chart' : 'show';
+        return link_to_route('users.'.$type, $this->name, [$this->id]);
     }
 
     public function wifes()
@@ -131,5 +132,24 @@ class User extends Authenticatable
             return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
 
         return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
+    }
+
+    public function siblings()
+    {
+        // TODO: research for fit siblings query
+        return User::where(function ($query) {
+            $query->where('id', '!=', $this->id);
+            if ($this->father_id != null)
+                $query->where('father_id', $this->father_id);
+            // if ($this->mother_id != null)
+            //     $query->where('mother_id', $this->mother_id);
+            // if ($this->parent_id != null)
+            //     $query->where('parent_id', $this->parent_id);
+        })->get();
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Couple::class);
     }
 }

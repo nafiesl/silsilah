@@ -240,4 +240,28 @@ class ManageUserFamiliesTest extends TestCase
             'wife_id' => $user->id,
         ]);
     }
+
+    /** @test */
+    public function user_can_set_parent_from_existing_couple_id()
+    {
+        $husband = factory(User::class)->states('male')->create();
+        $wife = factory(User::class)->states('female')->create();
+        $husband->addWife($wife);
+
+        $marriageId = $husband->wifes->first()->pivot->id;
+        $user = $this->loginAsUser();
+
+        $this->visit(route('profile'));
+        $this->click('Set Orang Tua');
+        $this->seeElement('select', ['name' => 'set_parent_id']);
+
+        $this->submitForm('set_parent_button', [
+            'set_parent_id' => $marriageId,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id' => $user->id,
+            'parent_id' => $marriageId,
+        ]);
+    }
 }

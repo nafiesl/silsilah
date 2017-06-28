@@ -39,6 +39,31 @@
                     @endif
                 </td>
             </tr>
+            <tr>
+                <th class="col-sm-4">Orang Tua</th>
+                <td class="col-sm-8">
+                    <div class="pull-right">
+                        @if (request('action') == 'set_parent')
+                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                        @else
+                            {{ link_to_route('users.show', 'Set Orang Tua', [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-success btn-xs']) }}
+                        @endif
+                    </div>
+                    @if ($user->parent)
+                    {{ $user->parent->husband->name }} & {{ $user->parent->wife->name }}
+                    @endif
+                    @if (request('action') == 'set_parent')
+                    {{ Form::open(['route' => ['family-actions.set-parent', $user->id]]) }}
+                    <div class="input-group">
+                        {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'class' => 'input-sm']) !!}
+                        <span class="input-group-btn">
+                            {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_parent_button']) }}
+                        </span>
+                    </div>
+                    {{ Form::close() }}
+                    @endif
+                </td>
+            </tr>
             @if ($user->gender_id == 1)
             <tr>
                 <th>Isteri</th>

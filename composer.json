@@ -11,6 +11,7 @@
         "luthfi/formfield": "^0.1.6"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^2.4",
         "fzaninotto/faker": "~1.4",
         "laravel/browser-kit-testing": "^1",
         "mockery/mockery": "0.9.*",
