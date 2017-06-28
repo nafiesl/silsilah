@@ -111,6 +111,7 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser(['gender_id' => 1]);
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Isteri');
         $this->seeElement('input', ['name' => 'set_wife']);
 
         $this->submitForm('set_wife_button', [
@@ -136,8 +137,8 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser(['gender_id' => 2]);
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Suami');
         $this->seeElement('input', ['name' => 'set_husband']);
-
 
         $this->submitForm('set_husband_button', [
             'set_husband' => 'Nama Suami',
@@ -202,6 +203,7 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Isteri');
         $this->seeElement('input', ['name' => 'set_wife']);
         $this->seeElement('select', ['name' => 'set_wife_id']);
 
@@ -224,6 +226,7 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Suami');
         $this->seeElement('input', ['name' => 'set_husband']);
         $this->seeElement('select', ['name' => 'set_husband_id']);
 

@@ -4,8 +4,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Ayah</th>
-                <td>
+                <th class="col-sm-4">Ayah</th>
+                <td class="col-sm-8">
                     @if ($user->father_id)
                         {{ $user->father->profileLink() }}
                     @else
@@ -43,13 +43,22 @@
             <tr>
                 <th>Isteri</th>
                 <td>
+                    <div class="pull-right">
+                        @if (request('action') == 'add_spouse')
+                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                        @else
+                            {{ link_to_route('users.show', 'Tambah Isteri', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
+                        @endif
+                    </div>
                     @if ($user->wifes->isEmpty() == false)
                         <ul class="list-unstyled">
                             @foreach($user->wifes as $wife)
                             <li>{{ $wife->profileLink() }}</li>
                             @endforeach
                         </ul>
-                    @else
+                    @endif
+                    @if (request('action') == 'add_spouse')
+                    <div>
                         {{ Form::open(['route' => ['family-actions.add-wife', $user->id]]) }}
                         {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false]) !!}
                         <div class="input-group">
@@ -59,6 +68,7 @@
                             </span>
                         </div>
                         {{ Form::close() }}
+                    </div>
                     @endif
                 </td>
             </tr>
@@ -66,13 +76,22 @@
             <tr>
                 <th>Suami</th>
                 <td>
+                    <div class="pull-right">
+                        @if (request('action') == 'add_spouse')
+                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                        @else
+                            {{ link_to_route('users.show', 'Tambah Suami', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
+                        @endif
+                    </div>
                     @if ($user->husbands->isEmpty() == false)
                         <ul class="list-unstyled">
                             @foreach($user->husbands as $husband)
                             <li>{{ $husband->profileLink() }}</li>
                             @endforeach
                         </ul>
-                    @else
+                    @endif
+                    @if (request('action') == 'add_spouse')
+                    <div>
                         {{ Form::open(['route' => ['family-actions.add-husband', $user->id]]) }}
                         {!! FormField::select('set_husband_id', $malePersonList, ['label' => false]) !!}
                         <div class="input-group">
@@ -82,6 +101,7 @@
                             </span>
                         </div>
                         {{ Form::close() }}
+                    </div>
                     @endif
                 </td>
             </tr>
