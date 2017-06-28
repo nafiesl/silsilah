@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function getGenderAttribute()
     {
-        return $this->gender_id == 1 ? 'Laki-laki' : 'Perempuan';
+        return $this->gender_id == 1 ? 'L' : 'P';
     }
 
     public function setFather(User $father)
@@ -136,16 +136,19 @@ class User extends Authenticatable
 
     public function siblings()
     {
-        // TODO: research for fit siblings query
-        return User::where(function ($query) {
-            $query->where('id', '!=', $this->id);
-            if ($this->father_id != null)
-                $query->where('father_id', $this->father_id);
-            // if ($this->mother_id != null)
-            //     $query->where('mother_id', $this->mother_id);
-            // if ($this->parent_id != null)
-            //     $query->where('parent_id', $this->parent_id);
-        })->get();
+        if (is_null($this->father_id) && is_null($this->mother_id) && is_null($this->parent_id))
+            return collect([]);
+
+        return User::where('id', '!=', $this->id)
+            ->where(function ($query) {
+                if (!is_null($this->father_id))
+                    $query->where('father_id', $this->father_id);
+                if (!is_null($this->mother_id))
+                    $query->orWhere('mother_id', $this->mother_id);
+                if (!is_null($this->parent_id))
+                    $query->orWhere('parent_id', $this->parent_id);
+            })
+            ->get();
     }
 
     public function parent()

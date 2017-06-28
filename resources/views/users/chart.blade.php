@@ -30,16 +30,16 @@
             </tr>
             <tr>
                 <th>&nbsp;</th>
-                <th class="text-center" colspan="{{ $colspan }}">{{ $user->profileLink('chart') }}</th>
+                <th class="text-center" colspan="{{ $colspan }}">{{ $user->profileLink('chart') }} ({{ $user->gender }})</th>
             </tr>
             <tr>
                 <th>Anak-Anak & Cucu-Cucu</th>
                 @foreach($childs as $child)
                 <td>
-                    {{ $child->profileLink('chart') }}
+                    {{ $child->profileLink('chart') }} ({{ $child->gender }})
                     <ul style="padding-left: 18px">
                         @foreach($child->childs as $grand)
-                        <li>{{ $grand->profileLink('chart') }}</li>
+                        <li>{{ $grand->profileLink('chart') }} ({{ $grand->gender }})</li>
                         @endforeach
                     </ul>
                 </td>
@@ -57,7 +57,7 @@
                 <tbody>
                     <tr>
                         <th style="width: 35%">Saudara</th>
-                        <th class="text-center" colspan="{{ $sibling->childs->count() }}">{{ $sibling->profileLink('chart') }}</th>
+                        <th class="text-center" colspan="{{ $sibling->childs->count() }}">{{ $sibling->profileLink('chart') }} ({{ $sibling->gender }})</th>
                     </tr>
                     <tr>
                         <th>Keponakan & Cucu-Cucu</th>
@@ -65,10 +65,10 @@
                             <ol style="padding-left: 15px">
                                 @foreach($sibling->childs as $child)
                                 <li>
-                                    {{ $child->profileLink('chart') }}
+                                    {{ $child->profileLink('chart') }} ({{ $child->gender }})
                                     <ul style="padding-left: 18px">
                                         @foreach($child->childs as $grand)
-                                        <li>{{ $grand->profileLink('chart') }}</li>
+                                        <li>{{ $grand->profileLink('chart') }} ({{ $grand->gender }})</li>
                                         @endforeach
                                     </ul>
                                 </li>
