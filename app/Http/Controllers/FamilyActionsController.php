@@ -89,13 +89,18 @@ class FamilyActionsController extends Controller
     public function addWife(Request $request, User $user)
     {
         $this->validate($request, [
-            'set_wife' => 'required|string|max:255',
+            'set_wife_id' => 'nullable',
+            'set_wife' => 'required_without:set_wife_id|max:255',
         ]);
 
-        $wife = new User;
-        $wife->name = $request->get('set_wife');
-        $wife->nickname = $request->get('set_wife');
-        $wife->gender_id = 2;
+        if ($request->get('set_wife_id')) {
+            $wife = User::findOrFail($request->get('set_wife_id'));
+        } else {
+            $wife = new User;
+            $wife->name = $request->get('set_wife');
+            $wife->nickname = $request->get('set_wife');
+            $wife->gender_id = 2;
+        }
 
         $user->addWife($wife);
 
@@ -105,13 +110,18 @@ class FamilyActionsController extends Controller
     public function addHusband(Request $request, User $user)
     {
         $this->validate($request, [
-            'set_husband' => 'required|string|max:255',
+            'set_husband_id' => 'nullable',
+            'set_husband' => 'required_without:set_husband_id|max:255',
         ]);
 
-        $husband = new User;
-        $husband->name = $request->get('set_husband');
-        $husband->nickname = $request->get('set_husband');
-        $husband->gender_id = 1;
+        if ($request->get('set_husband_id')) {
+            $husband = User::findOrFail($request->get('set_husband_id'));
+        } else {
+            $husband = new User;
+            $husband->name = $request->get('set_husband');
+            $husband->nickname = $request->get('set_husband');
+            $husband->gender_id = 1;
+        }
 
         $user->addHusband($husband);
 

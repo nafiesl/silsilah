@@ -111,7 +111,6 @@ class ManageUserFamiliesTest extends TestCase
         $this->seePageIs(route('profile'));
         $this->seeElement('input', ['name' => 'set_wife']);
 
-
         $this->submitForm('set_wife_button', [
             'set_wife' => 'Nama Istri',
         ]);
@@ -191,5 +190,49 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals($mother->nickname, $user->fresh()->mother->nickname);
+    }
+
+    /** @test */
+    public function user_can_pick_wife_from_existing_user()
+    {
+        $user = $this->loginAsUser(['gender_id' => 1]);
+        $wife = factory(User::class)->states('female')->create();
+
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_wife']);
+        $this->seeElement('select', ['name' => 'set_wife_id']);
+
+        $this->submitForm('set_wife_button', [
+            'set_wife' => '',
+            'set_wife_id' => $wife->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'husband_id' => $user->id,
+            'wife_id' => $wife->id,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_pick_husband_from_existing_user()
+    {
+        $user = $this->loginAsUser(['gender_id' => 2]);
+        $husband = factory(User::class)->states('male')->create();
+
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->seeElement('input', ['name' => 'set_husband']);
+        $this->seeElement('select', ['name' => 'set_husband_id']);
+
+        $this->submitForm('set_husband_button', [
+            'set_husband' => '',
+            'set_husband_id' => $husband->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'husband_id' => $husband->id,
+            'wife_id' => $user->id,
+        ]);
     }
 }

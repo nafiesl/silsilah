@@ -82,6 +82,7 @@
                                         </ul>
                                     @else
                                         {{ Form::open(['route' => ['family-actions.add-wife', $currentUser->id]]) }}
+                                        {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false]) !!}
                                         <div class="input-group">
                                             {{ Form::text('set_wife', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
@@ -104,6 +105,7 @@
                                         </ul>
                                     @else
                                         {{ Form::open(['route' => ['family-actions.add-husband', $currentUser->id]]) }}
+                                        {!! FormField::select('set_husband_id', $malePersonList, ['label' => false]) !!}
                                         <div class="input-group">
                                             {{ Form::text('set_husband', null, ['class' => 'form-control input-sm']) }}
                                             <span class="input-group-btn">
