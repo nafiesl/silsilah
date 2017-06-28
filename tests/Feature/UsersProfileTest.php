@@ -15,6 +15,6 @@ class UsersProfileTest extends TestCase
     {
         $user = factory(User::class)->create();
         $this->visit(route('users.show', $user->id));
-        $this->see('Profile : ' . $user->nickname);
+        $this->see($user->name);
     }
 }

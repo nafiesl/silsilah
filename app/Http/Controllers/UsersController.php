@@ -54,7 +54,7 @@ class UsersController extends Controller
         $malePersonList = User::where('gender_id', 1)->pluck('nickname', 'id');
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
-        return view('home', [
+        return view('users.show', [
             'currentUser' => $user,
             'usersMariageList' => $usersMariageList,
             'malePersonList' => $malePersonList,

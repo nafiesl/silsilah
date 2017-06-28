@@ -54,6 +54,7 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser(['gender_id' => 1]);
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Anak');
         $this->seeElement('input', ['name' => 'add_child_name']);
         $this->seeElement('input', ['name' => 'add_child_gender_id']);
         $this->seeElement('select', ['name' => 'add_child_parent_id']);
@@ -85,6 +86,7 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->click('Tambah Anak');
         $this->seeElement('input', ['name' => 'add_child_name']);
         $this->seeElement('input', ['name' => 'add_child_gender_id']);
         $this->seeElement('select', ['name' => 'add_child_parent_id']);

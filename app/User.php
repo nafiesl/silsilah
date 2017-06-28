@@ -92,8 +92,7 @@ class User extends Authenticatable
 
     public function profileLink()
     {
-        $linkText = $this->name ?: $this->nickname;
-        return link_to_route('users.show', $linkText, [$this->id]);
+        return link_to_route('users.show', $this->name, [$this->id]);
     }
 
     public function wifes()
