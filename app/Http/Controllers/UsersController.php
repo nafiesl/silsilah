@@ -94,6 +94,11 @@ class UsersController extends Controller
         return view('users.chart', compact('user', 'childs', 'father', 'mother', 'fatherGrandpa', 'fatherGrandma', 'motherGrandpa', 'motherGrandma', 'siblings', 'colspan'));
     }
 
+    public function tree(User $user)
+    {
+        return view('users.tree', compact('user'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

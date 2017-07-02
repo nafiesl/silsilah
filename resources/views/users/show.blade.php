@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="pull-right">
-        {{ link_to_route('users.edit', 'Edit Data '.$currentUser->name, [$currentUser->id], ['class' => 'btn btn-warning']) }}
-        {{ link_to_route('users.chart', 'Lihat Chart Keluarga '.$currentUser->name, [$currentUser->id], ['class' => 'btn btn-default']) }}
-    </div>
-    <h3 class="page-header text-center">{{ $currentUser->profileLink() }}</h3>
+    <h1 class="page-header">
+        <div class="pull-right">
+            {{ link_to_route('users.edit', 'Edit Data', [$currentUser->id], ['class' => 'btn btn-warning']) }}
+            {{ link_to_route('users.chart', 'Lihat Bagan Keluarga', [$currentUser->id], ['class' => 'btn btn-default']) }}
+            {{ link_to_route('users.tree', 'Lihat Pohon Keluarga', [$currentUser->id], ['class' => 'btn btn-default']) }}
+        </div>
+        {{ $currentUser->name }} <small>Profil</small>
+    </h1>
     <div class="row">
         <div class="col-md-6">
             @include('users.partials.profile', ['user' => $currentUser])
