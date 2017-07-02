@@ -102,7 +102,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -114,7 +114,29 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->nickname = $request->nickname;
+        $user->name = $request->get('name');
+        $user->gender_id = $request->get('gender_id');
+        $user->dob = $request->get('dob');
+        $user->dod = $request->get('dod');
+
+        if ($request->get('dod'))
+            $user->yod = substr($request->get('dod'), 0, 4);
+        else
+            $user->yod = $request->get('yod');
+
+        $user->phone = $request->get('phone');
+        $user->address = $request->get('address');
+        $user->city = $request->get('city');
+        $user->email = $request->get('email');
+
+        if ($request->get('email')) {
+            $user->password = bcrypt($request->get('email'));
+        }
+
+        $user->save();
+
+        return redirect()->route('users.show', $user->id);
     }
 
     /**

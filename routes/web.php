@@ -27,4 +27,6 @@ Route::post('family-actions/{user}/add-husband', 'FamilyActionsController@addHus
 Route::post('family-actions/{user}/set-parent', 'FamilyActionsController@setParent')->name('family-actions.set-parent');
 
 Route::get('users/{user}', 'UsersController@show')->name('users.show');
+Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
+Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');

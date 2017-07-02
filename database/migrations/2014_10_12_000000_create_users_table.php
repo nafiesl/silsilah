@@ -21,11 +21,13 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('father_id')->nullable();
             $table->unsignedInteger('mother_id')->nullable();
             $table->unsignedInteger('parent_id')->nullable();
-            $table->date('dof')->nullable();
+            $table->date('dob')->nullable();
             $table->date('dod')->nullable();
+            $table->date('yod')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
             $table->string('address')->nullable();
+            $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->rememberToken();
             $table->timestamps();

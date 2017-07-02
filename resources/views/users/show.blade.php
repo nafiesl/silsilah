@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="pull-right">
+        {{ link_to_route('users.edit', 'Edit Data '.$currentUser->name, [$currentUser->id], ['class' => 'btn btn-warning']) }}
         {{ link_to_route('users.chart', 'Lihat Chart Keluarga '.$currentUser->name, [$currentUser->id], ['class' => 'btn btn-default']) }}
     </div>
     <h3 class="page-header text-center">{{ $currentUser->profileLink() }}</h3>
