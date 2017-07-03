@@ -23,6 +23,7 @@ class FamilyActionsController extends Controller
             $father->name = $request->get('set_father');
             $father->nickname = $request->get('set_father');
             $father->gender_id = 1;
+            $father->manager_id = auth()->id();
 
             $user->setFather($father);
         }
@@ -45,6 +46,7 @@ class FamilyActionsController extends Controller
             $mother->name = $request->get('set_mother');
             $mother->nickname = $request->get('set_mother');
             $mother->gender_id = 2;
+            $mother->manager_id = auth()->id();
 
             $user->setMother($mother);
         }
@@ -65,6 +67,7 @@ class FamilyActionsController extends Controller
         $child->nickname = $request->get('add_child_name');
         $child->gender_id = $request->get('add_child_gender_id');
         $child->parent_id = $request->get('add_child_parent_id');
+        $child->manager_id = auth()->id();
 
         \DB::beginTransaction();
         $child->save();
@@ -100,6 +103,7 @@ class FamilyActionsController extends Controller
             $wife->name = $request->get('set_wife');
             $wife->nickname = $request->get('set_wife');
             $wife->gender_id = 2;
+            $wife->manager_id = auth()->id();
         }
 
         $user->addWife($wife);
@@ -121,6 +125,7 @@ class FamilyActionsController extends Controller
             $husband->name = $request->get('set_husband');
             $husband->nickname = $request->get('set_husband');
             $husband->gender_id = 1;
+            $husband->manager_id = auth()->id();
         }
 
         $user->addHusband($husband);

@@ -43,6 +43,7 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->seeInDatabase('users', [
             'nickname' => 'Nama Ibu',
+            'manager_id' => $user->id,
         ]);
 
         $this->assertEquals('Nama Ibu', $user->fresh()->mother->nickname);
@@ -71,6 +72,7 @@ class ManageUserFamiliesTest extends TestCase
             'father_id' => $user->id,
             'mother_id' => null,
             'parent_id' => null,
+            'manager_id' => $user->id,
         ]);
     }
 
@@ -102,6 +104,7 @@ class ManageUserFamiliesTest extends TestCase
             'gender_id' => 1,
             'father_id' => $husband->id,
             'mother_id' => $wife->id,
+            'manager_id' => $husband->id,
         ]);
     }
 
@@ -147,6 +150,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('users', [
             'nickname' => 'Nama Suami',
             'gender_id' => 1,
+            'manager_id' => $user->id,
         ]);
 
         $husband = User::orderBy('id', 'desc')->first();
@@ -262,6 +266,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('users', [
             'id' => $user->id,
             'parent_id' => $marriageId,
+            'manager_id' => $user->id,
         ]);
     }
 }
