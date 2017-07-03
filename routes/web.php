@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'UsersController@search');
 
 Auth::routes();
 
