@@ -155,4 +155,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Couple::class);
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

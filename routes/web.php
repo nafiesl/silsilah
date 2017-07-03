@@ -26,6 +26,7 @@ Route::post('family-actions/{user}/add-wife', 'FamilyActionsController@addWife')
 Route::post('family-actions/{user}/add-husband', 'FamilyActionsController@addHusband')->name('family-actions.add-husband');
 Route::post('family-actions/{user}/set-parent', 'FamilyActionsController@setParent')->name('family-actions.set-parent');
 
+Route::get('profile-search', 'UsersController@index')->name('users.search');
 Route::get('users/{user}', 'UsersController@show')->name('users.show');
 Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');

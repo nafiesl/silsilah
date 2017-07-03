@@ -53,4 +53,11 @@ class UsersProfileTest extends TestCase
             'password' => null,
         ]);
     }
+
+    /** @test */
+    public function guest_can_search_users_profile()
+    {
+        $this->visit(route('users.search'));
+        $this->seePageIs(route('users.search'));
+    }
 }

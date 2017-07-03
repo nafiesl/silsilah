@@ -20,6 +20,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'name' => $name,
         'nickname' => $name,
         'gender_id' => rand(1, 2),
+        'manager_id' => 1,
     ];
 });
 
