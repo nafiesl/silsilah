@@ -3,8 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Log;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +46,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /**modified part**/
+        if ($request->wantsJson()) {
+            return response([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 403);
+        }
+
+        if ($exception instanceof AuthorizationException) {
+            \Log::warning("Unauthorized Access or Action \nURL: " . $request->fullUrl() . " \nIP: " . $request->ip() . "\nForm: " . json_encode($request->all()) . "\n");
+            return response($exception->getMessage(), 403);
+        }
         return parent::render($request, $exception);
     }
 
