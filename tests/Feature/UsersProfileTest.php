@@ -21,7 +21,7 @@ class UsersProfileTest extends TestCase
     /** @test */
     public function user_can_edit_profile()
     {
-        $user = factory(User::class)->create();
+        $user = $this->loginAsUser();
         $this->visit(route('users.edit', $user->id));
         $this->seePageIs(route('users.edit', $user->id));
 

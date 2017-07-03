@@ -244,12 +244,12 @@ class ManageUserFamiliesTest extends TestCase
     /** @test */
     public function user_can_set_parent_from_existing_couple_id()
     {
+        $user = $this->loginAsUser();
         $husband = factory(User::class)->states('male')->create();
         $wife = factory(User::class)->states('female')->create();
         $husband->addWife($wife);
 
         $marriageId = $husband->wifes->first()->pivot->id;
-        $user = $this->loginAsUser();
 
         $this->visit(route('profile'));
         $this->click('Set Orang Tua');

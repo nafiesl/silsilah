@@ -13,9 +13,21 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function search(Request $request)
     {
-        //
+        $q = $request->get('q');
+        $users = [];
+
+        if ($q) {
+            $users = User::with('father', 'mother')->where(function ($query) use ($q) {
+                $query->where('name', 'like', '%'.$q.'%');
+                $query->orWhere('nickname', 'like', '%'.$q.'%');
+            })
+            ->orderBy('name', 'asc')
+            ->paginate(24);
+        }
+
+        return view('users.search', compact('users'));
     }
 
     /**
