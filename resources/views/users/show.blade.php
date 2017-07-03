@@ -3,7 +3,9 @@
 @section('content')
     <h1 class="page-header">
         <div class="pull-right">
+            @can ('edit', $currentUser)
             {{ link_to_route('users.edit', 'Edit Data', [$currentUser->id], ['class' => 'btn btn-warning']) }}
+            @endcan
             {{ link_to_route('users.chart', 'Lihat Bagan Keluarga', [$currentUser->id], ['class' => 'btn btn-default']) }}
             {{ link_to_route('users.tree', 'Lihat Pohon Keluarga', [$currentUser->id], ['class' => 'btn btn-default']) }}
         </div>
