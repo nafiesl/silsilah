@@ -119,6 +119,20 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->validate($request, [
+            'nickname'  => 'required|string|max:255',
+            'name'      => 'required|string|max:255',
+            'gender_id' => 'required|numeric',
+            'dob'       => 'nullable|date|date_format:Y-m-d',
+            'dod'       => 'nullable|date|date_format:Y-m-d',
+            'yod'       => 'nullable|date_format:Y',
+            'phone'     => 'nullable|string|max:255',
+            'address'   => 'nullable|string|max:255',
+            'city'      => 'nullable|string|max:255',
+            'email'     => 'nullable|string|max:255',
+            'password'  => 'nullable|min:6|max:15',
+        ]);
+
         $user->nickname = $request->nickname;
         $user->name = $request->get('name');
         $user->gender_id = $request->get('gender_id');

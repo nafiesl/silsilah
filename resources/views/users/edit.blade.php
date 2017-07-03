@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="pull-right">
-        {{ link_to_route('users.chart', 'Lihat Chart Keluarga '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
-    </div>
-    <h3 class="page-header text-center">Edit Profil {{ $user->profileLink() }}</h3>
+    <h2 class="page-header">
+        <div class="pull-right">
+            {{ link_to_route('users.show', 'Lihat Profil '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
+        </div>
+        Edit Profil {{ $user->profileLink() }}
+    </h2>
     {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch']) }}
     <div class="row">
         <div class="col-md-4">
@@ -39,13 +41,14 @@
                 <div class="panel-heading"><h3 class="panel-title">Akun Login</h3></div>
                 <div class="panel-body">
                     {!! FormField::email('email', ['label' => 'Email', 'placeholder' => 'Misal: nama@mail.com']) !!}
-                    {!! FormField::text('password', ['label' => 'Password', 'placeholder' => '******']) !!}
+                    {!! FormField::password('password', ['label' => 'Password', 'placeholder' => '******']) !!}
                 </div>
             </div>
         </div>
     </div>
     <div class="pull-right">
         {{ Form::submit('Update', ['class' => 'btn btn-primary']) }}
+        {{ link_to_route('users.show', 'Cancel', [$user->id], ['class' => 'btn btn-default']) }}
     </div>
     {{ Form::close() }}
 @endsection
