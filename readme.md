@@ -41,16 +41,27 @@ Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
 7. Telp
 8. Email
 
-### Data Pasangan
+### Data Pasangan (TODO)
 1. Suami
 2. Istri
 3. Tanggal menikah
 4. Tanggal Cerai
 5. Alamat
 
+## Cara Install
+1. Clone Repo, pada terminal : `git clone https://github.com/nafiesl/silsilah.git`
+2. `cd silsilah`
+3. `composer install`
+4. `cp .env.example .env`
+5. `php artisan key:generate`
+6. Buat **database pada mysql** untuk aplikasi ini
+7. **Setting database** pada file `.env`
+8. `php artisan migrate`
+9. `php artisan serve`
+10. Selesai (Register user baru untuk mulai mengisi silsilah).
+
 ## Testing
-Ingin mencoba testingnya? Silakan ketik perintah pada terminal: `vendor/bin/phpunit`
+Ingin mencoba automated testingnya? Silakan ketik perintah pada terminal: `vendor/bin/phpunit`
 
 ## License
-
 The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).
