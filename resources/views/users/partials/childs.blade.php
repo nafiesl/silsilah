@@ -5,7 +5,7 @@
             {{ link_to_route('users.show', 'Tambah Anak', [$user->id, 'action' => 'add_child'], ['class' => 'btn btn-success btn-xs']) }}
         </div>
         @endcan
-        <h3 class="panel-title">Anak-Anak</h3>
+        <h3 class="panel-title">Anak-Anak ({{ $user->childs->count() }})</h3>
     </div>
 
     <ul class="list-group">

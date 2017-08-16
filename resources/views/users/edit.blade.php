@@ -7,7 +7,7 @@
         </div>
         Edit Profil {{ $user->profileLink() }}
     </h2>
-    {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch']) }}
+    {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'nope']) }}
     <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -40,8 +40,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Akun Login</h3></div>
                 <div class="panel-body">
-                    {!! FormField::email('email', ['label' => 'Email', 'placeholder' => 'Misal: nama@mail.com']) !!}
-                    {!! FormField::password('password', ['label' => 'Password', 'placeholder' => '******']) !!}
+                    {!! FormField::email('email', ['label' => 'Email', 'placeholder' => 'Misal: nama@mail.com', 'autocomplete' => 'off']) !!}
+                    {!! FormField::password('password', ['label' => 'Password', 'placeholder' => '******', 'autocomplete' => 'off']) !!}
                 </div>
             </div>
         </div>

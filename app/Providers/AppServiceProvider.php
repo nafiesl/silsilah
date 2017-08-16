@@ -13,6 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        require_once app_path() . '/Helpers/functions.php';
+
         // Always redirect to https.
         if($this->app->environment() === 'production') {
             $this->app['request']->server->set('HTTPS', true);

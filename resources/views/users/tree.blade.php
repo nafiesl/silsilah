@@ -4,9 +4,7 @@
 </div>
 <div class="container-fluid">
 <h1 class="page-header">
-    <div class="pull-right">
-        {{ link_to_route('users.show', 'Lihat Profil '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
-    </div>
+    @include('users.partials.action-buttons')
     {{ $user->name }} <small>Pohon Keluarga</small>
 </h1>
 <?php

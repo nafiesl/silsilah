@@ -30,3 +30,11 @@ Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
+
+/**
+ * Backup Restore Database Routes
+ */
+Route::post('backups/upload', ['as'=>'backups.upload', 'uses'=>'BackupsController@upload']);
+Route::post('backups/{fileName}/restore', ['as'=>'backups.restore', 'uses'=>'BackupsController@restore']);
+Route::get('backups/{fileName}/dl', ['as'=>'backups.download', 'uses'=>'BackupsController@download']);
+Route::resource('backups','BackupsController');
