@@ -16,3 +16,19 @@
         </div>
     </div>
 @endsection
+
+@section ('ext_css')
+<link rel="stylesheet" href="{{ asset('css/plugins/select2.min.css') }}">
+@endsection
+
+@section ('ext_js')
+<script src="{{ asset('js/plugins/select2.min.js') }}"></script>
+@endsection
+
+@section ('script')
+<script>
+(function () {
+    $('select').select2();
+})();
+</script>
+@endsection

@@ -19,16 +19,14 @@
         <li class="list-group-item">
             {{ Form::open(['route' => ['family-actions.add-child', $user->id]]) }}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {!! FormField::text('add_child_name', ['label' => 'Nama Anak']) !!}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {!! FormField::radios('add_child_gender_id', [1 => 'Laki-laki', 2 => 'Perempuan'], ['label' => 'Jenis Kelamin Anak']) !!}
                 </div>
-                <div class="col-md-4">
-                    {!! FormField::select('add_child_parent_id', $usersMariageList, ['label' => 'Dari Pernikahan']) !!}
-                </div>
             </div>
+            {!! FormField::select('add_child_parent_id', $usersMariageList, ['label' => 'Dari Pernikahan (pilih pasangan '.$user->name.')', 'placeholder' => 'Tidak diketahui']) !!}
             {{ Form::submit('Tambah Anak', ['class' => 'btn btn-success btn-sm']) }}
             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
             {{ Form::close() }}

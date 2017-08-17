@@ -11,9 +11,9 @@
                     @else
                         @can ('edit', $currentUser)
                         {{ Form::open(['route' => ['family-actions.set-father', $user->id]]) }}
-                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false]) !!}
+                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
                         <div class="input-group">
-                            {{ Form::text('set_father', null, ['class' => 'form-control input-sm']) }}
+                            {{ Form::text('set_father', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
                             </span>
@@ -31,9 +31,9 @@
                     @else
                         @can ('edit', $currentUser)
                         {{ Form::open(['route' => ['family-actions.set-mother', $user->id]]) }}
-                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false]) !!}
+                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
                         <div class="input-group">
-                            {{ Form::text('set_mother', null, ['class' => 'form-control input-sm']) }}
+                            {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_mother_button']) }}
                             </span>
@@ -65,12 +65,8 @@
                     @can('edit', $currentUser)
                     @if (request('action') == 'set_parent')
                     {{ Form::open(['route' => ['family-actions.set-parent', $user->id]]) }}
-                    <div class="input-group">
-                        {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'class' => 'input-sm']) !!}
-                        <span class="input-group-btn">
-                            {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_parent_button']) }}
-                        </span>
-                    </div>
+                    {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'value' => $user->parent_id, 'placeholder' => 'Pilih Pasangan Pernikahan']) !!}
+                    {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_parent_button']) }}
                     {{ Form::close() }}
                     @endif
                     @endcan
@@ -101,9 +97,9 @@
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-wife', $user->id]]) }}
-                        {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false]) !!}
+                        {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
                         <div class="input-group">
-                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm']) }}
+                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_wife_button']) }}
                             </span>
@@ -138,9 +134,9 @@
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-husband', $user->id]]) }}
-                        {!! FormField::select('set_husband_id', $malePersonList, ['label' => false]) !!}
+                        {!! FormField::select('set_husband_id', $malePersonList, ['label' => false, 'placeholder' => 'Pilih dari Laki-Laki Terdaftar']) !!}
                         <div class="input-group">
-                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm']) }}
+                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_husband_button']) }}
                             </span>
