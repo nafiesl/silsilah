@@ -28,4 +28,22 @@ class UserTest extends TestCase
         $this->assertCount(1, $wife->husbands);
         $this->assertCount(1, $husband->marriages);
     }
+
+    /** @test */
+    public function user_have_father_link_method()
+    {
+        $father = factory(User::class)->create();
+        $user = factory(User::class)->create(['father_id' => $father->id]);
+
+        $this->assertEquals($father->profileLink(), $user->fatherLink());
+    }
+
+    /** @test */
+    public function user_have_mother_link_method()
+    {
+        $mother = factory(User::class)->create();
+        $user = factory(User::class)->create(['mother_id' => $mother->id]);
+
+        $this->assertEquals($mother->profileLink(), $user->motherLink());
+    }
 }

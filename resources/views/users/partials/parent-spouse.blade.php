@@ -19,17 +19,13 @@
                         </div>
                         {{ Form::close() }}
                         @else
-                            @if ($user->father_id)
-                                {{ $user->father->profileLink() }}
-                            @endif
+                            {{ $user->fatherLink() }}
                             <div class="pull-right">
                                 {{ link_to_route('users.show', 'Set Ayah', [$user->id, 'action' => 'set_father'], ['class' => 'btn btn-link btn-xs']) }}
                             </div>
                         @endif
                     @else
-                        @if ($user->father_id)
-                            {{ $user->father->profileLink() }}
-                        @endif
+                        {{ $user->fatherLink() }}
                     @endcan
                 </td>
             </tr>
@@ -39,7 +35,7 @@
                     @can ('edit', $currentUser)
                         @if (request('action') == 'set_mother')
                         {{ Form::open(['route' => ['family-actions.set-mother', $user->id]]) }}
-                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
+                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
                         <div class="input-group">
                             {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
@@ -49,17 +45,13 @@
                         </div>
                         {{ Form::close() }}
                         @else
-                            @if ($user->mother_id)
-                                {{ $user->mother->profileLink() }}
-                            @endif
+                            {{ $user->motherLink() }}
                             <div class="pull-right">
                                 {{ link_to_route('users.show', 'Set Ibu', [$user->id, 'action' => 'set_mother'], ['class' => 'btn btn-link btn-xs']) }}
                             </div>
                         @endif
                     @else
-                        @if ($user->mother_id)
-                            {{ $user->mother->profileLink() }}
-                        @endif
+                        {{ $user->motherLink() }}
                     @endcan
                 </td>
             </tr>

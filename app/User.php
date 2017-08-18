@@ -96,6 +96,16 @@ class User extends Authenticatable
         return link_to_route('users.'.$type, $this->name, [$this->id]);
     }
 
+    public function fatherLink()
+    {
+        return $this->father_id ? link_to_route('users.show', $this->father->name, [$this->father_id]) : null;
+    }
+
+    public function motherLink()
+    {
+        return $this->mother_id ? link_to_route('users.show', $this->mother->name, [$this->mother_id]) : null;
+    }
+
     public function wifes()
     {
         return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
