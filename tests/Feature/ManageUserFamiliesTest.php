@@ -89,7 +89,7 @@ class ManageUserFamiliesTest extends TestCase
         $wife = factory(User::class)->states('female')->create();
         $husband->addWife($wife);
 
-        $marriageId = $husband->wifes->first()->pivot->id;
+        $marriageId = $husband->fresh()->wifes->first()->pivot->id;
         $this->actingAs($husband);
 
         $this->visit(route('profile'));
@@ -265,7 +265,7 @@ class ManageUserFamiliesTest extends TestCase
         $wife = factory(User::class)->states('female')->create();
         $husband->addWife($wife);
 
-        $marriageId = $husband->wifes->first()->pivot->id;
+        $marriageId = $husband->fresh()->wifes->first()->pivot->id;
 
         $this->visit(route('profile'));
         $this->click('Set Orang Tua');

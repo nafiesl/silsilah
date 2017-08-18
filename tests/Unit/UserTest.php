@@ -24,9 +24,21 @@ class UserTest extends TestCase
         $wife = factory(User::class)->states('female')->create();
         $husband->addWife($wife);
 
+        $husband = $husband->fresh();
         $this->assertCount(1, $husband->wifes);
         $this->assertCount(1, $wife->husbands);
         $this->assertCount(1, $husband->marriages);
+    }
+
+    /** @test */
+    public function user_can_ony_marry_same_person_once()
+    {
+        $husband = factory(User::class)->states('male')->create();
+        $wife = factory(User::class)->states('female')->create();
+
+        $husband->addWife($wife);
+
+        $this->assertFalse($wife->addHusband($husband), 'This couple is married!');
     }
 
     /** @test */

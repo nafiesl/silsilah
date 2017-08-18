@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public function addWife(User $wife)
     {
-        if ($this->gender_id == 1) {
+        if ($this->gender_id == 1 && ! $this->hasBeenMarriedTo($wife)) {
             $this->wifes()->save($wife);
             return $wife;
         }
@@ -128,12 +128,17 @@ class User extends Authenticatable
 
     public function addHusband(User $husband)
     {
-        if ($this->gender_id == 2) {
+        if ($this->gender_id == 2 && ! $this->hasBeenMarriedTo($husband)) {
             $this->husbands()->save($husband);
             return $husband;
         }
 
         return false;
+    }
+
+    public function hasBeenMarriedTo(User $user)
+    {
+        return $this->marriages->contains($user);
     }
 
     public function marriages()
