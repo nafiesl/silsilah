@@ -16,6 +16,9 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser();
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->dontSeeElement('input', ['name' => 'set_father']);
+        $this->click('Set Ayah');
+        $this->seePageIs(route('users.show', [$user->id, 'action' => 'set_father']));
         $this->seeElement('input', ['name' => 'set_father']);
 
         $this->submitForm('set_father_button', [
@@ -35,6 +38,9 @@ class ManageUserFamiliesTest extends TestCase
         $user = $this->loginAsUser();
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->dontSeeElement('input', ['name' => 'set_mother']);
+        $this->click('Set Ibu');
+        $this->seePageIs(route('users.show', [$user->id, 'action' => 'set_mother']));
         $this->seeElement('input', ['name' => 'set_mother']);
 
         $this->submitForm('set_mother_button', [
@@ -169,6 +175,9 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->dontSeeElement('input', ['name' => 'set_father']);
+        $this->click('Set Ayah');
+        $this->seePageIs(route('users.show', [$user->id, 'action' => 'set_father']));
         $this->seeElement('input', ['name' => 'set_father']);
         $this->seeElement('select', ['name' => 'set_father_id']);
 
@@ -188,6 +197,9 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
+        $this->dontSeeElement('input', ['name' => 'set_mother']);
+        $this->click('Set Ibu');
+        $this->seePageIs(route('users.show', [$user->id, 'action' => 'set_mother']));
         $this->seeElement('input', ['name' => 'set_mother']);
         $this->seeElement('select', ['name' => 'set_mother_id']);
 

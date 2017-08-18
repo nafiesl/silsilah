@@ -6,41 +6,61 @@
             <tr>
                 <th class="col-sm-4">Ayah</th>
                 <td class="col-sm-8">
-                    @if ($user->father_id)
-                        {{ $user->father->profileLink() }}
-                    @else
-                        @can ('edit', $currentUser)
+                    @can ('edit', $currentUser)
+                        @if (request('action') == 'set_father')
                         {{ Form::open(['route' => ['family-actions.set-father', $user->id]]) }}
-                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
+                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'value' => $user->father_id, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
                         <div class="input-group">
                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
+                                {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
                             </span>
                         </div>
-                        @endcan
                         {{ Form::close() }}
-                    @endif
+                        @else
+                            @if ($user->father_id)
+                                {{ $user->father->profileLink() }}
+                            @endif
+                            <div class="pull-right">
+                                {{ link_to_route('users.show', 'Set Ayah', [$user->id, 'action' => 'set_father'], ['class' => 'btn btn-link btn-xs']) }}
+                            </div>
+                        @endif
+                    @else
+                        @if ($user->father_id)
+                            {{ $user->father->profileLink() }}
+                        @endif
+                    @endcan
                 </td>
             </tr>
             <tr>
                 <th>Ibu</th>
                 <td>
-                    @if ($user->mother_id)
-                        {{ $user->mother->profileLink() }}
-                    @else
-                        @can ('edit', $currentUser)
+                    @can ('edit', $currentUser)
+                        @if (request('action') == 'set_mother')
                         {{ Form::open(['route' => ['family-actions.set-mother', $user->id]]) }}
-                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
+                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
                         <div class="input-group">
                             {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_mother_button']) }}
+                                {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
                             </span>
                         </div>
                         {{ Form::close() }}
-                        @endcan
-                    @endif
+                        @else
+                            @if ($user->mother_id)
+                                {{ $user->mother->profileLink() }}
+                            @endif
+                            <div class="pull-right">
+                                {{ link_to_route('users.show', 'Set Ibu', [$user->id, 'action' => 'set_mother'], ['class' => 'btn btn-link btn-xs']) }}
+                            </div>
+                        @endif
+                    @else
+                        @if ($user->mother_id)
+                            {{ $user->mother->profileLink() }}
+                        @endif
+                    @endcan
                 </td>
             </tr>
             <tr>
@@ -52,11 +72,10 @@
                         @if (request('action') == 'set_parent')
                             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', 'Set Orang Tua', [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-success btn-xs']) }}
+                            {{ link_to_route('users.show', 'Set Orang Tua', [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-link btn-xs']) }}
                         @endif
                     </div>
                     @endcan
-
 
                     @if ($user->parent)
                     {{ $user->parent->husband->name }} & {{ $user->parent->wife->name }}
@@ -81,7 +100,7 @@
                         @if (request('action') == 'add_spouse')
                             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', 'Tambah Isteri', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
+                            {{ link_to_route('users.show', 'Tambah Isteri', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-link btn-xs']) }}
                         @endif
                     </div>
                     @endcan
