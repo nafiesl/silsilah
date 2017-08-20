@@ -2,6 +2,8 @@
 
 <h1 align="center">Aplikasi Silsilah Keluarga</h1>
 
+[![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
+
 >**Development in progress**
 
 ## Tentang
