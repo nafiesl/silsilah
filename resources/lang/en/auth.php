@@ -13,7 +13,21 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'failed'                    => 'These credentials do not match our records.',
+    'throttle'                  => 'Too many login attempts. Please try again in :seconds seconds.',
+    'email'                     => 'Email',
+    'password'                  => 'Password',
+    'login'                     => 'Login',
+    'logout'                    => 'Logout',
+    'register'                  => 'Create new Account',
+    'have_an_account'           => 'I have an Account',
+    'need_account'              => 'Need an Account?',
+    'change_password'           => 'Change Password',
+    'forgot_password'           => 'Forgot Password?',
+    'reset_password'            => 'Reset Password',
+    'password_confirmation'     => 'Repeat Password',
+    'old_password'              => 'Old Password',
+    'new_password'              => 'New Password',
+    'new_password_confirmation' => 'Repeat New Password',
+    'send_reset_password_link'  => 'Send Reset Password Link',
 ];
