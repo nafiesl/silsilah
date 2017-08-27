@@ -7,6 +7,8 @@ return [
     'unknown'           => 'Unknown',
     'male'              => 'Male',
     'female'            => 'Female',
+    'male_code'         => 'M',
+    'female_code'       => 'F',
     'family_chart'      => 'Family Chart',
     'family_tree'       => 'Family Tree',
     'child_count'       => 'Child Count',

@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function getGenderAttribute()
     {
-        return $this->gender_id == 1 ? 'L' : 'P';
+        return $this->gender_id == 1 ? trans('app.male_code') : trans('app.female_code');
     }
 
     public function setFather(User $father)

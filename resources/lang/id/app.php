@@ -7,6 +7,8 @@ return [
     'unknown'           => 'Tidak diketahui',
     'male'              => 'Laki-laki',
     'female'            => 'Perempuan',
+    'male_code'         => 'L',
+    'female_code'       => 'P',
     'family_chart'      => 'Bagan Keluarga',
     'family_tree'       => 'Pohon Keluarga',
     'child_count'       => 'Jumlah Anak',
