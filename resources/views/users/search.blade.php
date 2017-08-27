@@ -2,18 +2,18 @@
 
 @section('content')
 <h3 class="page-header">
-    Cari Keluarga Anda
+    {{ trans('app.search_your_family') }}
     @if (request('q'))
-    <small class="pull-right">User ditemukan : <strong>{{ $users->total() }} Orang</strong> untuk kata kunci : <strong>{{ request('q') }}</strong></small>
+    <small class="pull-right">{!! trans('app.user_found', ['total' => $users->total(), 'keyword' => request('q')]) !!}</small>
     @endif
 </h3>
 
 
 {{ Form::open(['method' => 'get','class' => '']) }}
 <div class="input-group">
-    {{ Form::text('q', request('q'), ['class' => 'form-control', 'placeholder' => 'Masukkan nama/panggilan... klik Cari']) }}
+    {{ Form::text('q', request('q'), ['class' => 'form-control', 'placeholder' => trans('app.search_your_family_placeholder')]) }}
     <span class="input-group-btn">
-        {{ Form::submit('Cari', ['class' => 'btn btn-default']) }}
+        {{ Form::submit(trans('app.search'), ['class' => 'btn btn-default']) }}
         {{ link_to_route('users.search', 'Reset', [], ['class' => 'btn btn-default']) }}
     </span>
 </div>
@@ -29,14 +29,14 @@
         <div class="panel panel-default">
             <div class="panel-heading"><h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3></div>
             <div class="panel-body">
-                <div>Panggilan : {{ $user->nickname }}</div>
+                <div>{{ trans('user.nickname') }} : {{ $user->nickname }}</div>
                 <hr style="margin: 5px 0;">
-                <div>Ayah : {{ $user->father_id ? $user->father->name : '' }}</div>
-                <div>Ibu : {{ $user->mother_id ? $user->mother->name : '' }}</div>
+                <div>{{ trans('user.fahter') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
+                <div>{{ trans('user.mother') }} : {{ $user->mother_id ? $user->mother->name : '' }}</div>
             </div>
             <div class="panel-footer">
-                {{ link_to_route('users.show', 'Lihat Profil', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
-                {{ link_to_route('users.chart', 'Bagan Keluarga', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                {{ link_to_route('users.show', trans('app.show_profile'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                {{ link_to_route('users.chart', trans('app.show_family_chart'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
             </div>
         </div>
     </div>

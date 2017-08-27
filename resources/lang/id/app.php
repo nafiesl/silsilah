@@ -2,6 +2,8 @@
 
 return [
     // Labels
+    'my_profile'        => 'Profil Saya',
+    'search'            => 'Cari',
     'unknown'           => 'Tidak diketahui',
     'male'              => 'Laki-laki',
     'female'            => 'Perempuan',
@@ -9,6 +11,9 @@ return [
     'family_tree'       => 'Pohon Keluarga',
     'child_count'       => 'Jumlah Anak',
     'grand_child_count' => 'Jumlah Cucu',
+    'user_found'        => 'User ditemukan : <strong>:total Orang</strong> untuk kata kunci : <strong>:keyword</strong>',
+    'search_your_family' => 'Cari Keluarga Anda',
+    'search_your_family_placeholder' => 'Masukkan nama/panggilan... klik Cari',
 
     // Actions
     'edit'              => 'Edit',
