@@ -1,17 +1,17 @@
 <div class="panel panel-default">
-    <div class="panel-heading"><h3 class="panel-title">Keluarga</h3></div>
+    <div class="panel-heading"><h3 class="panel-title">{{ trans('user.family') }}</h3></div>
 
     <table class="table">
         <tbody>
             <tr>
-                <th class="col-sm-4">Ayah</th>
+                <th class="col-sm-4">{{ trans('user.father') }}</th>
                 <td class="col-sm-8">
                     @can ('edit', $currentUser)
                         @if (request('action') == 'set_father')
                         {{ Form::open(['route' => ['family-actions.set-father', $user->id]]) }}
-                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'value' => $user->father_id, 'placeholder' => 'Pilih dari Laki-laki Terdaftar']) !!}
+                        {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'value' => $user->father_id, 'placeholder' => trans('app.select_from_existing_males')]) !!}
                         <div class="input-group">
-                            {{ Form::text('set_father', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
+                            {{ Form::text('set_father', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
                                 {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
@@ -30,14 +30,14 @@
                 </td>
             </tr>
             <tr>
-                <th>Ibu</th>
+                <th>{{ trans('user.mother') }}</th>
                 <td>
                     @can ('edit', $currentUser)
                         @if (request('action') == 'set_mother')
                         {{ Form::open(['route' => ['family-actions.set-mother', $user->id]]) }}
-                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
+                        {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => trans('app.select_from_existing_females')]) !!}
                         <div class="input-group">
-                            {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
+                            {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_mother_button']) }}
                                 {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
@@ -56,7 +56,7 @@
                 </td>
             </tr>
             <tr>
-                <th class="col-sm-4">Orang Tua</th>
+                <th class="col-sm-4">{{ trans('user.parent') }}</th>
                 <td class="col-sm-8">
 
                     @can ('edit', $currentUser)
@@ -76,7 +76,7 @@
                     @can('edit', $currentUser)
                     @if (request('action') == 'set_parent')
                     {{ Form::open(['route' => ['family-actions.set-parent', $user->id]]) }}
-                    {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'value' => $user->parent_id, 'placeholder' => 'Pilih Pasangan Pernikahan']) !!}
+                    {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'value' => $user->parent_id, 'placeholder' => trans('app.select_from_existing_couples')]) !!}
                     {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_parent_button']) }}
                     {{ Form::close() }}
                     @endif
@@ -85,7 +85,7 @@
             </tr>
             @if ($user->gender_id == 1)
             <tr>
-                <th>Isteri</th>
+                <th>{{ trans('user.wife') }}</th>
                 <td>
                     @can ('edit', $currentUser)
                     <div class="pull-right">
@@ -108,9 +108,9 @@
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-wife', $user->id]]) }}
-                        {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false, 'placeholder' => 'Pilih dari Wanita Terdaftar']) !!}
+                        {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_females')]) !!}
                         <div class="input-group">
-                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
+                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_wife_button']) }}
                             </span>
@@ -123,7 +123,7 @@
             </tr>
             @else
             <tr>
-                <th>Suami</th>
+                <th>{{ trans('user.husband') }}</th>
                 <td>
                     @can ('edit', $currentUser)
                     <div class="pull-right">
@@ -145,9 +145,9 @@
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-husband', $user->id]]) }}
-                        {!! FormField::select('set_husband_id', $malePersonList, ['label' => false, 'placeholder' => 'Pilih dari Laki-Laki Terdaftar']) !!}
+                        {!! FormField::select('set_husband_id', $malePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_males')]) !!}
                         <div class="input-group">
-                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => 'Input Nama Baru...']) }}
+                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_husband_button']) }}
                             </span>

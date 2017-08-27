@@ -25,6 +25,7 @@ return [
     'add_wife'    => 'Add Wife',
     'add_husband' => 'Add Husband',
     'add_child'   => 'Add Child',
+    'add_child_from_existing_couples' => 'Parent (select spouse of :name)',
 
     // Attributes
     'name'     => 'Name',

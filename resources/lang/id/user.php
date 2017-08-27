@@ -25,6 +25,7 @@ return [
     'add_wife'    => 'Tambah Isteri',
     'add_husband' => 'Tambah Suami',
     'add_child'   => 'Tambah Anak',
+    'add_child_from_existing_couples' => 'Dari Pernikahan (pilih pasangan :name)',
 
     // Attributes
     'name'     => 'Nama',
