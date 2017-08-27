@@ -5,7 +5,7 @@
 <div class="container-fluid">
 <h1 class="page-header">
     @include('users.partials.action-buttons')
-    {{ $user->name }} <small>Pohon Keluarga</small>
+    {{ $user->name }} <small>{{ trans('app.family_tree') }}</small>
 </h1>
 <?php
 $childsTotal = 0;
@@ -74,11 +74,11 @@ $ggccTotal = 0;
 <div class="row">
     <div class="col-md-1">&nbsp;</div>
     @if ($childsTotal)
-    <div class="col-md-1 text-right">Jumlah Anak</div>
+    <div class="col-md-1 text-right">{{ trans('app.child_count') }}</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $childsTotal }}</strong></div>
     @endif
     @if ($grandChildsTotal)
-    <div class="col-md-1 text-right">Jumlah Cucu</div>
+    <div class="col-md-1 text-right">{{ trans('app.grand_child_count') }}</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $grandChildsTotal }}</strong></div>
     @endif
     @if ($ggTotal)

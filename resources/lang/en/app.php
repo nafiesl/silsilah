@@ -5,6 +5,7 @@ return [
     'unknown'           => 'Unknown',
     'male'              => 'Male',
     'female'            => 'Female',
+    'family_chart'      => 'Family Chart',
     'family_tree'       => 'Family Tree',
     'child_count'       => 'Child Count',
     'grand_child_count' => 'Grand Child Count',

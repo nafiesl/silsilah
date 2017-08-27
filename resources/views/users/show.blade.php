@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="page-header">
         @include('users.partials.action-buttons', ['user' => $currentUser])
-        {{ $currentUser->name }} <small>Profil</small>
+        {{ $currentUser->name }} <small>{{ trans('app.profile') }}</small>
     </h1>
     <div class="row">
         <div class="col-md-6">

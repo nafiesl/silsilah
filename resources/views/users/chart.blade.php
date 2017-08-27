@@ -5,14 +5,14 @@
 <div class="container-fluid">
 <h1 class="page-header">
     @include('users.partials.action-buttons')
-    {{ $user->name }} <small>Bagan Keluarga</small>
+    {{ $user->name }} <small>{{ trans('app.family_chart') }}</small>
 </h1>
 
 <div class="panel panel-default table-responsive">
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th style="width: 9%">Kakek & Nenek</th>
+                <th style="width: 9%">{{ trans('user.grand_father') }} & {{ trans('user.grand_mother') }}</th>
                 <td class="text-center">
                     {{ $fatherGrandpa ? $fatherGrandpa->profileLink('chart') : '?' }}
                 </td>
@@ -27,7 +27,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Ayah & Ibu</th>
+                <th>{{ trans('user.father') }} & {{ trans('user.mother') }}</th>
                 <td class="text-center" colspan="2">
                     {{ $father ? $father->profileLink('chart') : '?' }}
                 </td>
@@ -42,7 +42,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Anak-Anak & Cucu-Cucu</th>
+                <th>{{ trans('user.childs') }} & {{ trans('user.grand_childs') }}</th>
                 <td colspan="4">
                     <?php $no = 0; ?>
                     @foreach($childs->chunk(4) as $chunkedChild)
@@ -69,7 +69,7 @@
 </div>
 
 <h4 class="page-header">
-    Saudara, Keponakan, dan Cucu
+    {{ trans('user.siblings') }}, {{ trans('user.nieces') }}, & {{ trans('user.grand_childs') }}
 </h4>
 @foreach ($siblings->chunk(3) as $chunkedSiblings)
 <div class="row">

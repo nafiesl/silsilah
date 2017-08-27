@@ -5,6 +5,7 @@ return [
     'unknown'           => 'Tidak diketahui',
     'male'              => 'Laki-laki',
     'female'            => 'Perempuan',
+    'family_chart'      => 'Bagan Keluarga',
     'family_tree'       => 'Pohon Keluarga',
     'child_count'       => 'Jumlah Anak',
     'grand_child_count' => 'Jumlah Cucu',
