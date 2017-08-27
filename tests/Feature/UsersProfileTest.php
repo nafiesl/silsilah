@@ -25,7 +25,7 @@ class UsersProfileTest extends TestCase
         $this->visit(route('users.edit', $user->id));
         $this->seePageIs(route('users.edit', $user->id));
 
-        $this->submitForm('Update', [
+        $this->submitForm(trans('app.update'), [
             'nickname'  => 'Nama Panggilan',
             'name'      => 'Nama User',
             'gender_id' => 1,

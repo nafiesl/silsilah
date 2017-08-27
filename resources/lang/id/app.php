@@ -19,6 +19,7 @@ return [
 
     // Actions
     'edit'              => 'Edit',
+    'update'            => 'Update',
     'show_profile'      => 'Lihat Profil',
     'show_family_chart' => 'Lihat Bagan Keluarga',
     'show_family_tree'  => 'Lihat Pohon Keluarga',

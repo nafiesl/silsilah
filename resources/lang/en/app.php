@@ -19,6 +19,7 @@ return [
 
     // Actions
     'edit'              => 'Edit',
+    'update'            => 'Update',
     'show_profile'      => 'Show Profile',
     'show_family_chart' => 'Show Family Chart',
     'show_family_tree'  => 'Show Family Tree',
