@@ -18,6 +18,7 @@ return [
     'nieces'       => 'Nieces',
 
     // Actions
+    'edit'        => 'Edit Profile',
     'set_father'  => 'Set Father',
     'set_mother'  => 'Set Mother',
     'set_parent'  => 'Set Parent',

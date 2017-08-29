@@ -16,6 +16,12 @@ return [
     'user_found'        => 'User ditemukan : <strong>:total Orang</strong> untuk kata kunci : <strong>:keyword</strong>',
     'search_your_family' => 'Cari Keluarga Anda',
     'search_your_family_placeholder' => 'Masukkan nama/panggilan... klik Cari',
+    'example'           => 'Misal:',
+    'address'           => 'Alamat',
+    'contact'           => 'Kontak',
+    'city'              => 'Kota',
+    'phone'             => 'Telp.',
+    'login_account'     => 'Akun Login',
 
     // Actions
     'edit'              => 'Edit',

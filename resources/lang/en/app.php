@@ -16,6 +16,12 @@ return [
     'user_found'        => '<strong>:total</strong> found with keyword : <strong>:keyword</strong>',
     'search_your_family' => 'Search Your Family',
     'search_your_family_placeholder' => 'Enter name/nickname... click Search',
+    'example'           => 'Eg.',
+    'address'           => 'Address',
+    'contact'           => 'Contact',
+    'city'              => 'City',
+    'phone'             => 'Phone',
+    'login_account'     => 'Login Account',
 
     // Actions
     'edit'              => 'Edit',

@@ -56,7 +56,7 @@
                             <label for="gender_id" class="col-md-4 control-label">Gender</label>
 
                             <div class="col-md-6">
-                                {!! FormField::radios('gender_id', [1 => 'Laki-laki', 2 => 'Perempuan'], ['label' => false]) !!}
+                                {!! FormField::radios('gender_id', [1 => trans('app.male'), 2 => trans('app.female')], ['label' => false]) !!}
                             </div>
                         </div>
 

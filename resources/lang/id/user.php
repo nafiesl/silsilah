@@ -18,6 +18,7 @@ return [
     'nieces'       => 'Keponakan',
 
     // Actions
+    'edit'        => 'Edit Profil',
     'set_father'  => 'Set Ayah',
     'set_mother'  => 'Set Ibu',
     'set_parent'  => 'Set Orang Tua',
