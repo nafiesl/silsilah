@@ -14,7 +14,7 @@ return [
     'child_count'       => 'Child Count',
     'grand_child_count' => 'Grand Child Count',
     'user_found'        => '<strong>:total</strong> found with keyword : <strong>:keyword</strong>',
-    'search_your_family' => 'Search Your Family',
+    'search_your_family' => 'Find Your Family',
     'search_your_family_placeholder' => 'Enter name/nickname... click Search',
     'example'           => 'Eg.',
     'address'           => 'Address',
