@@ -33,4 +33,7 @@ return [
     'select_from_existing_males'   => 'Pilih dari Pria terdaftar',
     'select_from_existing_females' => 'Pilih dari Wanita terdaftar',
     'select_from_existing_couples' => 'Pilih Pasangan Pernikahan',
+    'restore'           => 'Restore',
+    'download'          => 'Download',
+    'delete'            => 'Hapus',
 ];

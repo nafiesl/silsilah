@@ -3,7 +3,7 @@
 @section('title',trans('backup.index_title'))
 
 @section('content')
-<h1 class="page-header">{{ trans('backup.index_title') }}</h1>
+<h3 class="page-header">{{ trans('backup.index_title') }}</h3>
 <div class="row">
     <div class="col-md-8">
         <div class="panel panel-default table-responsive">
@@ -27,15 +27,15 @@
                             <a href="{{ route('backups.index', ['action' => 'restore', 'file_name' => $backup->getFilename()]) }}"
                                 id="restore_{{ str_replace('.gz', '', $backup->getFilename()) }}"
                                 class="btn btn-warning btn-xs"
-                                title="{{ trans('backup.restore') }}">Restore</i></a>
+                                title="{{ trans('backup.restore') }}">{{ trans('app.restore') }}</i></a>
                             <a href="{{ route('backups.download', [$backup->getFilename()]) }}"
                                 id="download_{{ str_replace('.gz', '', $backup->getFilename()) }}"
                                 class="btn btn-info btn-xs"
-                                title="{{ trans('backup.download') }}">Download</a>
+                                title="{{ trans('backup.download') }}">{{ trans('app.download') }}</a>
                             <a href="{{ route('backups.index', ['action' => 'delete', 'file_name' => $backup->getFilename()]) }}"
                                 id="del_{{ str_replace('.gz', '', $backup->getFilename()) }}"
                                 class="btn btn-danger btn-xs"
-                                title="{{ trans('backup.delete') }}">Delete</a>
+                                title="{{ trans('backup.delete') }}">{{ trans('app.delete') }}</a>
                         </td>
                     </tr>
                     @empty

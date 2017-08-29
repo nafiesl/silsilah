@@ -24,12 +24,6 @@
         @include('layouts.partials.nav')
 
         <div class="container">
-        {{-- {{ dump(get_class_methods(url())) }} --}}
-        {{-- {{ url()->current().'?lang=en' }} --}}
-        {{-- {{ dump(get_class_methods(Route::current())) }} --}}
-        {{-- {{ dump(Route::current()->parameters()) }} --}}
-        {{-- {{ dump(url(Route::getName(), ['query' => 'recent', 'order' => 'desc'])) }} --}}
-        {{-- {{ dump(Route::current()->setParameter('lang', 'id')) }} --}}
         @yield('content')
         </div>
     </div>

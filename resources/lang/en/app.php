@@ -33,4 +33,7 @@ return [
     'select_from_existing_males'   => 'Select from Existing Males',
     'select_from_existing_females' => 'Select from Existing Females',
     'select_from_existing_couples' => 'Select from Existing Couples',
+    'restore'           => 'Restore',
+    'download'          => 'Download',
+    'delete'            => 'Delete',
 ];
