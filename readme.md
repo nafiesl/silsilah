@@ -23,9 +23,9 @@ Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
 4. Satu orang memiliki 0 s/d beberapa anak
 5. Satu orang bisa memiliki pasangan (Istri/Suami)
 6. Satu pasangan bisa memiliki 0 s/d bberapa anak
-7. Satu orang laki-laki bisa memiliki maksimal 4 pasangan yang tidak cerai
-8. Satu orang perempuan bisa memiliki maksimal 1 pasangan yang tidak cerai
-9. Satu orang perempuan yang suaminya meninggal otomatis set tanggal cerai (pada data pasangan)
+7. Satu orang laki-laki bisa memiliki maksimal 4 pasangan yang tidak cerai (TODO)
+8. Satu orang perempuan bisa memiliki maksimal 1 pasangan yang tidak cerai (TODO)
+9. Satu orang perempuan yang suaminya meninggal otomatis set tanggal cerai (pada data pasangan) (TODO)
 
 ### Input ke sistem
 1. Input Nama dan Jenis Kelamin
@@ -84,6 +84,12 @@ Ingin mencoba automated testingnya? Silakan ketik perintah pada terminal: `vendo
 
 #### Edit Profil
 ![Edit Profil](public/images/06-edit-profil.jpg "Edit Profil")
+
+#### Automated Testing
+```bash
+$ vendor/bin/phpunit
+```
+![Automated Testing](public/images/07-automated-testing.jpg "Automated Testing")
 
 ## License
 The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).
