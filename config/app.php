@@ -166,7 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
-        BackupManager\Laravel\Laravel5ServiceProvider::class,
+        BackupManager\Laravel\Laravel55ServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         Luthfi\FormField\FormFieldServiceProvider::class,
 
