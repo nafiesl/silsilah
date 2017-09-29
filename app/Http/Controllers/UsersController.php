@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Search user by keyword.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,28 +31,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the specified User.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
@@ -112,7 +91,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified User.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
@@ -125,7 +104,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified User in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\User  $user
@@ -173,7 +152,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified User from storage.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response

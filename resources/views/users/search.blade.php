@@ -21,7 +21,7 @@
 
 @if (request('q'))
 <br>
-{!! str_replace('/?', '?', $users->appends(Request::except('page'))->render()) !!}
+{{ $users->appends(Request::except('page'))->render() }}
 @foreach ($users->chunk(4) as $chunkedUser)
 <div class="row">
     @foreach ($chunkedUser as $user)
@@ -31,7 +31,7 @@
             <div class="panel-body">
                 <div>{{ trans('user.nickname') }} : {{ $user->nickname }}</div>
                 <hr style="margin: 5px 0;">
-                <div>{{ trans('user.fahter') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
+                <div>{{ trans('user.father') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
                 <div>{{ trans('user.mother') }} : {{ $user->mother_id ? $user->mother->name : '' }}</div>
             </div>
             <div class="panel-footer">
@@ -44,6 +44,6 @@
 </div>
 @endforeach
 
-{!! str_replace('/?', '?', $users->appends(Request::except('page'))->render()) !!}
+{{ $users->appends(Request::except('page'))->render() }}
 @endif
 @endsection
