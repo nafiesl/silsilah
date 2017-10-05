@@ -1,5 +1,6 @@
 <?php
 
+use App\Couple;
 use App\User;
 
 /*
@@ -30,4 +31,16 @@ $factory->state(User::class, 'male', function (Faker\Generator $faker) {
 
 $factory->state(User::class, 'female', function (Faker\Generator $faker) {
     return ['gender_id' => 2];
+});
+
+$factory->define(Couple::class, function (Faker\Generator $faker) {
+    $name = $faker->name;
+    return [
+        'husband_id' => function () {
+            return factory(User::class)->states('male')->create()->id;
+        },
+        'wife_id' => function () {
+            return factory(User::class)->states('female')->create()->id;
+        },
+    ];
 });

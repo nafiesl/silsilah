@@ -149,6 +149,14 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
     }
 
+    public function marriages()
+    {
+        if ($this->gender_id == 1)
+            return $this->hasMany(Couple::class, 'husband_id');
+
+        return $this->hasMany(Couple::class, 'wife_id');
+    }
+
     public function siblings()
     {
         if (is_null($this->father_id) && is_null($this->mother_id) && is_null($this->parent_id))

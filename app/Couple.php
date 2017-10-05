@@ -15,4 +15,17 @@ class Couple extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function childs()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function addChild(User $user)
+    {
+        $user->parent_id = $this->id;
+        $user->father_id = $this->husband_id;
+        $user->mother_id = $this->wife_id;
+        $user->save();
+    }
 }

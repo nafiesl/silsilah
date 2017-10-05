@@ -31,6 +31,8 @@ Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
 
+Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
+
 /**
  * Backup Restore Database Routes
  */

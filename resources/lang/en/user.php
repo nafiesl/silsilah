@@ -16,6 +16,7 @@ return [
     'grand_mother' => 'Grand Mother',
     'grand_father' => 'Grand Father',
     'nieces'       => 'Nieces',
+    'marriages'    => 'Marriages',
 
     // Actions
     'edit'        => 'Edit Profile',
