@@ -39,7 +39,7 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $usersMariageList = [];
-        foreach ($user->marriages as $spouse) {
+        foreach ($user->couples as $spouse) {
             $usersMariageList[$spouse->pivot->id] = $user->name.' & '.$spouse->name;
         }
 

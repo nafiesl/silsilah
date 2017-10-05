@@ -27,7 +27,7 @@ class HomeController extends Controller
         $user = auth()->user();
 
         $usersMariageList = [];
-        foreach ($user->marriages as $spouse) {
+        foreach ($user->couples as $spouse) {
             $usersMariageList[$spouse->pivot->id] = $user->name.' & '.$spouse->name;
         }
 

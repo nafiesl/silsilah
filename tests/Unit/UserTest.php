@@ -18,7 +18,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function user_can_have_marriages()
+    public function user_can_have_couples()
     {
         $husband = factory(User::class)->states('male')->create();
         $wife = factory(User::class)->states('female')->create();
@@ -27,7 +27,7 @@ class UserTest extends TestCase
         $husband = $husband->fresh();
         $this->assertCount(1, $husband->wifes);
         $this->assertCount(1, $wife->husbands);
-        $this->assertCount(1, $husband->marriages);
+        $this->assertCount(1, $husband->couples);
     }
 
     /** @test */

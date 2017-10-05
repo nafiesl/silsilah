@@ -138,10 +138,10 @@ class User extends Authenticatable
 
     public function hasBeenMarriedTo(User $user)
     {
-        return $this->marriages->contains($user);
+        return $this->couples->contains($user);
     }
 
-    public function marriages()
+    public function couples()
     {
         if ($this->gender_id == 1)
             return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
