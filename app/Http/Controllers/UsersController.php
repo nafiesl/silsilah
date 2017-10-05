@@ -52,7 +52,7 @@ class UsersController extends Controller
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
         return view('users.show', [
-            'currentUser' => $user,
+            'user' => $user,
             'usersMariageList' => $usersMariageList,
             'malePersonList' => $malePersonList,
             'femalePersonList' => $femalePersonList,
@@ -85,6 +85,11 @@ class UsersController extends Controller
         return view('users.chart', compact('user', 'childs', 'father', 'mother', 'fatherGrandpa', 'fatherGrandma', 'motherGrandpa', 'motherGrandma', 'siblings', 'colspan'));
     }
 
+    /**
+     * Show user family tree
+     * @param  User   $user
+     * @return \Illuminate\Http\Response
+     */
     public function tree(User $user)
     {
         return view('users.tree', compact('user'));

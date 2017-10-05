@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        @can ('edit', $currentUser)
+        @can ('edit', $user)
         <div class="pull-right" style="margin: -3px -6px">
             {{ link_to_route('users.show', trans('user.add_child'), [$user->id, 'action' => 'add_child'], ['class' => 'btn btn-success btn-xs']) }}
         </div>
@@ -14,7 +14,7 @@
                 {{ $child->profileLink() }} ({{ $child->gender }})
             </li>
         @endforeach
-        @can('edit', $currentUser)
+        @can('edit', $user)
         @if (request('action') == 'add_child')
         <li class="list-group-item">
             {{ Form::open(['route' => ['family-actions.add-child', $user->id]]) }}

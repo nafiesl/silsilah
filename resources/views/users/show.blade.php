@@ -1,18 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.user-profile')
 
-@section('content')
-    <h1 class="page-header">
-        @include('users.partials.action-buttons', ['user' => $currentUser])
-        {{ $currentUser->name }} <small>{{ trans('user.profile') }}</small>
-    </h1>
+@section('subtitle', trans('user.profile'))
+
+@section('user-content')
     <div class="row">
         <div class="col-md-6">
-            @include('users.partials.profile', ['user' => $currentUser])
-            @include('users.partials.siblings', ['user' => $currentUser])
+            @include('users.partials.profile')
+            @include('users.partials.siblings')
         </div>
         <div class="col-md-6">
-            @include('users.partials.parent-spouse', ['user' => $currentUser])
-            @include('users.partials.childs', ['user' => $currentUser])
+            @include('users.partials.parent-spouse')
+            @include('users.partials.childs')
         </div>
     </div>
 @endsection

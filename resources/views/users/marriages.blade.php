@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.user-profile')
 
-@section('content')
-<h1 class="page-header">
-    {{ $user->name }} <small>{{ trans('user.marriages') }}</small>
-</h1>
+@section('subtitle', trans('user.marriages'))
+
+@section('user-content')
 
 <div class="row">
     @foreach ($marriages as $marriage)

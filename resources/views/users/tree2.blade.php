@@ -1,14 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.user-profile-wide')
 
-@section('content')
-</div>
-<div class="container-fluid">
-<h1 class="page-header">
-    <div class="pull-right">
-        {{ link_to_route('users.show', 'Lihat Profil '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
-    </div>
-    {{ $user->name }} <small>Pohon Keluarga</small>
-</h1>
+@section('subtitle', trans('app.family_tree'))
+
+@section('user-content')
 
 <div class="tree">
     <ul>

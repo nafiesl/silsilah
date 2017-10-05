@@ -6,7 +6,7 @@
             <tr>
                 <th class="col-sm-4">{{ trans('user.father') }}</th>
                 <td class="col-sm-8">
-                    @can ('edit', $currentUser)
+                    @can ('edit', $user)
                         @if (request('action') == 'set_father')
                         {{ Form::open(['route' => ['family-actions.set-father', $user->id]]) }}
                         {!! FormField::select('set_father_id', $malePersonList, ['label' => false, 'value' => $user->father_id, 'placeholder' => trans('app.select_from_existing_males')]) !!}
@@ -32,7 +32,7 @@
             <tr>
                 <th>{{ trans('user.mother') }}</th>
                 <td>
-                    @can ('edit', $currentUser)
+                    @can ('edit', $user)
                         @if (request('action') == 'set_mother')
                         {{ Form::open(['route' => ['family-actions.set-mother', $user->id]]) }}
                         {!! FormField::select('set_mother_id', $femalePersonList, ['label' => false, 'value' => $user->mother_id, 'placeholder' => trans('app.select_from_existing_females')]) !!}
@@ -59,7 +59,7 @@
                 <th class="col-sm-4">{{ trans('user.parent') }}</th>
                 <td class="col-sm-8">
 
-                    @can ('edit', $currentUser)
+                    @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'set_parent')
                             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
@@ -73,7 +73,7 @@
                     {{ $user->parent->husband->name }} & {{ $user->parent->wife->name }}
                     @endif
 
-                    @can('edit', $currentUser)
+                    @can('edit', $user)
                     @if (request('action') == 'set_parent')
                     {{ Form::open(['route' => ['family-actions.set-parent', $user->id]]) }}
                     {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'value' => $user->parent_id, 'placeholder' => trans('app.select_from_existing_couples')]) !!}
@@ -87,7 +87,7 @@
             <tr>
                 <th>{{ trans('user.wife') }}</th>
                 <td>
-                    @can ('edit', $currentUser)
+                    @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'add_spouse')
                             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
@@ -104,7 +104,7 @@
                             @endforeach
                         </ul>
                     @endif
-                    @can('edit', $currentUser)
+                    @can('edit', $user)
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-wife', $user->id]]) }}
@@ -125,7 +125,7 @@
             <tr>
                 <th>{{ trans('user.husband') }}</th>
                 <td>
-                    @can ('edit', $currentUser)
+                    @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'add_spouse')
                             {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
@@ -141,7 +141,7 @@
                             @endforeach
                         </ul>
                     @endif
-                    @can('edit', $currentUser)
+                    @can('edit', $user)
                     @if (request('action') == 'add_spouse')
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-husband', $user->id]]) }}

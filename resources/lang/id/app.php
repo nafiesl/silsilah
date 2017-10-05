@@ -29,6 +29,7 @@ return [
     'show_profile'      => 'Lihat Profil',
     'show_family_chart' => 'Lihat Bagan Keluarga',
     'show_family_tree'  => 'Lihat Pohon Keluarga',
+    'show_marriages'    => 'Lihat Pernikahan',
     'enter_new_name'    => 'Input Nama Baru...',
     'select_from_existing_males'   => 'Pilih dari Pria terdaftar',
     'select_from_existing_females' => 'Pilih dari Wanita terdaftar',

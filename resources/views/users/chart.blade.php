@@ -1,13 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.user-profile-wide')
 
-@section('content')
-</div>
-<div class="container-fluid">
-<h1 class="page-header">
-    @include('users.partials.action-buttons')
-    {{ $user->name }} <small>{{ trans('app.family_chart') }}</small>
-</h1>
+@section('subtitle', trans('app.family_chart'))
 
+@section('user-content')
 <div class="panel panel-default table-responsive">
     <table class="table table-bordered table-striped">
         <tbody>
