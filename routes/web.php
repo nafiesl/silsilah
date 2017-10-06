@@ -34,6 +34,11 @@ Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
 Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
 
 /**
+ * Couple/Marriages Routes
+ */
+Route::get('couples/{couple}', ['as'=>'couples.show', 'uses'=>'CouplesController@show']);
+
+/**
  * Backup Restore Database Routes
  */
 Route::post('backups/upload', ['as'=>'backups.upload', 'uses'=>'BackupsController@upload']);

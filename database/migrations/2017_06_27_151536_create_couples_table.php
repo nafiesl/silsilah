@@ -15,9 +15,9 @@ class CreateCouplesTable extends Migration
     {
         Schema::create('couples', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('husband_id')->index();
-            $table->unsignedInteger('wife_id')->index();
-            $table->date('marriege_date')->nullable();
+            $table->unsignedInteger('husband_id');
+            $table->unsignedInteger('wife_id');
+            $table->date('marriage_date')->nullable();
             $table->date('divorce_date')->nullable();
             $table->timestamps();
 

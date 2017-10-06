@@ -32,5 +32,20 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @yield('ext_js')
     @yield('script')
+    <script>
+        var header = $('h2.page-header').contents();
+        str = '';
+        mainText = header.filter(function () {
+                // return type of text
+                return this.nodeType === 3;
+            })[0];
+        str += mainText.data.trim();
+
+        if (mainText.nextSibling) {
+            // next siblings should be a small tag text
+            str += " - "+mainText.nextSibling.innerText;
+        }
+        $('title').prepend(str+" - ");
+    </script>
 </body>
 </html>

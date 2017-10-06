@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<h3 class="page-header">
+<h2 class="page-header">
     {{ trans('app.search_your_family') }}
     @if (request('q'))
     <small class="pull-right">{!! trans('app.user_found', ['total' => $users->total(), 'keyword' => request('q')]) !!}</small>
     @endif
-</h3>
+</h2>
 
 
 {{ Form::open(['method' => 'get','class' => '']) }}
