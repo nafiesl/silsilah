@@ -9,11 +9,13 @@
     </div>
 
     <ul class="list-group">
-        @foreach($user->childs as $child)
+        @forelse($user->childs as $child)
             <li class="list-group-item">
                 {{ $child->profileLink() }} ({{ $child->gender }})
             </li>
-        @endforeach
+        @empty
+            <li class="list-group-item"><i>{{ trans('app.childs_were_not_recorded') }}</i></li>
+        @endforelse
         @can('edit', $user)
         @if (request('action') == 'add_child')
         <li class="list-group-item">

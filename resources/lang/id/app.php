@@ -22,6 +22,7 @@ return [
     'city'              => 'Kota',
     'phone'             => 'Telp.',
     'login_account'     => 'Akun Login',
+    'childs_were_not_recorded' => 'Anak-anak belum tercatat.',
 
     // Actions
     'edit'              => 'Edit',
