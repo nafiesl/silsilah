@@ -4,7 +4,8 @@
 
 [![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
 
->**Development in progress**
+> **Development in progress**  
+> In development progress, any changes of table structure **will be updated** directly to corresponding **migration file**.
 
 ## About
 Geanology (Silsilah) application to record our family members.

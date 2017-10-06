@@ -4,7 +4,8 @@
 
 [![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
 
->**Development in progress**
+> **Development in progress**  
+> Dalam proses development, perubahan struktur tabel akan **diubah langsung pada file migration** yang sesuai.
 
 ## Tentang
 Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
@@ -14,6 +15,7 @@ Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
 2. Melihat data ahli waris
 
 ## Fitur
+Aplikasi ini menggunakan Bahasa Indonesia dan Bahasa Inggris, diatur pada `config.locale`.
 
 ### Konsep
 1. Satu orang memiliki satu ayah (belum sebagai tentu orang tua)
