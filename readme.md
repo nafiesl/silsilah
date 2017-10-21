@@ -6,6 +6,8 @@
 
 > **Development in progress**  
 > Dalam proses development, perubahan struktur tabel akan **diubah langsung pada file migration** yang sesuai.
+>
+> [Read English README](readme.en.md)
 
 ## Tentang
 Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
