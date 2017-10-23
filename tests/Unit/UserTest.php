@@ -72,4 +72,11 @@ class UserTest extends TestCase
 
         $this->assertEquals($mother->profileLink(), $user->motherLink());
     }
+
+    /** @test */
+    public function a_user_have_a_manager()
+    {
+        $user = factory(User::class)->create();
+        $this->assertTrue($user->manager instanceof User);
+    }
 }

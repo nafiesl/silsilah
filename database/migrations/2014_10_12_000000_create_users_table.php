@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
-            $table->unsignedInteger('manager_id')->nullable();
+            $table->unsignedInteger('manager_id');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -42,5 +42,8 @@ $factory->define(Couple::class, function (Faker\Generator $faker) {
         'wife_id' => function () {
             return factory(User::class)->states('female')->create()->id;
         },
+        'manager_id' => function () {
+            return factory(User::class)->create()->id;
+        },
     ];
 });

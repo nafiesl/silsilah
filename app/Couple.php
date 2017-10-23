@@ -28,4 +28,9 @@ class Couple extends Model
         $user->mother_id = $this->wife_id;
         $user->save();
     }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
