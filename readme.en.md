@@ -1,6 +1,6 @@
 ![Laravel](https://laravel.com/assets/img/components/logo-laravel.svg)
 
-<h1 align="center">Geanology Application</h1>
+<h1 align="center">Genealogy Application</h1>
 
 [![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
 
@@ -8,7 +8,7 @@
 > In development progress, any changes of table structure **will be updated** directly to corresponding **migration file**.
 
 ## About
-Geanology (Silsilah) application to record our family members.
+Genealogy (Silsilah) application to record our family members.
 
 ## Features
 This application uses Bahasa Indonesia and English based on `config.locale`.
