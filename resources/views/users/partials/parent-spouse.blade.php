@@ -14,14 +14,14 @@
                             {{ Form::text('set_father', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_father_button']) }}
-                                {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
+                                {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-sm']) }}
                             </span>
                         </div>
                         {{ Form::close() }}
                         @else
                             {{ $user->fatherLink() }}
                             <div class="pull-right">
-                                {{ link_to_route('users.show', 'Set Ayah', [$user->id, 'action' => 'set_father'], ['class' => 'btn btn-link btn-xs']) }}
+                                {{ link_to_route('users.show', trans('user.set_father'), [$user->id, 'action' => 'set_father'], ['class' => 'btn btn-link btn-xs']) }}
                             </div>
                         @endif
                     @else
@@ -40,14 +40,14 @@
                             {{ Form::text('set_mother', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
                             <span class="input-group-btn">
                                 {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_mother_button']) }}
-                                {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
+                                {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-sm']) }}
                             </span>
                         </div>
                         {{ Form::close() }}
                         @else
                             {{ $user->motherLink() }}
                             <div class="pull-right">
-                                {{ link_to_route('users.show', 'Set Ibu', [$user->id, 'action' => 'set_mother'], ['class' => 'btn btn-link btn-xs']) }}
+                                {{ link_to_route('users.show', trans('user.set_mother'), [$user->id, 'action' => 'set_mother'], ['class' => 'btn btn-link btn-xs']) }}
                             </div>
                         @endif
                     @else
@@ -62,9 +62,9 @@
                     @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'set_parent')
-                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                            {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', 'Set Orang Tua', [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-link btn-xs']) }}
+                            {{ link_to_route('users.show', trans('user.set_parent'), [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-link btn-xs']) }}
                         @endif
                     </div>
                     @endcan
@@ -90,9 +90,9 @@
                     @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'add_spouse')
-                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                            {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', 'Tambah Isteri', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-link btn-xs']) }}
+                            {{ link_to_route('users.show', trans('user.add_wife'), [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-link btn-xs']) }}
                         @endif
                     </div>
                     @endcan
@@ -128,9 +128,9 @@
                     @can ('edit', $user)
                     <div class="pull-right">
                         @if (request('action') == 'add_spouse')
-                            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                            {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', 'Tambah Suami', [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
+                            {{ link_to_route('users.show', trans('user.add_husband'), [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
                         @endif
                     </div>
                     @endcan

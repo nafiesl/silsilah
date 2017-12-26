@@ -30,7 +30,7 @@
             </div>
             {!! FormField::select('add_child_parent_id', $usersMariageList, ['label' => trans('user.add_child_from_existing_couples', ['name' => $user->name]), 'placeholder' => trans('app.unknown')]) !!}
             {{ Form::submit(trans('user.add_child'), ['class' => 'btn btn-success btn-sm']) }}
-            {{ link_to_route('users.show', 'Batal', [$user->id], ['class' => 'btn btn-default btn-sm']) }}
+            {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-sm']) }}
             {{ Form::close() }}
         </li>
         @endif

@@ -38,4 +38,5 @@ return [
     'restore'           => 'Restore',
     'download'          => 'Download',
     'delete'            => 'Hapus',
+    'cancel'            => 'Batal',
 ];
