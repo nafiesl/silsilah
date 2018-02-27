@@ -135,7 +135,7 @@
                         @if (request('action') == 'add_spouse')
                             {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
                         @else
-                            {{ link_to_route('users.show', trans('user.add_husband'), [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-success btn-xs']) }}
+                            {{ link_to_route('users.show', trans('user.add_husband'), [$user->id, 'action' => 'add_spouse'], ['class' => 'btn btn-link btn-xs']) }}
                         @endif
                     </div>
                     @endcan
@@ -151,12 +151,17 @@
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-husband', $user->id]]) }}
                         {!! FormField::select('set_husband_id', $malePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_males')]) !!}
-                        <div class="input-group">
-                            {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
-                            <span class="input-group-btn">
-                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_husband_button']) }}
-                            </span>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ Form::text('marriage_date', null, ['class' => 'form-control input-sm', 'placeholder' => trans('couple.marriage_date')]) }}
+                                </div>
+                            </div>
                         </div>
+                        {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_husband_button']) }}
                         {{ Form::close() }}
                     </div>
                     @endif
