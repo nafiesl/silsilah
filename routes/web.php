@@ -37,6 +37,8 @@ Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('use
  * Couple/Marriages Routes
  */
 Route::get('couples/{couple}', ['as'=>'couples.show', 'uses'=>'CouplesController@show']);
+Route::get('couples/{couple}/edit', ['as'=>'couples.edit', 'uses'=>'CouplesController@edit']);
+Route::patch('couples/{couple}', ['as'=>'couples.update', 'uses'=>'CouplesController@update']);
 
 /**
  * Backup Restore Database Routes

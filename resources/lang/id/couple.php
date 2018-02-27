@@ -7,6 +7,10 @@ return [
     'childs_count'       => 'Jumlah Anak',
     'grand_childs_count' => 'Jumlah Cucu',
 
+    // Actions
+    'edit'               => 'Edit Pernikahan',
+    'update'             => 'Update Pernikahan',
+
     // Attributes
     'husband'            => 'Kepala Keluarga',
     'wife'               => 'Isteri',
