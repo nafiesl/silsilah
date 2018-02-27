@@ -125,6 +125,7 @@ class ManageUserFamiliesTest extends TestCase
 
         $this->submitForm('set_wife_button', [
             'set_wife' => 'Nama Istri',
+            'marriage_date' => '2010-01-01',
         ]);
 
         $this->seeInDatabase('users', [
@@ -137,6 +138,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('couples', [
             'husband_id' => $user->id,
             'wife_id' => $wife->id,
+            'marriage_date' => '2010-01-01',
         ]);
     }
 
@@ -226,11 +228,13 @@ class ManageUserFamiliesTest extends TestCase
         $this->submitForm('set_wife_button', [
             'set_wife' => '',
             'set_wife_id' => $wife->id,
+            'marriage_date' => '2010-01-01',
         ]);
 
         $this->seeInDatabase('couples', [
             'husband_id' => $user->id,
             'wife_id' => $wife->id,
+            'marriage_date' => '2010-01-01',
         ]);
     }
 

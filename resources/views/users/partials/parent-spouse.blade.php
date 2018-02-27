@@ -109,12 +109,17 @@
                     <div>
                         {{ Form::open(['route' => ['family-actions.add-wife', $user->id]]) }}
                         {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_females')]) !!}
-                        <div class="input-group">
-                            {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
-                            <span class="input-group-btn">
-                                {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_wife_button']) }}
-                            </span>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
+                                </div>
+                                <div class="col-md-5">
+                                    {{ Form::text('marriage_date', null, ['class' => 'form-control input-sm', 'placeholder' => trans('couple.marriage_date')]) }}
+                                </div>
+                            </div>
                         </div>
+                        {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_wife_button']) }}
                         {{ Form::close() }}
                     </div>
                     @endif

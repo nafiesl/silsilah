@@ -111,10 +111,10 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
     }
 
-    public function addWife(User $wife)
+    public function addWife(User $wife, $marriageDate = null)
     {
         if ($this->gender_id == 1 && ! $this->hasBeenMarriedTo($wife)) {
-            $this->wifes()->save($wife);
+            $this->wifes()->save($wife, ['marriage_date' => $marriageDate]);
             return $wife;
         }
 
