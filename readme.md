@@ -56,8 +56,9 @@ This application uses Bahasa Indonesia and English based on `config.locale`.
 6. Create **database on MySQL**
 7. **Set database credentials** on `.env` file
 8. `php artisan migrate`
-9. `php artisan serve`
-10. Done (Register as new user to start using the application).
+9. `php artisan storage:link`
+10. `php artisan serve`
+11. Done (Register as new user to start using the application).
 
 ## Testing
 This application built with testing (TDD) using in-memory sqlite database.

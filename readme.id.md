@@ -61,8 +61,9 @@ Aplikasi ini menggunakan Bahasa Indonesia dan Bahasa Inggris, diatur pada `confi
 6. Buat **database pada mysql** untuk aplikasi ini
 7. **Setting database** pada file `.env`
 8. `php artisan migrate`
-9. `php artisan serve`
-10. Selesai (Register user baru untuk mulai mengisi silsilah).
+9. `php artisan storage:link`
+10. `php artisan serve`
+11. Selesai (Register user baru untuk mulai mengisi silsilah).
 
 ## Testing
 Ingin mencoba automated testingnya? Silakan ketik perintah pada terminal: `vendor/bin/phpunit`
