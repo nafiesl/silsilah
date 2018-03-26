@@ -4,13 +4,13 @@
 
 @section('user-content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             @include('users.partials.profile')
-            @include('users.partials.siblings')
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
             @include('users.partials.parent-spouse')
             @include('users.partials.childs')
+            @include('users.partials.siblings')
         </div>
     </div>
 @endsection

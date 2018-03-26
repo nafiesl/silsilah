@@ -7,12 +7,19 @@
         </div>
         {{ trans('user.edit') }} {{ $user->profileLink() }}
     </h2>
-    {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
     <div class="row">
+        {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('user.edit') }}</h3></div>
                 <div class="panel-body">
+                    <div class="text-center">
+                        @if ($user->photo_path && is_file(public_path('storage/'.$user->photo_path)))
+                            {{ Html::image('storage/'.$user->photo_path, $user->name, ['style' => 'max-width:100%']) }}
+                        @else
+                            {{ Html::image('images/icon_user_'.$user->gender_id.'.png', $user->name, ['style' => 'max-width:100%']) }}
+                        @endif
+                    </div>
                     {!! FormField::text('name', ['label' => trans('user.name')]) !!}
                     {!! FormField::text('nickname', ['label' => trans('user.nickname')]) !!}
                     <div class="row">
@@ -35,8 +42,6 @@
                     {!! FormField::text('phone', ['label' => trans('app.phone'), 'placeholder' => trans('app.example').' 081234567890']) !!}
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('app.login_account') }}</h3></div>
                 <div class="panel-body">
@@ -44,11 +49,18 @@
                     {!! FormField::text('password', ['label' => trans('auth.password'), 'placeholder' => '******', 'value' => '']) !!}
                 </div>
             </div>
+            <div class="text-right">
+                {{ Form::submit(trans('app.update'), ['class' => 'btn btn-primary']) }}
+                {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
+            </div>
+        </div>
+        {{ Form::close() }}
+        <div class="col-md-4">
+            {{ Form::open(['route' => ['users.photo-upload', $user], 'method' => 'patch', 'files' => true]) }}
+            {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => 'Format jpg, maks: 200 Kb.', 'class' => 'warning']]) !!}
+            {!! Form::submit(__('user.update_photo'), ['class' => 'btn btn-success']) !!}
+            {{ link_to_route('users.show', trans('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
+            {{ Form::close() }}
         </div>
     </div>
-    <div class="pull-right">
-        {{ Form::submit(trans('app.update'), ['class' => 'btn btn-primary']) }}
-        {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
-    </div>
-    {{ Form::close() }}
 @endsection

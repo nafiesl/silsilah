@@ -30,20 +30,21 @@ Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
+Route::patch('users/{user}/photo-upload', 'UsersController@photoUpload')->name('users.photo-upload');
 
 Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
 
 /**
  * Couple/Marriages Routes
  */
-Route::get('couples/{couple}', ['as'=>'couples.show', 'uses'=>'CouplesController@show']);
-Route::get('couples/{couple}/edit', ['as'=>'couples.edit', 'uses'=>'CouplesController@edit']);
-Route::patch('couples/{couple}', ['as'=>'couples.update', 'uses'=>'CouplesController@update']);
+Route::get('couples/{couple}', ['as' => 'couples.show', 'uses' => 'CouplesController@show']);
+Route::get('couples/{couple}/edit', ['as' => 'couples.edit', 'uses' => 'CouplesController@edit']);
+Route::patch('couples/{couple}', ['as' => 'couples.update', 'uses' => 'CouplesController@update']);
 
 /**
  * Backup Restore Database Routes
  */
-Route::post('backups/upload', ['as'=>'backups.upload', 'uses'=>'BackupsController@upload']);
-Route::post('backups/{fileName}/restore', ['as'=>'backups.restore', 'uses'=>'BackupsController@restore']);
-Route::get('backups/{fileName}/dl', ['as'=>'backups.download', 'uses'=>'BackupsController@download']);
-Route::resource('backups','BackupsController');
+Route::post('backups/upload', ['as' => 'backups.upload', 'uses' => 'BackupsController@upload']);
+Route::post('backups/{fileName}/restore', ['as' => 'backups.restore', 'uses' => 'BackupsController@restore']);
+Route::get('backups/{fileName}/dl', ['as' => 'backups.download', 'uses' => 'BackupsController@download']);
+Route::resource('backups', 'BackupsController');

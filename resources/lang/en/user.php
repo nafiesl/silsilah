@@ -45,4 +45,8 @@ return [
     'city'     => 'City',
     'phone'    => 'Phone',
     'manager'  => 'Manager',
+
+    // Photo
+    'reupload_photo' => 'Re-upload Photo',
+    'update_photo'   => 'Update Photo',
 ];

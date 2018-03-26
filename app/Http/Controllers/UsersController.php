@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Couple;
 use App\User;
 use Illuminate\Http\Request;
+use Storage;
 
 class UsersController extends Controller
 {
@@ -23,8 +24,8 @@ class UsersController extends Controller
                 $query->where('name', 'like', '%'.$q.'%');
                 $query->orWhere('nickname', 'like', '%'.$q.'%');
             })
-            ->orderBy('name', 'asc')
-            ->paginate(24);
+                ->orderBy('name', 'asc')
+                ->paginate(24);
         }
 
         return view('users.search', compact('users'));
@@ -44,7 +45,7 @@ class UsersController extends Controller
         }
 
         $allMariageList = [];
-        foreach (Couple::with('husband','wife')->get() as $couple) {
+        foreach (Couple::with('husband', 'wife')->get() as $couple) {
             $allMariageList[$couple->id] = $couple->husband->name.' & '.$couple->wife->name;
         }
 
@@ -52,11 +53,11 @@ class UsersController extends Controller
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
         return view('users.show', [
-            'user' => $user,
+            'user'             => $user,
             'usersMariageList' => $usersMariageList,
-            'malePersonList' => $malePersonList,
+            'malePersonList'   => $malePersonList,
             'femalePersonList' => $femalePersonList,
-            'allMariageList' => $allMariageList
+            'allMariageList'   => $allMariageList,
         ]);
     }
 
@@ -137,10 +138,11 @@ class UsersController extends Controller
         $user->dob = $request->get('dob');
         $user->dod = $request->get('dod');
 
-        if ($request->get('dod'))
+        if ($request->get('dod')) {
             $user->yod = substr($request->get('dod'), 0, 4);
-        else
+        } else {
             $user->yod = $request->get('yod');
+        }
 
         $user->phone = $request->get('phone');
         $user->address = $request->get('address');
@@ -165,5 +167,31 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    /**
+     * Upload users photo.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User                $user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function photoUpload(Request $request, User $user)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:200',
+        ]);
+
+        $storage = env('APP_ENV') == 'testing' ? 'avatars' : 'public';
+
+        if (Storage::disk($storage)->exists($user->photo_path)) {
+            Storage::disk($storage)->delete($user->photo_path);
+        }
+
+        $user->photo_path = $request->photo->store('images', $storage);
+        $user->save();
+
+        return back();
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Storage;
 use Tests\TestCase;
 
 class UsersProfileTest extends TestCase
@@ -40,18 +41,38 @@ class UsersProfileTest extends TestCase
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Panggilan',
-            'name' => 'Nama User',
+            'nickname'  => 'Nama Panggilan',
+            'name'      => 'Nama User',
             'gender_id' => 1,
-            'dob' => '1959-06-09',
-            'dod' => '2003-10-17',
-            'yod' => '2003',
-            'address' => 'Jln. Angkasa, No. 70',
-            'city' => 'Nama Kota',
-            'phone' => '081234567890',
-            'email' => null,
-            'password' => null,
+            'dob'       => '1959-06-09',
+            'dod'       => '2003-10-17',
+            'yod'       => '2003',
+            'address'   => 'Jln. Angkasa, No. 70',
+            'city'      => 'Nama Kota',
+            'phone'     => '081234567890',
+            'email'     => null,
+            'password'  => null,
         ]);
+    }
+
+    /** @test */
+    public function user_can_upload_their_own_photo()
+    {
+        Storage::fake('avatars');
+
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', $user->id));
+        $this->assertNull($user->photo_path);
+
+        $this->attach(public_path('images/icon_user_1.png'), 'photo');
+        $this->press(trans('user.update_photo'));
+
+        $this->seePageIs(route('users.edit', $user));
+
+        $user = $user->fresh();
+
+        $this->assertNotNull($user->photo_path);
+        Storage::disk('avatars')->assertExists($user->photo_path);
     }
 
     /** @test */

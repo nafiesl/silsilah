@@ -45,4 +45,8 @@ return [
     'city'     => 'Kota',
     'phone'    => 'Telp.',
     'manager'  => 'Pengelola',
+
+    // Photo
+    'reupload_photo' => 'Upload ulang Foto',
+    'update_photo'   => 'Update Foto',
 ];
