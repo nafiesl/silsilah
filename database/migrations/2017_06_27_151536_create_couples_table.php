@@ -14,12 +14,12 @@ class CreateCouplesTable extends Migration
     public function up()
     {
         Schema::create('couples', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('husband_id');
-            $table->unsignedInteger('wife_id');
+            $table->uuid('id')->primary();
+            $table->uuid('husband_id');
+            $table->uuid('wife_id');
             $table->date('marriage_date')->nullable();
             $table->date('divorce_date')->nullable();
-            $table->unsignedInteger('manager_id')->nullable();
+            $table->uuid('manager_id')->nullable();
             $table->timestamps();
 
             $table->unique(['husband_id', 'wife_id']);

@@ -13,8 +13,8 @@ class UserPolicyTest extends TestCase
     /** @test */
     public function admin_can_edit_users_profile()
     {
-        $user = factory(User::class)->create();
-        $manager = $user->manager;
+        $manager = factory(User::class)->create();
+        $user = factory(User::class)->create(['manager_id' => $manager->id]);
 
         $this->assertTrue($manager->can('edit', $user));
     }

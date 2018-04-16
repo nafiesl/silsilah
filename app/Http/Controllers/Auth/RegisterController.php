@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 
 class RegisterController extends Controller
 {
@@ -65,6 +66,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
+            'id' => Uuid::uuid4()->toString(),
             'nickname' => $data['nickname'],
             'name' => $data['name'],
             'gender_id' => $data['gender_id'],

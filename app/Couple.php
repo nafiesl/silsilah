@@ -3,9 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Couple extends Model
 {
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
     public function husband()
     {
         return $this->belongsTo(User::class);
@@ -23,6 +31,7 @@ class Couple extends Model
 
     public function addChild(User $user)
     {
+        $user->id = Uuid::uuid4()->toString();
         $user->parent_id = $this->id;
         $user->father_id = $this->husband_id;
         $user->mother_id = $this->wife_id;

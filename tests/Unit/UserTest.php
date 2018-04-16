@@ -76,7 +76,9 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_have_a_manager()
     {
-        $user = factory(User::class)->create();
+        $manager = factory(User::class)->create();
+        $user = factory(User::class)->create(['manager_id' => $manager->id]);
+
         $this->assertTrue($user->manager instanceof User);
     }
 }

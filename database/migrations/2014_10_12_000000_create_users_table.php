@@ -14,13 +14,13 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id')->primary();
             $table->string('nickname');
             $table->string('name')->nullable();
             $table->boolean('gender_id')->unsigned();
-            $table->unsignedInteger('father_id')->nullable();
-            $table->unsignedInteger('mother_id')->nullable();
-            $table->unsignedInteger('parent_id')->nullable();
+            $table->uuid('father_id')->nullable();
+            $table->uuid('mother_id')->nullable();
+            $table->uuid('parent_id')->nullable();
             $table->date('dob')->nullable();
             $table->date('dod')->nullable();
             $table->date('yod')->nullable();
@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->string('photo_path')->nullable();
-            $table->unsignedInteger('manager_id')->nullable();
+            $table->uuid('manager_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

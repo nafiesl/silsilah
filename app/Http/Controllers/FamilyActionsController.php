@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Couple;
 use App\User;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 
 class FamilyActionsController extends Controller
 {
@@ -12,7 +13,7 @@ class FamilyActionsController extends Controller
     {
         $this->validate($request, [
             'set_father_id' => 'nullable',
-            'set_father' => 'required_without:set_father_id|max:255',
+            'set_father'    => 'required_without:set_father_id|max:255',
         ]);
 
         if ($request->get('set_father_id')) {
@@ -20,6 +21,7 @@ class FamilyActionsController extends Controller
             $user->save();
         } else {
             $father = new User;
+            $father->id = Uuid::uuid4()->toString();
             $father->name = $request->get('set_father');
             $father->nickname = $request->get('set_father');
             $father->gender_id = 1;
@@ -35,7 +37,7 @@ class FamilyActionsController extends Controller
     {
         $this->validate($request, [
             'set_mother_id' => 'nullable',
-            'set_mother' => 'required_without:set_mother_id|max:255',
+            'set_mother'    => 'required_without:set_mother_id|max:255',
         ]);
 
         if ($request->get('set_mother_id')) {
@@ -43,6 +45,7 @@ class FamilyActionsController extends Controller
             $user->save();
         } else {
             $mother = new User;
+            $mother->id = Uuid::uuid4()->toString();
             $mother->name = $request->get('set_mother');
             $mother->nickname = $request->get('set_mother');
             $mother->gender_id = 2;
@@ -57,12 +60,13 @@ class FamilyActionsController extends Controller
     public function addChild(Request $request, User $user)
     {
         $this->validate($request, [
-            'add_child_name' => 'required|string|max:255',
+            'add_child_name'      => 'required|string|max:255',
             'add_child_gender_id' => 'required|in:1,2',
             'add_child_parent_id' => 'nullable|exists:couples,id',
         ]);
 
         $child = new User;
+        $child->id = Uuid::uuid4()->toString();
         $child->name = $request->get('add_child_name');
         $child->nickname = $request->get('add_child_name');
         $child->gender_id = $request->get('add_child_gender_id');
@@ -78,10 +82,12 @@ class FamilyActionsController extends Controller
             $child->mother_id = $couple->wife_id;
             $child->save();
         } else {
-            if ($user->gender_id == 1)
+            if ($user->gender_id == 1) {
                 $child->setFather($user);
-            else
+            } else {
                 $child->setMother($user);
+            }
+
         }
 
         \DB::commit();
@@ -92,8 +98,8 @@ class FamilyActionsController extends Controller
     public function addWife(Request $request, User $user)
     {
         $this->validate($request, [
-            'set_wife_id' => 'nullable',
-            'set_wife' => 'required_without:set_wife_id|max:255',
+            'set_wife_id'   => 'nullable',
+            'set_wife'      => 'required_without:set_wife_id|max:255',
             'marriage_date' => 'nullable|date|date_format:Y-m-d',
         ]);
 
@@ -101,6 +107,7 @@ class FamilyActionsController extends Controller
             $wife = User::findOrFail($request->get('set_wife_id'));
         } else {
             $wife = new User;
+            $wife->id = Uuid::uuid4()->toString();
             $wife->name = $request->get('set_wife');
             $wife->nickname = $request->get('set_wife');
             $wife->gender_id = 2;
@@ -116,14 +123,15 @@ class FamilyActionsController extends Controller
     {
         $this->validate($request, [
             'set_husband_id' => 'nullable',
-            'set_husband' => 'required_without:set_husband_id|max:255',
-            'marriage_date' => 'nullable|date|date_format:Y-m-d',
+            'set_husband'    => 'required_without:set_husband_id|max:255',
+            'marriage_date'  => 'nullable|date|date_format:Y-m-d',
         ]);
 
         if ($request->get('set_husband_id')) {
             $husband = User::findOrFail($request->get('set_husband_id'));
         } else {
             $husband = new User;
+            $husband->id = Uuid::uuid4()->toString();
             $husband->name = $request->get('set_husband');
             $husband->nickname = $request->get('set_husband');
             $husband->gender_id = 1;

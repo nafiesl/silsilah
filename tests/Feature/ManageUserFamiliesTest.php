@@ -48,7 +48,7 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Ibu',
+            'nickname'   => 'Nama Ibu',
             'manager_id' => $user->id,
         ]);
 
@@ -67,17 +67,17 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'add_child_parent_id']);
 
         $this->submitForm(trans('user.add_child'), [
-            'add_child_name' => 'Nama Anak 1',
+            'add_child_name'      => 'Nama Anak 1',
             'add_child_gender_id' => 1,
             'add_child_parent_id' => '',
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Anak 1',
-            'gender_id' => 1,
-            'father_id' => $user->id,
-            'mother_id' => null,
-            'parent_id' => null,
+            'nickname'   => 'Nama Anak 1',
+            'gender_id'  => 1,
+            'father_id'  => $user->id,
+            'mother_id'  => null,
+            'parent_id'  => null,
             'manager_id' => $user->id,
         ]);
     }
@@ -85,12 +85,11 @@ class ManageUserFamiliesTest extends TestCase
     /** @test */
     public function user_can_add_childrens_with_parent_id_if_exist()
     {
-        $husband = factory(User::class)->states('male')->create();
-        $wife = factory(User::class)->states('female')->create();
+        $husband = $this->loginAsUser(['gender_id' => 1]);
+        $wife = factory(User::class)->states('female')->create(['manager_id' => $husband->id]);
         $husband->addWife($wife);
 
         $marriageId = $husband->fresh()->wifes->first()->pivot->id;
-        $this->actingAs($husband);
 
         $this->visit(route('profile'));
         $this->seePageIs(route('profile'));
@@ -100,16 +99,16 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'add_child_parent_id']);
 
         $this->submitForm(trans('user.add_child'), [
-            'add_child_name' => 'Nama Anak 1',
+            'add_child_name'      => 'Nama Anak 1',
             'add_child_gender_id' => 1,
             'add_child_parent_id' => $marriageId,
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Anak 1',
-            'gender_id' => 1,
-            'father_id' => $husband->id,
-            'mother_id' => $wife->id,
+            'nickname'   => 'Nama Anak 1',
+            'gender_id'  => 1,
+            'father_id'  => $husband->id,
+            'mother_id'  => $wife->id,
             'manager_id' => $husband->id,
         ]);
     }
@@ -124,20 +123,23 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('input', ['name' => 'set_wife']);
 
         $this->submitForm('set_wife_button', [
-            'set_wife' => 'Nama Istri',
+            'set_wife'      => 'Nama Istri',
             'marriage_date' => '2010-01-01',
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Istri',
+            'nickname'  => 'Nama Istri',
             'gender_id' => 2,
         ]);
 
-        $wife = User::orderBy('id', 'desc')->first();
+        $wife = User::where([
+            'nickname'  => 'Nama Istri',
+            'gender_id' => 2,
+        ])->first();
 
         $this->seeInDatabase('couples', [
-            'husband_id' => $user->id,
-            'wife_id' => $wife->id,
+            'husband_id'    => $user->id,
+            'wife_id'       => $wife->id,
             'marriage_date' => '2010-01-01',
         ]);
     }
@@ -152,21 +154,24 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('input', ['name' => 'set_husband']);
 
         $this->submitForm('set_husband_button', [
-            'set_husband' => 'Nama Suami',
+            'set_husband'   => 'Nama Suami',
             'marriage_date' => '2010-03-03',
         ]);
 
         $this->seeInDatabase('users', [
-            'nickname' => 'Nama Suami',
-            'gender_id' => 1,
+            'nickname'   => 'Nama Suami',
+            'gender_id'  => 1,
             'manager_id' => $user->id,
         ]);
 
-        $husband = User::orderBy('id', 'desc')->first();
+        $husband = User::where([
+            'nickname'  => 'Nama Suami',
+            'gender_id' => 1,
+        ])->first();
 
         $this->seeInDatabase('couples', [
-            'husband_id' => $husband->id,
-            'wife_id' => $user->id,
+            'husband_id'    => $husband->id,
+            'wife_id'       => $user->id,
             'marriage_date' => '2010-03-03',
         ]);
     }
@@ -186,7 +191,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'set_father_id']);
 
         $this->submitForm('set_father_button', [
-            'set_father' => '',
+            'set_father'    => '',
             'set_father_id' => $father->id,
         ]);
 
@@ -208,7 +213,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'set_mother_id']);
 
         $this->submitForm('set_mother_button', [
-            'set_mother' => '',
+            'set_mother'    => '',
             'set_mother_id' => $mother->id,
         ]);
 
@@ -228,14 +233,14 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'set_wife_id']);
 
         $this->submitForm('set_wife_button', [
-            'set_wife' => '',
-            'set_wife_id' => $wife->id,
+            'set_wife'      => '',
+            'set_wife_id'   => $wife->id,
             'marriage_date' => '2010-01-01',
         ]);
 
         $this->seeInDatabase('couples', [
-            'husband_id' => $user->id,
-            'wife_id' => $wife->id,
+            'husband_id'    => $user->id,
+            'wife_id'       => $wife->id,
             'marriage_date' => '2010-01-01',
         ]);
     }
@@ -253,14 +258,14 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeElement('select', ['name' => 'set_husband_id']);
 
         $this->submitForm('set_husband_button', [
-            'set_husband' => '',
+            'set_husband'    => '',
             'set_husband_id' => $husband->id,
-            'marriage_date' => '2010-03-03',
+            'marriage_date'  => '2010-03-03',
         ]);
 
         $this->seeInDatabase('couples', [
-            'husband_id' => $husband->id,
-            'wife_id' => $user->id,
+            'husband_id'    => $husband->id,
+            'wife_id'       => $user->id,
             'marriage_date' => '2010-03-03',
         ]);
     }
@@ -284,8 +289,8 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->seeInDatabase('users', [
-            'id' => $user->id,
-            'parent_id' => $marriageId,
+            'id'         => $user->id,
+            'parent_id'  => $marriageId,
             'manager_id' => $user->id,
         ]);
     }

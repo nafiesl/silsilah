@@ -2,12 +2,20 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -15,6 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'id',
         'nickname', 'gender_id', 'name',
         'email', 'password',
         'address', 'phone',
@@ -35,6 +44,14 @@ class User extends Authenticatable
         'gender',
     ];
 
+    protected $casts = [
+        'couples.pivot.id'  => 'string',
+        'wifes.pivot.id'    => 'string',
+        'husbands.pivot.id' => 'string',
+    ];
+
+    // protected $keyType = 'string';
+
     public function getGenderAttribute()
     {
         return $this->gender_id == 1 ? trans('app.male_code') : trans('app.female_code');
@@ -44,8 +61,9 @@ class User extends Authenticatable
     {
         if ($father->gender_id == 1) {
 
-            if ($father->exists == false)
+            if ($father->exists == false) {
                 $father->save();
+            }
 
             $this->father_id = $father->id;
             $this->save();
@@ -60,8 +78,9 @@ class User extends Authenticatable
     {
         if ($mother->gender_id == 2) {
 
-            if ($mother->exists == false)
+            if ($mother->exists == false) {
                 $mother->save();
+            }
 
             $this->mother_id = $mother->id;
             $this->save();
@@ -84,8 +103,9 @@ class User extends Authenticatable
 
     public function childs()
     {
-        if ($this->gender_id == 2)
+        if ($this->gender_id == 2) {
             return $this->hasMany(User::class, 'mother_id');
+        }
 
         return $this->hasMany(User::class, 'father_id');
     }
@@ -108,13 +128,16 @@ class User extends Authenticatable
 
     public function wifes()
     {
-        return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->using('App\CouplePivot')->withPivot(['id'])->withTimestamps();
     }
 
     public function addWife(User $wife, $marriageDate = null)
     {
-        if ($this->gender_id == 1 && ! $this->hasBeenMarriedTo($wife)) {
-            $this->wifes()->save($wife, ['marriage_date' => $marriageDate]);
+        if ($this->gender_id == 1 && !$this->hasBeenMarriedTo($wife)) {
+            $this->wifes()->save($wife, [
+                'id'            => Uuid::uuid4()->toString(),
+                'marriage_date' => $marriageDate,
+            ]);
             return $wife;
         }
 
@@ -123,13 +146,16 @@ class User extends Authenticatable
 
     public function husbands()
     {
-        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->using('App\CouplePivot')->withPivot(['id'])->withTimestamps();
     }
 
     public function addHusband(User $husband, $marriageDate = null)
     {
-        if ($this->gender_id == 2 && ! $this->hasBeenMarriedTo($husband)) {
-            $this->husbands()->save($husband, ['marriage_date' => $marriageDate]);
+        if ($this->gender_id == 2 && !$this->hasBeenMarriedTo($husband)) {
+            $this->husbands()->save($husband, [
+                'id'            => Uuid::uuid4()->toString(),
+                'marriage_date' => $marriageDate,
+            ]);
             return $husband;
         }
 
@@ -143,33 +169,42 @@ class User extends Authenticatable
 
     public function couples()
     {
-        if ($this->gender_id == 1)
-            return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
+        if ($this->gender_id == 1) {
+            return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->using('App\CouplePivot')->withPivot(['id'])->withTimestamps();
+        }
 
-        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
+        return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->using('App\CouplePivot')->withPivot(['id'])->withTimestamps();
     }
 
     public function marriages()
     {
-        if ($this->gender_id == 1)
+        if ($this->gender_id == 1) {
             return $this->hasMany(Couple::class, 'husband_id');
+        }
 
         return $this->hasMany(Couple::class, 'wife_id');
     }
 
     public function siblings()
     {
-        if (is_null($this->father_id) && is_null($this->mother_id) && is_null($this->parent_id))
+        if (is_null($this->father_id) && is_null($this->mother_id) && is_null($this->parent_id)) {
             return collect([]);
+        }
 
         return User::where('id', '!=', $this->id)
             ->where(function ($query) {
-                if (!is_null($this->father_id))
+                if (!is_null($this->father_id)) {
                     $query->where('father_id', $this->father_id);
-                if (!is_null($this->mother_id))
+                }
+
+                if (!is_null($this->mother_id)) {
                     $query->orWhere('mother_id', $this->mother_id);
-                if (!is_null($this->parent_id))
+                }
+
+                if (!is_null($this->parent_id)) {
                     $query->orWhere('parent_id', $this->parent_id);
+                }
+
             })
             ->get();
     }

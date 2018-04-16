@@ -18,10 +18,11 @@ use App\User;
 $factory->define(User::class, function (Faker\Generator $faker) {
     $name = $faker->name;
     return [
+        'id' => $faker->uuid,
         'name' => $name,
         'nickname' => $name,
         'gender_id' => rand(1, 2),
-        'manager_id' => 1,
+        'manager_id' => $faker->uuid,
     ];
 });
 
@@ -34,8 +35,8 @@ $factory->state(User::class, 'female', function (Faker\Generator $faker) {
 });
 
 $factory->define(Couple::class, function (Faker\Generator $faker) {
-    $name = $faker->name;
     return [
+        'id' => $faker->uuid,
         'husband_id' => function () {
             return factory(User::class)->states('male')->create()->id;
         },
