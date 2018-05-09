@@ -13,13 +13,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('user.edit') }}</h3></div>
                 <div class="panel-body">
-                    <div class="text-center">
-                        @if ($user->photo_path && is_file(public_path('storage/'.$user->photo_path)))
-                            {{ Html::image('storage/'.$user->photo_path, $user->name, ['style' => 'max-width:100%']) }}
-                        @else
-                            {{ Html::image('images/icon_user_'.$user->gender_id.'.png', $user->name, ['style' => 'max-width:100%']) }}
-                        @endif
-                    </div>
                     {!! FormField::text('name', ['label' => trans('user.name')]) !!}
                     {!! FormField::text('nickname', ['label' => trans('user.nickname')]) !!}
                     <div class="row">
@@ -56,11 +49,21 @@
         </div>
         {{ Form::close() }}
         <div class="col-md-4">
-            {{ Form::open(['route' => ['users.photo-upload', $user], 'method' => 'patch', 'files' => true]) }}
-            {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => 'Format jpg, maks: 200 Kb.', 'class' => 'warning']]) !!}
-            {!! Form::submit(__('user.update_photo'), ['class' => 'btn btn-success']) !!}
-            {{ link_to_route('users.show', trans('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
-            {{ Form::close() }}
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">{{ __('user.update_photo') }}</h3></div>
+                {{ Form::open(['route' => ['users.photo-upload', $user], 'method' => 'patch', 'files' => true]) }}
+                <div class="panel-body text-center">
+                    {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
+                </div>
+                <div class="panel-body">
+                    {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => 'Format jpg, maks: 200 Kb.', 'class' => 'warning']]) !!}
+                </div>
+                <div class="panel-footer">
+                    {!! Form::submit(__('user.update_photo'), ['class' => 'btn btn-success']) !!}
+                    {{ link_to_route('users.show', trans('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
+                </div>
+                {{ Form::close() }}
+            </div>
         </div>
     </div>
 @endsection

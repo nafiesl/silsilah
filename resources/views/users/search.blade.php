@@ -27,8 +27,11 @@
     @foreach ($chunkedUser as $user)
     <div class="col-md-3">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3></div>
+            <div class="panel-heading">
+                {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
+            </div>
             <div class="panel-body">
+                <h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3>
                 <div>{{ trans('user.nickname') }} : {{ $user->nickname }}</div>
                 <hr style="margin: 5px 0;">
                 <div>{{ trans('user.father') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
