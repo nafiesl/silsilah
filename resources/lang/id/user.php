@@ -45,6 +45,7 @@ return [
     'city'     => 'Kota',
     'phone'    => 'Telp.',
     'job'      => 'Pekerjaan',
+    'job_description'   => 'Bidang Pekerjaan',
     'manager'  => 'Pengelola',
 
     // Photo

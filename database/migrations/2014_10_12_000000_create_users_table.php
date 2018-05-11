@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->string('job')->nullable();
+            $table->string('job_description')->nullable();
             $table->string('photo_path')->nullable();
             $table->uuid('manager_id')->nullable();
             $table->rememberToken();

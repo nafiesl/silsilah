@@ -45,12 +45,12 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path('foto_profile'),
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => public_path('foto_profile'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],

@@ -8,6 +8,7 @@ before_script:
   - travis_retry composer install --prefer-source --no-interaction --dev
   - cp .env.example .env
   - php artisan key:generate
+  - php artisan storage:link
 
 script:
   - vendor/bin/phpunit

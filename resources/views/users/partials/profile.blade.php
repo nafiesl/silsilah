@@ -1,11 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading"><h3 class="panel-title">{{ trans('user.profile') }}</h3></div>
     <div class="panel-body text-center">
-        @if ($user->photo_path && is_file(public_path('storage/'.$user->photo_path)))
-            {{ Html::image('storage/'.$user->photo_path, $user->name, ['style' => 'max-width:100%']) }}
-        @else
-            {{ Html::image('images/icon_user_'.$user->gender_id.'.png', $user->name, ['style' => 'max-width:100%']) }}
-        @endif
+        {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
     </div>
     <table class="table">
         <tbody>
@@ -39,6 +35,14 @@
                 <td>{{ $user->email }}</td>
             </tr>
             @endif
+            <tr>
+                <th>{{ trans('user.job') }}</th>
+                <td>{{ $user->job }}</td>
+            </tr>
+            <tr>
+                <th>{{ trans('user.job_description') }}</th>
+                <td>{{ $user->job_description }}</td>
+            </tr>
             <tr>
                 <th>{{ trans('user.phone') }}</th>
                 <td>{{ $user->phone }}</td>

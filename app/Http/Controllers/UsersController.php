@@ -119,18 +119,19 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
-            'nickname'  => 'required|string|max:255',
-            'name'      => 'required|string|max:255',
-            'gender_id' => 'required|numeric',
-            'dob'       => 'nullable|date|date_format:Y-m-d',
-            'dod'       => 'nullable|date|date_format:Y-m-d',
-            'yod'       => 'nullable|date_format:Y',
-            'phone'     => 'nullable|string|max:255',
-            'job'       => 'nullable|string|max:255',
-            'address'   => 'nullable|string|max:255',
-            'city'      => 'nullable|string|max:255',
-            'email'     => 'nullable|string|max:255',
-            'password'  => 'nullable|min:6|max:15',
+            'nickname'          => 'required|string|max:255',
+            'name'              => 'required|string|max:255',
+            'gender_id'         => 'required|numeric',
+            'dob'               => 'nullable|date|date_format:Y-m-d',
+            'dod'               => 'nullable|date|date_format:Y-m-d',
+            'yod'               => 'nullable|date_format:Y',
+            'phone'             => 'nullable|string|max:255',
+            'job'               => 'nullable|string|max:255',
+            'job_description'   => 'nullable|string|max:255',
+            'address'           => 'nullable|string|max:255',
+            'city'              => 'nullable|string|max:255',
+            'email'             => 'nullable|string|max:255',
+            // 'password'          => 'nullable|min:6|max:15',
         ]);
 
         $user->nickname = $request->nickname;
@@ -145,15 +146,16 @@ class UsersController extends Controller
             $user->yod = $request->get('yod');
         }
 
-        $user->phone = $request->get('phone');
-        $user->job = $request->get('job');
-        $user->address = $request->get('address');
-        $user->city = $request->get('city');
-        $user->email = $request->get('email');
+        $user->phone            = $request->get('phone');
+        $user->job              = $request->get('job');
+        $user->job_description  = $request->get('job_description');
+        $user->address          = $request->get('address');
+        $user->city             = $request->get('city');
+        $user->email            = $request->get('email');
 
-        if ($request->get('email')) {
-            $user->password = bcrypt($request->get('email'));
-        }
+        // if ($request->get('email')) {
+        //     $user->password = bcrypt($request->get('email'));
+        // }
 
         $user->save();
 
@@ -166,10 +168,26 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
+    // public function destroy(User $user)
+    // {
+    //     //
+    // }
+
     public function destroy(User $user)
     {
-        $user->delete('manager_id');
-        return redirect()->route('users.search');
+        $this->authorize('delete', $user);
+
+        $this->validate(request(), [
+            'user' => 'required',
+        ]);
+
+        $routeParam = request()->only('page', 'q');
+
+        if (request('user') == $user->id && $user->delete()) {
+            return redirect()->route('users.profile', $routeParam);
+        }
+
+        return back();
     }
 
     /**
@@ -183,7 +201,7 @@ class UsersController extends Controller
     public function photoUpload(Request $request, User $user)
     {
         $request->validate([
-            'photo' => 'required|image|max:200',
+            'photo' => 'required|image|max:2000',
         ]);
 
         $storage = env('APP_ENV') == 'testing' ? 'avatars' : 'public';

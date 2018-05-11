@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('user-content')
 @section('content')
 <h2 class="page-header">
     {{ trans('app.search_your_family') }}
@@ -27,13 +28,18 @@
     @foreach ($chunkedUser as $user)
     <div class="col-md-3">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3></div>
+            <div class="panel-heading">
+                {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
+            </div>
             <div class="panel-body">
+                <h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3>
                 <div>{{ trans('user.nickname') }} : {{ $user->nickname }}</div>
+                <hr style="margin: 5px 0;">
+                <div>{{ trans('user.job') }} : {{ $user->job }}</div>
+                <div>{{ trans('user.job_description') }} : {{ $user->job_description }}</div>
                 <hr style="margin: 5px 0;">
                 <div>{{ trans('user.father') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
                 <div>{{ trans('user.mother') }} : {{ $user->mother_id ? $user->mother->name : '' }}</div>
-                <div>{{ trans('user.job') }} : {{ $user->job }}</div>
             </div>
             <div class="panel-footer">
                 {{ link_to_route('users.show', trans('app.show_profile'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}

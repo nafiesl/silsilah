@@ -27,11 +27,12 @@ Route::post('family-actions/{user}/set-parent', 'FamilyActionsController@setPare
 Route::get('profile-search', 'UsersController@search')->name('users.search');
 Route::get('users/{user}', 'UsersController@show')->name('users.show');
 Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
-Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
+Route::get('users/{user}', 'UsersController@destroy')->name('users.destroy');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
 Route::patch('users/{user}/photo-upload', 'UsersController@photoUpload')->name('users.photo-upload');
+Route::resource('users', 'UsersController');
 
 Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
 

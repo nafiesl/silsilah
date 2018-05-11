@@ -45,6 +45,7 @@ return [
     'city'     => 'City',
     'phone'    => 'Phone',
     'job'      => 'Job',
+    'job_description'   => 'Job Description',
     'manager'  => 'Manager',
 
     // Photo
