@@ -1,0 +1,7 @@
+1. Save Image 2 Mb Maximal.
+2. Add folder "Foto_Profile" in Public_path.
+3. Add Job Trans in app.php & user.php (en & id).
+4. Add Job Information in User Search.
+5. Add Input Job & Job Desription in Edit User Page.
+6. Add Job & Job Desription Info in User Profile.
+7. Add Job Description in Migrate Database.
