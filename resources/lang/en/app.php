@@ -21,6 +21,7 @@ return [
     'contact'           => 'Contact',
     'city'              => 'City',
     'phone'             => 'Phone',
+    'job'               => 'Job',
     'login_account'     => 'Login Account',
     'childs_were_not_recorded' => 'Childs were not recorded.',
 

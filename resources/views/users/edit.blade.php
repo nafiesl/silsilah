@@ -41,6 +41,7 @@
                     {!! FormField::textarea('address', ['label' => trans('app.address')]) !!}
                     {!! FormField::text('city', ['label' => trans('app.city'), 'placeholder' => trans('app.example').' Jakarta']) !!}
                     {!! FormField::text('phone', ['label' => trans('app.phone'), 'placeholder' => trans('app.example').' 081234567890']) !!}
+                    {!! FormField::text('job', ['label' => trans('app.job'), 'placeholder' => trans('app.example').' Karyawan']) !!}
                 </div>
             </div>
             <div class="panel panel-default">

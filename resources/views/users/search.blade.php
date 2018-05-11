@@ -33,6 +33,7 @@
                 <hr style="margin: 5px 0;">
                 <div>{{ trans('user.father') }} : {{ $user->father_id ? $user->father->name : '' }}</div>
                 <div>{{ trans('user.mother') }} : {{ $user->mother_id ? $user->mother->name : '' }}</div>
+                <div>{{ trans('user.job') }} : {{ $user->job }}</div>
             </div>
             <div class="panel-footer">
                 {{ link_to_route('users.show', trans('app.show_profile'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
