@@ -126,6 +126,7 @@ class UsersController extends Controller
             'dod'       => 'nullable|date|date_format:Y-m-d',
             'yod'       => 'nullable|date_format:Y',
             'phone'     => 'nullable|string|max:255',
+            'job'       => 'nullable|string|max:255',
             'address'   => 'nullable|string|max:255',
             'city'      => 'nullable|string|max:255',
             'email'     => 'nullable|string|max:255',
@@ -145,6 +146,7 @@ class UsersController extends Controller
         }
 
         $user->phone = $request->get('phone');
+        $user->job = $request->get('job');
         $user->address = $request->get('address');
         $user->city = $request->get('city');
         $user->email = $request->get('email');
@@ -166,7 +168,8 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete('manager_id');
+        return redirect()->route('users.search');
     }
 
     /**

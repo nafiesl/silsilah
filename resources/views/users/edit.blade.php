@@ -9,6 +9,7 @@
     </h2>
     <div class="row">
         {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
+        {{ Form::model($user, ['route' => ['users.destroy', $user->id], 'method' =>'delete', 'autocomplete' => 'on']) }}
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('user.edit') }}</h3></div>
@@ -33,6 +34,7 @@
                     {!! FormField::textarea('address', ['label' => trans('app.address')]) !!}
                     {!! FormField::text('city', ['label' => trans('app.city'), 'placeholder' => trans('app.example').' Jakarta']) !!}
                     {!! FormField::text('phone', ['label' => trans('app.phone'), 'placeholder' => trans('app.example').' 081234567890']) !!}
+                    {!! FormField::text('job', ['label' => trans('app.job'), 'placeholder' => trans('app.example').' Karyawan']) !!}
                 </div>
             </div>
             <div class="panel panel-default">
@@ -44,6 +46,7 @@
             </div>
             <div class="text-right">
                 {{ Form::submit(trans('app.update'), ['class' => 'btn btn-primary']) }}
+                {{ Form::submit(trans('app.delete'), ['class' => 'btn btn-danger']) }}
                 {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
             </div>
         </div>

@@ -21,6 +21,7 @@ return [
     'contact'           => 'Kontak',
     'city'              => 'Kota',
     'phone'             => 'Telp.',
+    'job'               => 'Pekerjaan',
     'login_account'     => 'Akun Login',
     'childs_were_not_recorded' => 'Anak-anak belum tercatat.',
 
