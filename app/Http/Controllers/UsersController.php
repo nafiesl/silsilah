@@ -166,7 +166,8 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete('manager_id');
+        return redirect()->route('users.search');
     }
 
     /**
