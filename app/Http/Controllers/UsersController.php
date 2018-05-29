@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Couple;
-use App\User;
-use Illuminate\Http\Request;
 use Storage;
+use App\User;
+use App\Couple;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -149,8 +149,8 @@ class UsersController extends Controller
         $user->city = $request->get('city');
         $user->email = $request->get('email');
 
-        if ($request->get('email')) {
-            $user->password = bcrypt($request->get('email'));
+        if ($request->get('password')) {
+            $user->password = bcrypt($request->get('password'));
         }
 
         $user->save();

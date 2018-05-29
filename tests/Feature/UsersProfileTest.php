@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Storage;
+use App\User;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UsersProfileTest extends TestCase
 {
@@ -53,6 +53,42 @@ class UsersProfileTest extends TestCase
             'email'     => null,
             'password'  => null,
         ]);
+    }
+
+    /** @test */
+    public function manager_can_add_login_account_on_a_user()
+    {
+        $manager = $this->loginAsUser();
+        $user = factory(User::class)->create(['manager_id' => $manager->id]);
+        $this->visit(route('users.edit', $user->id));
+        $this->seePageIs(route('users.edit', $user->id));
+
+        $this->submitForm(trans('app.update'), [
+            'email'    => 'user@mail.com',
+            'password' => 'Secr3t',
+        ]);
+
+        $user = $user->fresh();
+        $this->assertEquals('user@mail.com', $user->email);
+        $this->assertTrue(app('hash')->check('Secr3t', $user->password));
+    }
+
+    /** @test */
+    public function manager_can_add_user_email_without_a_password()
+    {
+        $manager = $this->loginAsUser();
+        $user = factory(User::class)->create(['manager_id' => $manager->id]);
+        $this->visit(route('users.edit', $user->id));
+        $this->seePageIs(route('users.edit', $user->id));
+
+        $this->submitForm(trans('app.update'), [
+            'email'    => 'user@mail.com',
+            'password' => '',
+        ]);
+
+        $user = $user->fresh();
+        $this->assertEquals('user@mail.com', $user->email);
+        $this->assertNull($user->password);
     }
 
     /** @test */
