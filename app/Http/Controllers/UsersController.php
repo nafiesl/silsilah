@@ -161,12 +161,24 @@ class UsersController extends Controller
     /**
      * Remove the specified User from storage.
      *
-     * @param  \App\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User $user
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        request()->validate([
+            'user_id' => 'required',
+        ]);
+
+        if (request('user_id') == $user->id && $user->delete()) {
+            return redirect()->route('users.search');
+        }
+
+        return back();
     }
 
     /**

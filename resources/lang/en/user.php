@@ -28,6 +28,9 @@ return [
     'add_husband' => 'Add Husband',
     'add_child'   => 'Add Child',
     'add_child_from_existing_couples' => 'Parent (select spouse of :name)',
+    'delete' => 'Delete User',
+    'delete_confirm' => 'Are you sure to delete this user?',
+    'delete_confirm_button' => 'Yes, I am sure',
 
     // Attributes
     'name'     => 'Name',

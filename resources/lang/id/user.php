@@ -28,6 +28,9 @@ return [
     'add_husband' => 'Tambah Suami',
     'add_child'   => 'Tambah Anak',
     'add_child_from_existing_couples' => 'Dari Pernikahan (pilih pasangan :name)',
+    'delete' => 'Hapus User',
+    'delete_confirm' => 'Anda yakin akan menghapus user ini?',
+    'delete_confirm_button' => 'Saya yakin hapus user ini',
 
     // Attributes
     'name'     => 'Nama',
