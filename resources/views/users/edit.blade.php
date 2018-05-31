@@ -7,6 +7,19 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3 class="panel-title">{{ __('user.delete') }} : {{ $user->name }}</h3></div>
+                    <div class="panel-body">
+                        <table class="table table-condensed">
+                            <tr><td>{{ __('user.name') }}</td><td>{{ $user->name }}</td></tr>
+                            <tr><td>{{ __('user.nickname') }}</td><td>{{ $user->nickname }}</td></tr>
+                            <tr><td>{{ __('user.gender') }}</td><td>{{ $user->gender }}</td></tr>
+                            <tr><td>{{ __('user.father') }}</td><td>{{ $user->father_id ? $user->father->name : '' }}</td></tr>
+                            <tr><td>{{ __('user.mother') }}</td><td>{{ $user->mother_id ? $user->mother->name : '' }}</td></tr>
+                            <tr><td>{{ __('user.childs_count') }}</td><td>{{ $user->childs()->count() }}</td></tr>
+                            <tr><td>{{ __('user.spouses_count') }}</td><td>{{ $user->marriages()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_user') }}</td><td>{{ $user->managedUsers()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_couple') }}</td><td>{{ $user->managedCouples()->count() }}</td></tr>
+                        </table>
+                    </div>
                     <div class="panel-body">{{ __('user.delete_confirm') }}</div>
                     <div class="panel-footer">
                         {!! FormField::delete(

@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -217,5 +217,15 @@ class User extends Authenticatable
     public function manager()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function managedUsers()
+    {
+        return $this->hasMany(User::class, 'manager_id');
+    }
+
+    public function managedCouples()
+    {
+        return $this->hasMany(Couple::class, 'manager_id');
     }
 }
