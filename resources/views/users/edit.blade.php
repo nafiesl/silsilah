@@ -14,12 +14,12 @@
                             <tr><td>{{ __('user.gender') }}</td><td>{{ $user->gender }}</td></tr>
                             <tr><td>{{ __('user.father') }}</td><td>{{ $user->father_id ? $user->father->name : '' }}</td></tr>
                             <tr><td>{{ __('user.mother') }}</td><td>{{ $user->mother_id ? $user->mother->name : '' }}</td></tr>
-                            <tr><td>{{ __('user.childs_count') }}</td><td>{{ $dependentCount = $user->childs()->count() }}</td></tr>
-                            <tr><td>{{ __('user.spouses_count') }}</td><td>{{ $dependentCount += $user->marriages()->count() }}</td></tr>
-                            <tr><td>{{ __('user.managed_user') }}</td><td>{{ $dependentCount += $user->managedUsers()->count() }}</td></tr>
-                            <tr><td>{{ __('user.managed_couple') }}</td><td>{{ $dependentCount += $user->managedCouples()->count() }}</td></tr>
+                            <tr><td>{{ __('user.childs_count') }}</td><td>{{ $childsCount = $user->childs()->count() }}</td></tr>
+                            <tr><td>{{ __('user.spouses_count') }}</td><td>{{ $spousesCount = $user->marriages()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_user') }}</td><td>{{ $managedUserCount = $user->managedUsers()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_couple') }}</td><td>{{ $managedCoupleCount = $user->managedCouples()->count() }}</td></tr>
                         </table>
-                        @if ($dependentCount)
+                        @if ($childsCount + $spousesCount + $managedUserCount + $managedCoupleCount)
                             {{ __('user.replace_delete_text') }}
                             {{ Form::open([
                                 'route' => ['users.destroy', $user],
