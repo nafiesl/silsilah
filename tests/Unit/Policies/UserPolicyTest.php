@@ -35,4 +35,12 @@ class UserPolicyTest extends TestCase
 
         $this->assertTrue($manager->can('delete', $user));
     }
+
+    /** @test */
+    public function user_cannot_delete_their_own_data()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertFalse($user->can('delete', $user));
+    }
 }
