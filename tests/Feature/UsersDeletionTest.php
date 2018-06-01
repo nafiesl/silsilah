@@ -35,21 +35,15 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_childs_father_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $oldUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
         $oldUserChild = factory(User::class)->create(['father_id' => $oldUser->id]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $replacementUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
 
-        $this->visit(route('users.edit', $oldUser));
-        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
-
-        $this->click('del-user-'.$oldUser->id);
-        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
         $this->see(__('user.replace_delete_text'));
 
         $this->submitForm(__('user.replace_delete_button'), [
@@ -74,21 +68,15 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_childs_mother_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 2,
+        $oldUser = factory(User::class)->states('female')->create([
             'manager_id' => $manager->id,
         ]);
         $oldUserChild = factory(User::class)->create(['mother_id' => $oldUser->id]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 2,
+        $replacementUser = factory(User::class)->states('female')->create([
             'manager_id' => $manager->id,
         ]);
 
-        $this->visit(route('users.edit', $oldUser));
-        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
-
-        $this->click('del-user-'.$oldUser->id);
-        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
         $this->see(__('user.replace_delete_text'));
 
         $this->submitForm(__('user.replace_delete_button'), [
@@ -113,21 +101,15 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_users_manager_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $oldUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
         $oldUserManagedUser = factory(User::class)->create(['manager_id' => $oldUser->id]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $replacementUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
 
-        $this->visit(route('users.edit', $oldUser));
-        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
-
-        $this->click('del-user-'.$oldUser->id);
-        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
         $this->see(__('user.replace_delete_text'));
 
         $this->submitForm(__('user.replace_delete_button'), [
@@ -152,15 +134,13 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_couples_husband_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $oldUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
         $oldUserCouple = factory(Couple::class)->create([
             'husband_id' => $oldUser->id,
         ]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $replacementUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
 
@@ -189,15 +169,13 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_couples_wife_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 2,
+        $oldUser = factory(User::class)->states('female')->create([
             'manager_id' => $manager->id,
         ]);
         $oldUserCouple = factory(Couple::class)->create([
             'wife_id' => $oldUser->id,
         ]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 2,
+        $replacementUser = factory(User::class)->states('female')->create([
             'manager_id' => $manager->id,
         ]);
 
@@ -226,13 +204,13 @@ class UsersDeletionTest extends TestCase
     public function manager_can_delete_a_user_the_replace_couples_manager_id()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $oldUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
-        $oldCoupleManagedCouple = factory(Couple::class)->create(['manager_id' => $oldUser->id]);
-        $replacementUser = factory(User::class)->create([
-            'gender_id'  => 1,
+        $oldCoupleManagedCouple = factory(Couple::class)->create([
+            'manager_id' => $oldUser->id,
+        ]);
+        $replacementUser = factory(User::class)->states('male')->create([
             'manager_id' => $manager->id,
         ]);
 
@@ -255,5 +233,24 @@ class UsersDeletionTest extends TestCase
             'id'         => $oldCoupleManagedCouple->id,
             'manager_id' => $replacementUser->id,
         ]);
+    }
+
+    /** @test */
+    public function user_replacement_options_only_available_on_same_gender()
+    {
+        $manager = $this->loginAsUser();
+        $maleUser = factory(User::class)->states('male')->create([
+            'manager_id' => $manager->id,
+        ]);
+        $maleUserChild = factory(User::class)->create(['father_id' => $maleUser->id]);
+
+        $replacementMaleUser = factory(User::class)->states('male')->create();
+        $femaleUser = factory(User::class)->states('female')->create();
+
+        $this->visit(route('users.edit', [$maleUser, 'action' => 'delete']));
+
+        $this->see(__('user.replace_delete_text'));
+        $this->seeElement('option', ['value' => $replacementMaleUser->id]);
+        $this->dontSeeElement('option', ['value' => $femaleUser->id]);
     }
 }
