@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Storage;
 use App\User;
 use App\Couple;
@@ -106,7 +107,12 @@ class UsersController extends Controller
     {
         $this->authorize('edit', $user);
 
-        return view('users.edit', compact('user'));
+        $replacementUsers = [];
+        if (request('action') == 'delete') {
+            $replacementUsers = User::where('gender_id', $user->gender_id)->pluck('nickname', 'id');
+        }
+
+        return view('users.edit', compact('user', 'replacementUsers'));
     }
 
     /**
@@ -161,12 +167,40 @@ class UsersController extends Controller
     /**
      * Remove the specified User from storage.
      *
-     * @param  \App\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User $user
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        if ($request->has('replace_delete_button')) {
+            $attributes = $request->validate([
+                'replacement_user_id' => 'required|exists:users,id',
+            ], [
+                'replacement_user_id.required' => __('validation.user.replacement_user_id.required'),
+            ]);
+
+            DB::beginTransaction();
+            $this->replaceUserOnUsersTable($user->id, $attributes['replacement_user_id']);
+            $this->replaceUserOnCouplesTable($user->id, $attributes['replacement_user_id']);
+            $user->delete();
+            DB::commit();
+
+            return redirect()->route('users.show', $attributes['replacement_user_id']);
+        }
+
+        request()->validate([
+            'user_id' => 'required',
+        ]);
+
+        if (request('user_id') == $user->id && $user->delete()) {
+            return redirect()->route('users.search');
+        }
+
+        return back();
     }
 
     /**
@@ -193,5 +227,39 @@ class UsersController extends Controller
         $user->save();
 
         return back();
+    }
+
+    /**
+     * Replace User Ids on users table.
+     *
+     * @param string $oldUserId
+     * @param string $replacementUserId
+     *
+     * @return void
+     */
+    private function replaceUserOnUsersTable($oldUserId, $replacementUserId)
+    {
+        foreach (['father_id', 'mother_id', 'manager_id'] as $field) {
+            DB::table('users')->where($field, $oldUserId)->update([
+                $field => $replacementUserId,
+            ]);
+        }
+    }
+
+    /**
+     * Replace User Ids on couples table.
+     *
+     * @param string $oldUserId
+     * @param string $replacementUserId
+     *
+     * @return void
+     */
+    private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
+    {
+        foreach (['husband_id', 'wife_id', 'manager_id'] as $field) {
+            DB::table('couples')->where($field, $oldUserId)->update([
+                $field => $replacementUserId,
+            ]);
+        }
     }
 }

@@ -3,8 +3,10 @@
 namespace Tests\Unit;
 
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Couple;
 use Tests\TestCase;
+use Illuminate\Support\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -80,5 +82,25 @@ class UserTest extends TestCase
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
 
         $this->assertTrue($user->manager instanceof User);
+    }
+
+    /** @test */
+    public function a_user_has_many_managed_users_relation()
+    {
+        $user = factory(User::class)->create();
+        $managedUser = factory(User::class)->create(['manager_id' => $user->id]);
+
+        $this->assertInstanceOf(Collection::class, $user->managedUsers);
+        $this->assertInstanceOf(User::class, $user->managedUsers->first());
+    }
+
+    /** @test */
+    public function a_user_has_many_managed_couples_relation()
+    {
+        $user = factory(User::class)->create();
+        $managedCouple = factory(Couple::class)->create(['manager_id' => $user->id]);
+
+        $this->assertInstanceOf(Collection::class, $user->managedCouples);
+        $this->assertInstanceOf(Couple::class, $user->managedCouples->first());
     }
 }

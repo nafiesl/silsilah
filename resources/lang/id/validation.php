@@ -99,9 +99,9 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+    'user' => [
+        'replacement_user_id' => [
+            'required' => 'Wajib dipilih.',
         ],
     ],
 

@@ -19,14 +19,14 @@ return [
     'marriages'    => 'Marriages',
 
     // Actions
-    'edit'        => 'Edit Profile',
-    'set_father'  => 'Set Father',
-    'set_mother'  => 'Set Mother',
-    'set_parent'  => 'Set Parent',
-    'add_spouse'  => 'Add Spouse',
-    'add_wife'    => 'Add Wife',
-    'add_husband' => 'Add Husband',
-    'add_child'   => 'Add Child',
+    'edit'                            => 'Edit Profile',
+    'set_father'                      => 'Set Father',
+    'set_mother'                      => 'Set Mother',
+    'set_parent'                      => 'Set Parent',
+    'add_spouse'                      => 'Add Spouse',
+    'add_wife'                        => 'Add Wife',
+    'add_husband'                     => 'Add Husband',
+    'add_child'                       => 'Add Child',
     'add_child_from_existing_couples' => 'Parent (select spouse of :name)',
 
     // Attributes
@@ -49,4 +49,17 @@ return [
     // Photo
     'reupload_photo' => 'Re-upload Photo',
     'update_photo'   => 'Update Photo',
+
+    // Deletion confirm attributes
+    'delete'                => 'Delete User',
+    'delete_confirm'        => 'Are you sure to delete this user?',
+    'delete_confirm_button' => 'Yes, I am sure',
+    'spouses_count'         => 'Number of Spouse',
+    'childs_count'          => 'Number of Child',
+    'managed_user'          => 'Number of Managed Users',
+    'managed_couple'        => 'Number of Managed Couples',
+    'replacement'           => 'Replacement User',
+    'replace_confirm'       => 'Aree you sure replace then delete this user?',
+    'replace_delete_text'   => 'You must select other user as replacement.',
+    'replace_delete_button' => 'Replace and Delete User',
 ];

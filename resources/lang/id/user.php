@@ -19,14 +19,14 @@ return [
     'marriages'    => 'Pernikahan',
 
     // Actions
-    'edit'        => 'Edit Profil',
-    'set_father'  => 'Set Ayah',
-    'set_mother'  => 'Set Ibu',
-    'set_parent'  => 'Set Orang Tua',
-    'add_spouse'  => 'Tambah Pasangan',
-    'add_wife'    => 'Tambah Isteri',
-    'add_husband' => 'Tambah Suami',
-    'add_child'   => 'Tambah Anak',
+    'edit'                            => 'Edit Profil',
+    'set_father'                      => 'Set Ayah',
+    'set_mother'                      => 'Set Ibu',
+    'set_parent'                      => 'Set Orang Tua',
+    'add_spouse'                      => 'Tambah Pasangan',
+    'add_wife'                        => 'Tambah Isteri',
+    'add_husband'                     => 'Tambah Suami',
+    'add_child'                       => 'Tambah Anak',
     'add_child_from_existing_couples' => 'Dari Pernikahan (pilih pasangan :name)',
 
     // Attributes
@@ -49,4 +49,17 @@ return [
     // Photo
     'reupload_photo' => 'Upload ulang Foto',
     'update_photo'   => 'Update Foto',
+
+    // Deletion confirm attributes
+    'delete'                => 'Hapus User',
+    'delete_confirm'        => 'Anda yakin akan menghapus user ini?',
+    'delete_confirm_button' => 'Saya yakin hapus user ini',
+    'spouses_count'         => 'Jumlah Pasangan',
+    'childs_count'          => 'Jumlah Anak',
+    'managed_user'          => 'Jumlah User Dikelola',
+    'managed_couple'        => 'Jumlah Pasangan Dikelola',
+    'replacement'           => 'User Pengganti',
+    'replace_confirm'       => 'Anda yakin mengganti dan menghapus user ini?',
+    'replace_delete_text'   => 'Anda harus memilih user lain sebagai pengganti.',
+    'replace_delete_button' => 'Ganti dan Hapus User',
 ];
