@@ -60,6 +60,6 @@ return [
     'managed_couple'        => 'Jumlah Pasangan Dikelola',
     'replacement'           => 'User Pengganti',
     'replace_confirm'       => 'Anda yakin mengganti dan menghapus user ini?',
-    'replace_delete_text'   => 'Anda memilih user lain sebagai pengganti?',
+    'replace_delete_text'   => 'Anda harus memilih user lain sebagai pengganti.',
     'replace_delete_button' => 'Ganti dan Hapus User',
 ];

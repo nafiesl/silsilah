@@ -58,4 +58,8 @@ return [
     'childs_count'          => 'Number of Child',
     'managed_user'          => 'Number of Managed Users',
     'managed_couple'        => 'Number of Managed Couples',
+    'replacement'           => 'Replacement User',
+    'replace_confirm'       => 'Aree you sure replace then delete this user?',
+    'replace_delete_text'   => 'You must select other user as replacement.',
+    'replace_delete_button' => 'Replace and Delete User',
 ];
