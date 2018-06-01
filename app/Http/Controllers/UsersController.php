@@ -184,32 +184,8 @@ class UsersController extends Controller
             ]);
 
             DB::beginTransaction();
-            $oldUserId = $user->id;
-
-            DB::table('users')->where('father_id', $oldUserId)->update([
-                'father_id' => $attributes['replacement_user_id'],
-            ]);
-
-            DB::table('users')->where('mother_id', $oldUserId)->update([
-                'mother_id' => $attributes['replacement_user_id'],
-            ]);
-
-            DB::table('users')->where('manager_id', $oldUserId)->update([
-                'manager_id' => $attributes['replacement_user_id'],
-            ]);
-
-            DB::table('couples')->where('husband_id', $oldUserId)->update([
-                'husband_id' => $attributes['replacement_user_id'],
-            ]);
-
-            DB::table('couples')->where('wife_id', $oldUserId)->update([
-                'wife_id' => $attributes['replacement_user_id'],
-            ]);
-
-            DB::table('couples')->where('manager_id', $oldUserId)->update([
-                'manager_id' => $attributes['replacement_user_id'],
-            ]);
-
+            $this->replaceUserOnUsersTable($user->id, $attributes['replacement_user_id']);
+            $this->replaceUserOnCouplesTable($user->id, $attributes['replacement_user_id']);
             $user->delete();
             DB::commit();
 
@@ -251,5 +227,39 @@ class UsersController extends Controller
         $user->save();
 
         return back();
+    }
+
+    /**
+     * Replace User Ids on users table.
+     *
+     * @param string $oldUserId
+     * @param string $replacementUserId
+     *
+     * @return void
+     */
+    private function replaceUserOnUsersTable($oldUserId, $replacementUserId)
+    {
+        foreach (['father_id', 'mother_id', 'manager_id'] as $field) {
+            DB::table('users')->where($field, $oldUserId)->update([
+                $field => $replacementUserId,
+            ]);
+        }
+    }
+
+    /**
+     * Replace User Ids on couples table.
+     *
+     * @param string $oldUserId
+     * @param string $replacementUserId
+     *
+     * @return void
+     */
+    private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
+    {
+        foreach (['husband_id', 'wife_id', 'manager_id'] as $field) {
+            DB::table('couples')->where($field, $oldUserId)->update([
+                $field => $replacementUserId,
+            ]);
+        }
     }
 }
