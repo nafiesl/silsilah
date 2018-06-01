@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Storage;
 use App\User;
 use App\Couple;
@@ -106,7 +107,12 @@ class UsersController extends Controller
     {
         $this->authorize('edit', $user);
 
-        return view('users.edit', compact('user'));
+        $replacementUsers = [];
+        if (request('action') == 'delete') {
+            $replacementUsers = User::where('gender_id', $user->gender_id)->pluck('nickname', 'id');
+        }
+
+        return view('users.edit', compact('user', 'replacementUsers'));
     }
 
     /**
@@ -169,6 +175,34 @@ class UsersController extends Controller
     public function destroy(Request $request, User $user)
     {
         $this->authorize('delete', $user);
+
+        if ($request->has('replace_delete_button')) {
+            $attributes = $request->validate([
+                'replacement_user_id' => 'required|exists:users,id',
+            ], [
+                'replacement_user_id.required' => __('validation.user.replacement_user_id.required'),
+            ]);
+
+            DB::beginTransaction();
+            $oldUserId = $user->id;
+
+            DB::table('users')->where('father_id', $oldUserId)->update([
+                'father_id' => $attributes['replacement_user_id'],
+            ]);
+
+            DB::table('users')->where('mother_id', $oldUserId)->update([
+                'mother_id' => $attributes['replacement_user_id'],
+            ]);
+
+            DB::table('users')->where('manager_id', $oldUserId)->update([
+                'manager_id' => $attributes['replacement_user_id'],
+            ]);
+
+            $user->delete();
+            DB::commit();
+
+            return redirect()->route('users.show', $attributes['replacement_user_id']);
+        }
 
         request()->validate([
             'user_id' => 'required',

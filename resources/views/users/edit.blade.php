@@ -14,21 +14,37 @@
                             <tr><td>{{ __('user.gender') }}</td><td>{{ $user->gender }}</td></tr>
                             <tr><td>{{ __('user.father') }}</td><td>{{ $user->father_id ? $user->father->name : '' }}</td></tr>
                             <tr><td>{{ __('user.mother') }}</td><td>{{ $user->mother_id ? $user->mother->name : '' }}</td></tr>
-                            <tr><td>{{ __('user.childs_count') }}</td><td>{{ $user->childs()->count() }}</td></tr>
-                            <tr><td>{{ __('user.spouses_count') }}</td><td>{{ $user->marriages()->count() }}</td></tr>
-                            <tr><td>{{ __('user.managed_user') }}</td><td>{{ $user->managedUsers()->count() }}</td></tr>
-                            <tr><td>{{ __('user.managed_couple') }}</td><td>{{ $user->managedCouples()->count() }}</td></tr>
+                            <tr><td>{{ __('user.childs_count') }}</td><td>{{ $dependentCount = $user->childs()->count() }}</td></tr>
+                            <tr><td>{{ __('user.spouses_count') }}</td><td>{{ $dependentCount += $user->marriages()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_user') }}</td><td>{{ $dependentCount += $user->managedUsers()->count() }}</td></tr>
+                            <tr><td>{{ __('user.managed_couple') }}</td><td>{{ $dependentCount += $user->managedCouples()->count() }}</td></tr>
                         </table>
-                    </div>
-                    <div class="panel-body">{{ __('user.delete_confirm') }}</div>
-                    <div class="panel-footer">
-                        {!! FormField::delete(
-                            ['route' => ['users.destroy', $user]],
-                            __('user.delete_confirm_button'),
-                            ['class'=>'btn btn-danger'],
-                            ['user_id' => $user->id]
-                        ) !!}
-                        {{ link_to_route('users.edit', __('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
+                        @if ($dependentCount)
+                            {{ __('user.replace_delete_text') }}
+                            {{ Form::open([
+                                'route' => ['users.destroy', $user],
+                                'method' => 'delete',
+                                'onsubmit' => 'return confirm("'.__('user.replace_confirm').'")',
+                            ]) }}
+                            {!! FormField::select('replacement_user_id', $replacementUsers, [
+                                'label' => false,
+                                'placeholder' => __('user.replacement'),
+                            ]) !!}
+                            {{ Form::submit(__('user.replace_delete_button'), [
+                                'name' => 'replace_delete_button',
+                                'class' => 'btn btn-danger',
+                            ]) }}
+                            {{ link_to_route('users.edit', __('app.cancel'), [$user], ['class' => 'btn btn-default pull-right']) }}
+                            {{ Form::close() }}
+                        @else
+                            {!! FormField::delete(
+                                ['route' => ['users.destroy', $user]],
+                                __('user.delete_confirm_button'),
+                                ['class' => 'btn btn-danger'],
+                                ['user_id' => $user->id]
+                            ) !!}
+                            {{ link_to_route('users.edit', __('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
+                        @endif
                     </div>
                 </div>
             </div>

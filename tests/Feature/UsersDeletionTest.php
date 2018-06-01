@@ -29,4 +29,121 @@ class UsersDeletionTest extends TestCase
             'id' => $user->id,
         ]);
     }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_childs_father_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+        $oldUserChild = factory(User::class)->create(['father_id' => $oldUser->id]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', $oldUser));
+        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
+
+        $this->click('del-user-'.$oldUser->id);
+        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'father_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'        => $oldUserChild->id,
+            'father_id' => $replacementUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_childs_mother_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 2,
+            'manager_id' => $manager->id,
+        ]);
+        $oldUserChild = factory(User::class)->create(['mother_id' => $oldUser->id]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 2,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', $oldUser));
+        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
+
+        $this->click('del-user-'.$oldUser->id);
+        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'mother_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'        => $oldUserChild->id,
+            'mother_id' => $replacementUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_childs_manager_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+        $oldUserManagedUser = factory(User::class)->create(['manager_id' => $oldUser->id]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', $oldUser));
+        $this->seeElement('a', ['id' => 'del-user-'.$oldUser->id]);
+
+        $this->click('del-user-'.$oldUser->id);
+        $this->seePageIs(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'manager_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'         => $oldUserManagedUser->id,
+            'manager_id' => $replacementUser->id,
+        ]);
+    }
 }
