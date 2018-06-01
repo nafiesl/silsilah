@@ -11,7 +11,7 @@ class UserPolicy
 
     public function edit(User $user, User $editableUser)
     {
-        return $editableUser->manager_id == $user->id;
+        return $editableUser->id == $user->id || $editableUser->manager_id == $user->id;
     }
 
     public function delete(User $user, User $editableUser)

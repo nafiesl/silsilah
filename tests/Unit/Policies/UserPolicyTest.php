@@ -20,6 +20,14 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
+    public function user_can_edit_their_own_profile()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertTrue($user->can('edit', $user));
+    }
+
+    /** @test */
     public function manager_can_delete_a_user()
     {
         $manager = factory(User::class)->create();
