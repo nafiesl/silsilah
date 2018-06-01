@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use App\Couple;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -109,7 +110,7 @@ class UsersDeletionTest extends TestCase
     }
 
     /** @test */
-    public function manager_can_delete_a_user_the_replace_childs_manager_id()
+    public function manager_can_delete_a_user_the_replace_users_manager_id()
     {
         $manager = $this->loginAsUser();
         $oldUser = factory(User::class)->create([
@@ -143,6 +144,115 @@ class UsersDeletionTest extends TestCase
 
         $this->seeInDatabase('users', [
             'id'         => $oldUserManagedUser->id,
+            'manager_id' => $replacementUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_couples_husband_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+        $oldUserCouple = factory(Couple::class)->create([
+            'husband_id' => $oldUser->id,
+        ]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('couples', [
+            'husband_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'id'         => $oldUserCouple->id,
+            'husband_id' => $replacementUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_couples_wife_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 2,
+            'manager_id' => $manager->id,
+        ]);
+        $oldUserCouple = factory(Couple::class)->create([
+            'wife_id' => $oldUser->id,
+        ]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 2,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('couples', [
+            'wife_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'id'      => $oldUserCouple->id,
+            'wife_id' => $replacementUser->id,
+        ]);
+    }
+
+    /** @test */
+    public function manager_can_delete_a_user_the_replace_couples_manager_id()
+    {
+        $manager = $this->loginAsUser();
+        $oldUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+        $oldCoupleManagedCouple = factory(Couple::class)->create(['manager_id' => $oldUser->id]);
+        $replacementUser = factory(User::class)->create([
+            'gender_id'  => 1,
+            'manager_id' => $manager->id,
+        ]);
+
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', [
+            'id' => $oldUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('couples', [
+            'manager_id' => $oldUser->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'id'         => $oldCoupleManagedCouple->id,
             'manager_id' => $replacementUser->id,
         ]);
     }

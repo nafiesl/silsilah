@@ -198,6 +198,18 @@ class UsersController extends Controller
                 'manager_id' => $attributes['replacement_user_id'],
             ]);
 
+            DB::table('couples')->where('husband_id', $oldUserId)->update([
+                'husband_id' => $attributes['replacement_user_id'],
+            ]);
+
+            DB::table('couples')->where('wife_id', $oldUserId)->update([
+                'wife_id' => $attributes['replacement_user_id'],
+            ]);
+
+            DB::table('couples')->where('manager_id', $oldUserId)->update([
+                'manager_id' => $attributes['replacement_user_id'],
+            ]);
+
             $user->delete();
             DB::commit();
 
