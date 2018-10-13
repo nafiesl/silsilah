@@ -48,4 +48,21 @@ class UpdateRequest extends FormRequest
             'new_password.same_password' => trans('passwords.same_password'),
         ];
     }
+
+    public function validated()
+    {
+        $formData = parent::validated();
+
+        if ($formData['dod']) {
+            $formData['yod'] = substr($formData['dod'], 0, 4);
+        } else {
+            $formData['yod'] = $formData['yod'];
+        }
+
+        if ($formData['password']) {
+            $formData['password'] = bcrypt($formData['password']);
+        }
+
+        return $formData;
+    }
 }

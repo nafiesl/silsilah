@@ -27,7 +27,7 @@ class User extends Authenticatable
         'nickname', 'gender_id', 'name',
         'email', 'password',
         'address', 'phone',
-        'dof', 'dod',
+        'dob', 'dod', 'yod', 'city',
         'father_id', 'mother_id', 'parent_id',
     ];
 
