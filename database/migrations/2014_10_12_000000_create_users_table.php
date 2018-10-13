@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->uuid('mother_id')->nullable();
             $table->uuid('parent_id')->nullable();
             $table->date('dob')->nullable();
+            $table->unsignedTinyInteger('birth_order')->nullable();
             $table->date('dod')->nullable();
             $table->date('yod')->nullable();
             $table->string('email')->unique()->nullable();

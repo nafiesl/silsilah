@@ -26,17 +26,18 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname'  => 'required|string|max:255',
-            'name'      => 'required|string|max:255',
-            'gender_id' => 'required|numeric',
-            'dob'       => 'nullable|date|date_format:Y-m-d',
-            'dod'       => 'nullable|date|date_format:Y-m-d',
-            'yod'       => 'nullable|date_format:Y',
-            'phone'     => 'nullable|string|max:255',
-            'address'   => 'nullable|string|max:255',
-            'city'      => 'nullable|string|max:255',
-            'email'     => 'nullable|string|max:255',
-            'password'  => 'nullable|min:6|max:15',
+            'nickname'    => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
+            'gender_id'   => 'required|numeric',
+            'dob'         => 'nullable|date|date_format:Y-m-d',
+            'dod'         => 'nullable|date|date_format:Y-m-d',
+            'yod'         => 'nullable|date_format:Y',
+            'phone'       => 'nullable|string|max:255',
+            'address'     => 'nullable|string|max:255',
+            'city'        => 'nullable|string|max:255',
+            'email'       => 'nullable|string|max:255',
+            'password'    => 'nullable|min:6|max:15',
+            'birth_order' => 'nullable|numeric|min:1',
         ];
     }
 

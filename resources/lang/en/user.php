@@ -17,6 +17,7 @@ return [
     'grand_father' => 'Grand Father',
     'nieces'       => 'Nieces',
     'marriages'    => 'Marriages',
+    'birth_order'  => 'Birth Order',
 
     // Actions
     'edit'                            => 'Edit Profile',

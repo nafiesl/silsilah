@@ -130,6 +130,7 @@ class UsersController extends Controller
         $user->gender_id = $request->get('gender_id');
         $user->dob = $request->get('dob');
         $user->dod = $request->get('dod');
+        $user->birth_order = $request->get('birth_order');
 
         if ($request->get('dod')) {
             $user->yod = substr($request->get('dod'), 0, 4);
