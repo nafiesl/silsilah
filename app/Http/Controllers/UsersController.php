@@ -142,8 +142,8 @@ class UsersController extends Controller
         $user->city = $request->get('city');
         $user->email = $request->get('email');
 
-        if ($request->get('password')) {
-            $user->password = bcrypt($request->get('password'));
+        if ($request->new_password) {
+            $user->password = bcrypt($request->new_password);
         }
 
         $user->save();
