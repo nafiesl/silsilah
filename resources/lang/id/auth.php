@@ -31,6 +31,6 @@ return [
     'new_password'              => 'Password Baru',
     'new_password_confirmation' => 'Ulangi Password Baru',
     'send_reset_password_link'  => 'Kirim Link Reset Password',
-    'change_password_success'   => 'Password Anda sudah berhasil dirubah.',
+    'change_password_success'   => 'Password Anda sudah berhasil di ubah.',
     'change_password_error'     => 'Awww, sistem gagal merubah password Anda',
 ];
