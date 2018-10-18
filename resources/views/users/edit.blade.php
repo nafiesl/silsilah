@@ -90,8 +90,6 @@
                 <div class="panel-body">
                     {!! FormField::email('email', ['label' => trans('auth.email'), 'placeholder' => trans('app.example').' nama@mail.com']) !!}
                     {!! FormField::password('password', ['label' => trans('auth.old_password'), 'placeholder' => '******', 'value' => '']) !!}
-                    {!! FormField::password('new_password', ['label' => trans('auth.new_password'), 'placeholder' => '******', 'value' => '']) !!}
-                    {!! FormField::password ('new_password_confirmation', ['label' => trans('auth.new_password_confirmation'), 'placeholder' => '******', 'value' => '']) !!}
                 </div>
             </div>
             <div class="text-right">

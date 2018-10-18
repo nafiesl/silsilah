@@ -66,8 +66,6 @@ class UsersProfileTest extends TestCase
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
             'password' => 'Secr3t',
-            'new_password' => 'Secr3t2',
-            'new_password_confirmation' => 'Secr3t2',
         ]);
 
         $user = $user->fresh();
