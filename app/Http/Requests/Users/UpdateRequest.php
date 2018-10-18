@@ -39,4 +39,12 @@ class UpdateRequest extends FormRequest
             'password'  => 'nullable|min:6|max:15',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'password.current_password'  => trans('passwords.old_password'),
+            'new_password.same_password' => trans('passwords.same_password'),
+        ];
+    }
 }

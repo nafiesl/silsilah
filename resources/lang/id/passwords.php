@@ -18,5 +18,7 @@ return [
     "sent"      => "Kami sudah mengirim email yang berisi tautan untuk mereset Password Anda!",
     "token"     => "Token Reset Password tidak sah.",
     "user"      => "Kami tidak dapat menemukan pengguna dengan email tersebut.",
+    "old_password" => "Password yang Anda masukan tidak sesuai dengan password yang tersimpan. Silahkan coba kembali.",
+    "same_password" => "Password baru Anda tidak boleh sama dengan password lama. Silahkan pilih password yang berbeda."
 
 ];

@@ -89,7 +89,7 @@
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('app.login_account') }}</h3></div>
                 <div class="panel-body">
                     {!! FormField::email('email', ['label' => trans('auth.email'), 'placeholder' => trans('app.example').' nama@mail.com']) !!}
-                    {!! FormField::text('password', ['label' => trans('auth.password'), 'placeholder' => '******', 'value' => '']) !!}
+                    {!! FormField::password('password', ['label' => trans('auth.old_password'), 'placeholder' => '******', 'value' => '']) !!}
                 </div>
             </div>
             <div class="text-right">
