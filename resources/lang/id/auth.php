@@ -19,6 +19,7 @@ return [
     'password'                  => 'Password',
     'login'                     => 'Login',
     'logout'                    => 'Keluar',
+    'back'                      => 'Kembali',
     'register'                  => 'Buat Akun Baru',
     'have_an_account'           => 'Saya sudah punya Akun',
     'need_account'              => 'Belum punya Akun?',
@@ -30,4 +31,6 @@ return [
     'new_password'              => 'Password Baru',
     'new_password_confirmation' => 'Ulangi Password Baru',
     'send_reset_password_link'  => 'Kirim Link Reset Password',
+    'change_password_success'   => 'Password Anda sudah berhasil dirubah.',
+    'change_password_error'     => 'Awww, sistem gagal merubah password Anda',
 ];

@@ -19,6 +19,7 @@ return [
     'password'                  => 'Password',
     'login'                     => 'Login',
     'logout'                    => 'Logout',
+    'back'                      => 'Back',
     'register'                  => 'Create new Account',
     'have_an_account'           => 'I have an Account',
     'need_account'              => 'Need an Account?',
@@ -30,4 +31,6 @@ return [
     'new_password'              => 'New Password',
     'new_password_confirmation' => 'Repeat New Password',
     'send_reset_password_link'  => 'Send Reset Password Link',
+    'change_password_success'   => 'Your password has changed',
+    'change_password_error'    => 'Uh-oh, change password failed',
 ];
