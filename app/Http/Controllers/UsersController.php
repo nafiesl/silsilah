@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Storage;
 use App\User;
 use App\Couple;
@@ -11,6 +14,15 @@ use App\Http\Requests\Users\UpdateRequest;
 
 class UsersController extends Controller
 {
+    /**
+     * UsersController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth',['only' => ['changePasswordForm','changePassword']]);
+    }
+
+
     /**
      * Search user by keyword.
      *
@@ -111,6 +123,36 @@ class UsersController extends Controller
         }
 
         return view('users.edit', compact('user', 'replacementUsers'));
+    }
+
+    public function changePasswordForm()
+    {
+        $user = Auth::user();
+        return view('users.password', compact('user'));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+        $validator = Validator::make($request->all(),[
+            'old_password' => 'required|string|min:6|',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $validator->after(function ($validator) use ($request,$user) {
+            if (Hash::check($request->old_password, $user->password)) {
+                $user->password = bcrypt($request->new_password);
+                $user->update();
+            }else{
+                $validator->errors()->add('old_password', 'Old password is wrong !');
+            }
+        });
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        return redirect('/');
     }
 
     /**
