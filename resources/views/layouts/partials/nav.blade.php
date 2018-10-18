@@ -40,7 +40,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('backups.index') }}">{{ trans('backup.list') }}</a></li>
                             <li><a href="{{ route('profile') }}">{{ trans('app.my_profile') }}</a></li>
-                            <li><a href="{{ route('profile.change-password.form') }}">Ganti Password</a></li>
+                            <li><a href="{{ route('profile.change-password.form') }}">{{ trans('auth.change_password') }}</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
