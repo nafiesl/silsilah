@@ -36,16 +36,15 @@ class UpdateRequest extends FormRequest
             'address'   => 'nullable|string|max:255',
             'city'      => 'nullable|string|max:255',
             'email'     => 'nullable|string|max:255',
-            'password'  => 'nullable|min:6|max:15|current_password',
-            'new_password'  => 'nullable|min:6|max:15|same_password|confirmed',
+            'password'  => 'nullable|min:6|max:15',
         ];
     }
 
     public function messages()
     {
         return [
-           'password.current_password' => trans('passwords.old_password'),
-           'new_password.same_password' => trans('passwords.same_password'),
+            'password.current_password'  => trans('passwords.old_password'),
+            'new_password.same_password' => trans('passwords.same_password'),
         ];
     }
 }
