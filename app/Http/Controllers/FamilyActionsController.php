@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Couple;
 use App\User;
-use Illuminate\Http\Request;
+use App\Couple;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Http\Request;
 
 class FamilyActionsController extends Controller
 {
@@ -60,9 +60,10 @@ class FamilyActionsController extends Controller
     public function addChild(Request $request, User $user)
     {
         $this->validate($request, [
-            'add_child_name'      => 'required|string|max:255',
-            'add_child_gender_id' => 'required|in:1,2',
-            'add_child_parent_id' => 'nullable|exists:couples,id',
+            'add_child_name'        => 'required|string|max:255',
+            'add_child_gender_id'   => 'required|in:1,2',
+            'add_child_parent_id'   => 'nullable|exists:couples,id',
+            'add_child_birth_order' => 'nullable|numeric',
         ]);
 
         $child = new User;
@@ -71,6 +72,7 @@ class FamilyActionsController extends Controller
         $child->nickname = $request->get('add_child_name');
         $child->gender_id = $request->get('add_child_gender_id');
         $child->parent_id = $request->get('add_child_parent_id');
+        $child->birth_order = $request->get('add_child_birth_order');
         $child->manager_id = auth()->id();
 
         \DB::beginTransaction();

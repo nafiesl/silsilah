@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManageUserFamiliesTest extends TestCase
 {
@@ -110,6 +110,33 @@ class ManageUserFamiliesTest extends TestCase
             'father_id'  => $husband->id,
             'mother_id'  => $wife->id,
             'manager_id' => $husband->id,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_add_children_with_birth_order()
+    {
+        $user = $this->loginAsUser(['gender_id' => 1]);
+        $this->visit(route('profile'));
+        $this->seePageIs(route('profile'));
+        $this->click(trans('user.add_child'));
+        $this->seeElement('input', ['name' => 'add_child_birth_order']);
+
+        $this->submitForm(trans('user.add_child'), [
+            'add_child_name'        => 'Nama Anak 1',
+            'add_child_gender_id'   => 1,
+            'add_child_birth_order' => 2,
+            'add_child_parent_id'   => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'nickname'    => 'Nama Anak 1',
+            'gender_id'   => 1,
+            'father_id'   => $user->id,
+            'mother_id'   => null,
+            'parent_id'   => null,
+            'manager_id'  => $user->id,
+            'birth_order' => 2,
         ]);
     }
 

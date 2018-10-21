@@ -14,7 +14,7 @@
                 {{ $child->profileLink() }} ({{ $child->gender }})
             </li>
         @empty
-            <li class="list-group-item"><i>{{ trans('app.childs_were_not_recorded') }}</i></li>
+            <li class="list-group-item">{{ trans('app.childs_were_not_recorded') }}</li>
         @endforelse
         @can('edit', $user)
         @if (request('action') == 'add_child')
@@ -29,6 +29,7 @@
                 </div>
             </div>
             {!! FormField::select('add_child_parent_id', $usersMariageList, ['label' => trans('user.add_child_from_existing_couples', ['name' => $user->name]), 'placeholder' => trans('app.unknown')]) !!}
+            {!! FormField::text('add_child_birth_order', ['label' => trans('user.birth_order'), 'type' => 'number', 'min' => 1]) !!}
             {{ Form::submit(trans('user.add_child'), ['class' => 'btn btn-success btn-sm']) }}
             {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-sm']) }}
             {{ Form::close() }}
