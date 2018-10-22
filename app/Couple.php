@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Model;
 
 class Couple extends Model
 {
@@ -26,7 +26,7 @@ class Couple extends Model
 
     public function childs()
     {
-        return $this->hasMany(User::class, 'parent_id');
+        return $this->hasMany(User::class, 'parent_id')->orderBy('birth_order');
     }
 
     public function addChild(User $user)

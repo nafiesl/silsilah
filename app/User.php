@@ -23,11 +23,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'id',
+        'id', 'birth_order',
         'nickname', 'gender_id', 'name',
         'email', 'password',
         'address', 'phone',
-        'dof', 'dod',
+        'dob', 'dod', 'yod', 'city',
         'father_id', 'mother_id', 'parent_id',
     ];
 
@@ -104,10 +104,10 @@ class User extends Authenticatable
     public function childs()
     {
         if ($this->gender_id == 2) {
-            return $this->hasMany(User::class, 'mother_id');
+            return $this->hasMany(User::class, 'mother_id')->orderBy('birth_order');
         }
 
-        return $this->hasMany(User::class, 'father_id');
+        return $this->hasMany(User::class, 'father_id')->orderBy('birth_order');
     }
 
     public function profileLink($type = 'profile')
@@ -206,7 +206,7 @@ class User extends Authenticatable
                 }
 
             })
-            ->get();
+            ->orderBy('birth_order')->get();
     }
 
     public function parent()

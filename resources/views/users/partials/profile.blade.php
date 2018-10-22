@@ -7,9 +7,7 @@
         <tbody>
             <tr>
                 <th class="col-sm-4">{{ trans('user.name') }}</th>
-                <td class="col-sm-8">
-                    {{ $user->profileLink() }}
-                </td>
+                <td class="col-sm-8">{{ $user->profileLink() }}</td>
             </tr>
             <tr>
                 <th>{{ trans('user.nickname') }}</th>
@@ -22,6 +20,10 @@
             <tr>
                 <th>{{ trans('user.dob') }}</th>
                 <td>{{ $user->dob }}</td>
+            </tr>
+            <tr>
+                <th>{{ trans('user.birth_order') }}</th>
+                <td>{{ $user->birth_order }}</td>
             </tr>
             @if ($user->dod)
             <tr>

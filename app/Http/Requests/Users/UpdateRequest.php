@@ -26,17 +26,18 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname'  => 'required|string|max:255',
-            'name'      => 'required|string|max:255',
-            'gender_id' => 'required|numeric',
-            'dob'       => 'nullable|date|date_format:Y-m-d',
-            'dod'       => 'nullable|date|date_format:Y-m-d',
-            'yod'       => 'nullable|date_format:Y',
-            'phone'     => 'nullable|string|max:255',
-            'address'   => 'nullable|string|max:255',
-            'city'      => 'nullable|string|max:255',
-            'email'     => 'nullable|string|max:255',
-            'password'  => 'nullable|min:6|max:15',
+            'nickname'    => 'required|string|max:255',
+            'name'        => 'required|string|max:255',
+            'gender_id'   => 'required|numeric',
+            'dob'         => 'nullable|date|date_format:Y-m-d',
+            'dod'         => 'nullable|date|date_format:Y-m-d',
+            'yod'         => 'nullable|date_format:Y',
+            'phone'       => 'nullable|string|max:255',
+            'address'     => 'nullable|string|max:255',
+            'city'        => 'nullable|string|max:255',
+            'email'       => 'nullable|string|max:255',
+            'password'    => 'nullable|min:6|max:15',
+            'birth_order' => 'nullable|numeric|min:1',
         ];
     }
 
@@ -46,5 +47,22 @@ class UpdateRequest extends FormRequest
             'password.current_password'  => trans('passwords.old_password'),
             'new_password.same_password' => trans('passwords.same_password'),
         ];
+    }
+
+    public function validated()
+    {
+        $formData = parent::validated();
+
+        if ($formData['dod']) {
+            $formData['yod'] = substr($formData['dod'], 0, 4);
+        } else {
+            $formData['yod'] = $formData['yod'];
+        }
+
+        if ($formData['password']) {
+            $formData['password'] = bcrypt($formData['password']);
+        }
+
+        return $formData;
     }
 }

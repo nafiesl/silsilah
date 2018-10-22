@@ -17,6 +17,7 @@ return [
     'grand_father' => 'Kakek',
     'nieces'       => 'Keponakan',
     'marriages'    => 'Pernikahan',
+    'birth_order'  => 'Anak ke',
 
     // Actions
     'edit'                            => 'Edit Profil',

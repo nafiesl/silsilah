@@ -70,6 +70,11 @@
                         <div class="col-md-6">{!! FormField::text('dob', ['label' => trans('user.dob'), 'placeholder' => trans('app.example').' 1959-07-20']) !!}</div>
                     </div>
                     <div class="row">
+                        <div class="col-md-4">
+                            {!! FormField::text('birth_order', ['label' => trans('user.birth_order'), 'type' => 'number', 'min' => 1]) !!}
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">{!! FormField::text('yod', ['label' => trans('user.yod'), 'placeholder' => trans('app.example').' 2003']) !!}</div>
                         <div class="col-md-6">{!! FormField::text('dod', ['label' => trans('user.dod'), 'placeholder' => trans('app.example').' 2003-10-17']) !!}</div>
                     </div>
@@ -78,7 +83,7 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">{{ trans('app.address') }} & {{ trans('app.contact') }}</h3></div>
+                <div class="panel-heading"><h3 class="panel-title">{{ trans('app.address') }} &amp; {{ trans('app.contact') }}</h3></div>
                 <div class="panel-body">
                     {!! FormField::textarea('address', ['label' => trans('app.address')]) !!}
                     {!! FormField::text('city', ['label' => trans('app.city'), 'placeholder' => trans('app.example').' Jakarta']) !!}
