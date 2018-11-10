@@ -126,3 +126,21 @@
     </div>
 @endif
 @endsection
+
+@section('ext_css')
+<link href="{{ asset('css/plugins/jquery.datetimepicker.css') }}" rel="stylesheet">
+@endsection
+
+@section('script')
+<script src="{{ asset('js/plugins/jquery.datetimepicker.js') }}"></script>jQuery('#datetimepicker').datetimepicker();
+<script>
+    (function() {
+        $('#dob,#dod').datetimepicker({
+            timepicker:false,
+            format:'Y-m-d',
+            closeOnDateSelect: true,
+            scrollInput: false
+        });
+    })();
+</script>
+@endsection
