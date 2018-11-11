@@ -14,7 +14,7 @@ class UsersController extends Controller
     /**
      * Search user by keyword.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function search(Request $request)
     {
@@ -36,9 +36,8 @@ class UsersController extends Controller
     /**
      * Display the specified User.
      *
-     * @param \App\User $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
      */
     public function show(User $user)
     {
@@ -59,9 +58,8 @@ class UsersController extends Controller
     /**
      * Display the user's family chart.
      *
-     * @param \App\User $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
      */
     public function chart(User $user)
     {
@@ -79,15 +77,19 @@ class UsersController extends Controller
         $colspan = $colspan < 4 ? 4 : $colspan;
 
         $siblings = $user->siblings();
-        return view('users.chart', compact('user', 'childs', 'father', 'mother', 'fatherGrandpa', 'fatherGrandma', 'motherGrandpa', 'motherGrandma', 'siblings', 'colspan'));
+
+        return view('users.chart', compact(
+            'user', 'childs', 'father', 'mother', 'fatherGrandpa',
+            'fatherGrandma', 'motherGrandpa', 'motherGrandma',
+            'siblings', 'colspan'
+        ));
     }
 
     /**
      * Show user family tree.
      *
-     * @param \App\User $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
      */
     public function tree(User $user)
     {
@@ -97,9 +99,8 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified User.
      *
-     * @param \App\User $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
      */
     public function edit(User $user)
     {
@@ -116,10 +117,9 @@ class UsersController extends Controller
     /**
      * Update the specified User in storage.
      *
-     * @param \App\Http\Requests\Users\UpdateRequest $request
-     * @param \App\User                $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\Users\UpdateRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRequest $request, User $user)
     {
@@ -131,10 +131,9 @@ class UsersController extends Controller
     /**
      * Remove the specified User from storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\User                $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, User $user)
     {
@@ -170,10 +169,9 @@ class UsersController extends Controller
     /**
      * Upload users photo.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\User                $user
-     *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function photoUpload(Request $request, User $user)
     {
@@ -196,9 +194,8 @@ class UsersController extends Controller
     /**
      * Replace User Ids on users table.
      *
-     * @param string $oldUserId
-     * @param string $replacementUserId
-     *
+     * @param  string  $oldUserId
+     * @param  string  $replacementUserId
      * @return void
      */
     private function replaceUserOnUsersTable($oldUserId, $replacementUserId)
