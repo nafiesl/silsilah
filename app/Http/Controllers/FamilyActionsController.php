@@ -9,9 +9,16 @@ use Illuminate\Http\Request;
 
 class FamilyActionsController extends Controller
 {
+    /**
+     * Set father for a user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function setFather(Request $request, User $user)
     {
-        $this->validate($request, [
+        $request->validate([
             'set_father_id' => 'nullable',
             'set_father'    => 'required_without:set_father_id|max:255',
         ]);
@@ -33,9 +40,16 @@ class FamilyActionsController extends Controller
         return back();
     }
 
+    /**
+     * Set mother for a user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function setMother(Request $request, User $user)
     {
-        $this->validate($request, [
+        $request->validate([
             'set_mother_id' => 'nullable',
             'set_mother'    => 'required_without:set_mother_id|max:255',
         ]);
@@ -57,9 +71,16 @@ class FamilyActionsController extends Controller
         return back();
     }
 
+    /**
+     * Add child for a user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addChild(Request $request, User $user)
     {
-        $this->validate($request, [
+        $request->validate([
             'add_child_name'        => 'required|string|max:255',
             'add_child_gender_id'   => 'required|in:1,2',
             'add_child_parent_id'   => 'nullable|exists:couples,id',
@@ -97,9 +118,16 @@ class FamilyActionsController extends Controller
         return back();
     }
 
+    /**
+     * Add wife for male user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addWife(Request $request, User $user)
     {
-        $this->validate($request, [
+        $request->validate([
             'set_wife_id'   => 'nullable',
             'set_wife'      => 'required_without:set_wife_id|max:255',
             'marriage_date' => 'nullable|date|date_format:Y-m-d',
@@ -121,6 +149,13 @@ class FamilyActionsController extends Controller
         return back();
     }
 
+    /**
+     * Add husband for female user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addHusband(Request $request, User $user)
     {
         $this->validate($request, [
@@ -145,11 +180,18 @@ class FamilyActionsController extends Controller
         return back();
     }
 
+    /**
+     * Set parent for a user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function setParent(Request $request, User $user)
     {
         $user->parent_id = $request->get('set_parent_id');
         $user->save();
 
-        return redirect()->route('users.show', $user->id);
+        return redirect()->route('users.show', $user);
     }
 }
