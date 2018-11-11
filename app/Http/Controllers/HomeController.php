@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -20,7 +19,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -35,10 +34,10 @@ class HomeController extends Controller
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
         return view('users.show', [
-            'user' => $user,
+            'user'             => $user,
             'usersMariageList' => $usersMariageList,
-            'malePersonList' => $malePersonList,
-            'femalePersonList' => $femalePersonList
+            'malePersonList'   => $malePersonList,
+            'femalePersonList' => $femalePersonList,
         ]);
     }
 }
