@@ -15,6 +15,9 @@ Route::get('/', 'UsersController@search');
 
 Auth::routes();
 
+Route::get('profile/update-password', 'Auth\ChangePasswordController@show')->middleware('auth')->name('profile.change-password.form');
+Route::post('profile/update-password', 'Auth\ChangePasswordController@update')->middleware('auth')->name('profile.change-password.update');
+
 Route::get('home', 'HomeController@index')->name('home');
 Route::get('profile', 'HomeController@index')->name('profile');
 Route::post('family-actions/{user}/set-father', 'FamilyActionsController@setFather')->name('family-actions.set-father');
@@ -23,9 +26,6 @@ Route::post('family-actions/{user}/add-child', 'FamilyActionsController@addChild
 Route::post('family-actions/{user}/add-wife', 'FamilyActionsController@addWife')->name('family-actions.add-wife');
 Route::post('family-actions/{user}/add-husband', 'FamilyActionsController@addHusband')->name('family-actions.add-husband');
 Route::post('family-actions/{user}/set-parent', 'FamilyActionsController@setParent')->name('family-actions.set-parent');
-
-Route::get('profile/update-password', 'ChangePasswordController@show')->middleware('auth')->name('profile.change-password.form');
-Route::post('profile/update-password', 'ChangePasswordController@update')->middleware('auth')->name('profile.change-password.update');
 
 Route::get('profile-search', 'UsersController@search')->name('users.search');
 Route::get('users/{user}', 'UsersController@show')->name('users.show');

@@ -15,15 +15,15 @@ class ChangePasswordTest extends TestCase
         $user = $this->loginAsUser(['password' => bcrypt('secret')]);
 
         $this->visit(route('home'));
-        $this->click(trans('auth.change_password'));
+        $this->click(__('auth.change_password'));
 
-        $this->submitForm(trans('auth.change_password'), [
+        $this->submitForm(__('auth.change_password'), [
             'old_password'              => 'secret',
             'new_password'              => 'rahasia',
             'new_password_confirmation' => 'rahasia',
         ]);
 
-        $this->seeText(trans('auth.change_password_success'));
+        $this->seeText(__('auth.change_password_success'));
 
         $this->assertTrue(
             app('hash')->check('rahasia', $user->password),
@@ -37,15 +37,15 @@ class ChangePasswordTest extends TestCase
         $user = $this->loginAsUser(['password' => bcrypt('secret')]);
 
         $this->visit(route('home'));
-        $this->click(trans('auth.change_password'));
+        $this->click(__('auth.change_password'));
 
-        $this->submitForm(trans('auth.change_password'), [
+        $this->submitForm(__('auth.change_password'), [
             'old_password'              => 'member1',
             'new_password'              => 'rahasia',
             'new_password_confirmation' => 'rahasia',
         ]);
 
-        $this->seeText(trans('passwords.old_password'));
+        $this->seeText(__('passwords.old_password'));
 
         $this->assertTrue(
             app('hash')->check('secret', $user->password),
