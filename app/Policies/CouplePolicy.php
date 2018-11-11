@@ -2,16 +2,23 @@
 
 namespace App\Policies;
 
-use App\Couple;
 use App\User;
+use App\Couple;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CouplePolicy
 {
     use HandlesAuthorization;
 
-    public function edit(User $user, Couple $editableCouple)
+    /**
+     * Determine whether the user can edit the couple.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Couple  $couple
+     * @return mixed
+     */
+    public function edit(User $user, Couple $couple)
     {
-        return $editableCouple->manager_id == $user->id;
+        return $couple->manager_id == $user->id;
     }
 }
