@@ -2,6 +2,12 @@
 
 use App\User;
 
+/**
+ * Convert file size to have unit string.
+ *
+ * @param  int  $bytes
+ * @return string
+ */
 function formatSizeUnits($bytes)
 {
     if ($bytes >= 1073741824) {
@@ -21,6 +27,13 @@ function formatSizeUnits($bytes)
     return $bytes;
 }
 
+/**
+ * Get user photo image tag.
+ *
+ * @param  \App\User  $user
+ * @param  array  $attributes
+ * @return \Illuminate\Support\HtmlString
+ */
 function userPhoto(User $user, $attributes = [])
 {
     return Html::image(
@@ -30,6 +43,13 @@ function userPhoto(User $user, $attributes = [])
     );
 }
 
+/**
+ * Get user photo by path. Return default gender icon by default.
+ *
+ * @param  string  $photoPath
+ * @param  int  $genderId
+ * @return string
+ */
 function userPhotoPath($photoPath, $genderId)
 {
     if (is_file(public_path('storage/'.$photoPath))) {
