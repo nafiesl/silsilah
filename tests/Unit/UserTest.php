@@ -47,6 +47,34 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function male_person_marriages_ordered_by_marriage_date()
+    {
+        $husband = factory(User::class)->states('male')->create();
+        $wife1 = factory(User::class)->states('female')->create();
+        $wife2 = factory(User::class)->states('female')->create();
+        $husband->addWife($wife1, '1990-02-13');
+        $husband->addWife($wife2, '1999-04-21');
+
+        $marriages = $husband->fresh()->marriages;
+        $this->assertEquals('1990-02-13', $marriages->first()->marriage_date);
+        $this->assertEquals('1999-04-21', $marriages->last()->marriage_date);
+    }
+
+    /** @test */
+    public function female_person_marriages_ordered_by_marriage_date()
+    {
+        $wife = factory(User::class)->states('female')->create();
+        $husband1 = factory(User::class)->states('male')->create();
+        $husband2 = factory(User::class)->states('male')->create();
+        $wife->addHusband($husband1, '1980-02-13');
+        $wife->addHusband($husband2, '1989-04-21');
+
+        $marriages = $wife->fresh()->marriages;
+        $this->assertEquals('1980-02-13', $marriages->first()->marriage_date);
+        $this->assertEquals('1989-04-21', $marriages->last()->marriage_date);
+    }
+
+    /** @test */
     public function user_can_ony_marry_same_person_once()
     {
         $husband = factory(User::class)->states('male')->create();

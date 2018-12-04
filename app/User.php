@@ -179,10 +179,10 @@ class User extends Authenticatable
     public function marriages()
     {
         if ($this->gender_id == 1) {
-            return $this->hasMany(Couple::class, 'husband_id');
+            return $this->hasMany(Couple::class, 'husband_id')->orderBy('marriage_date');
         }
 
-        return $this->hasMany(Couple::class, 'wife_id');
+        return $this->hasMany(Couple::class, 'wife_id')->orderBy('marriage_date');
     }
 
     public function siblings()
