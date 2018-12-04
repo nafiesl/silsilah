@@ -155,11 +155,11 @@ class UsersController extends Controller
             return redirect()->route('users.show', $attributes['replacement_user_id']);
         }
 
-        request()->validate([
+        $request->validate([
             'user_id' => 'required',
         ]);
 
-        if (request('user_id') == $user->id && $user->delete()) {
+        if ($request->get('user_id') == $user->id && $user->delete()) {
             return redirect()->route('users.search');
         }
 
