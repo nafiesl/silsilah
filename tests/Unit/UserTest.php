@@ -55,9 +55,16 @@ class UserTest extends TestCase
         $husband->addWife($wife1, '1990-02-13');
         $husband->addWife($wife2, '1999-04-21');
 
-        $marriages = $husband->fresh()->marriages;
+        $husband = $husband->fresh();
+        $marriages = $husband->marriages;
         $this->assertEquals('1990-02-13', $marriages->first()->marriage_date);
         $this->assertEquals('1999-04-21', $marriages->last()->marriage_date);
+
+        $this->assertEquals($wife1->name, $husband->couples->first()->name);
+        $this->assertEquals($wife2->name, $husband->couples->last()->name);
+
+        $this->assertEquals($wife1->name, $husband->wifes->first()->name);
+        $this->assertEquals($wife2->name, $husband->wifes->last()->name);
     }
 
     /** @test */
@@ -69,9 +76,16 @@ class UserTest extends TestCase
         $wife->addHusband($husband1, '1980-02-13');
         $wife->addHusband($husband2, '1989-04-21');
 
-        $marriages = $wife->fresh()->marriages;
+        $wife = $wife->fresh();
+        $marriages = $wife->marriages;
         $this->assertEquals('1980-02-13', $marriages->first()->marriage_date);
         $this->assertEquals('1989-04-21', $marriages->last()->marriage_date);
+
+        $this->assertEquals($husband1->name, $wife->couples->first()->name);
+        $this->assertEquals($husband2->name, $wife->couples->last()->name);
+
+        $this->assertEquals($husband1->name, $wife->husbands->first()->name);
+        $this->assertEquals($husband2->name, $wife->husbands->last()->name);
     }
 
     /** @test */
