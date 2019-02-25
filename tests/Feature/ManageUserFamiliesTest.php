@@ -168,6 +168,7 @@ class ManageUserFamiliesTest extends TestCase
             'husband_id'    => $user->id,
             'wife_id'       => $wife->id,
             'marriage_date' => '2010-01-01',
+            'manager_id'    => $user->id,
         ]);
     }
 
@@ -200,6 +201,7 @@ class ManageUserFamiliesTest extends TestCase
             'husband_id'    => $husband->id,
             'wife_id'       => $user->id,
             'marriage_date' => '2010-03-03',
+            'manager_id'    => $user->id,
         ]);
     }
 
@@ -269,6 +271,7 @@ class ManageUserFamiliesTest extends TestCase
             'husband_id'    => $user->id,
             'wife_id'       => $wife->id,
             'marriage_date' => '2010-01-01',
+            'manager_id'    => $user->id,
         ]);
     }
 
@@ -294,6 +297,7 @@ class ManageUserFamiliesTest extends TestCase
             'husband_id'    => $husband->id,
             'wife_id'       => $user->id,
             'marriage_date' => '2010-03-03',
+            'manager_id'    => $user->id,
         ]);
     }
 
