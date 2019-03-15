@@ -96,7 +96,7 @@ class UsersProfileTest extends TestCase
     /** @test */
     public function user_can_upload_their_own_photo()
     {
-        Storage::fake('avatars');
+        Storage::fake(config('filesystems.default'));
 
         $user = $this->loginAsUser();
         $this->visit(route('users.edit', $user->id));
@@ -110,7 +110,7 @@ class UsersProfileTest extends TestCase
         $user = $user->fresh();
 
         $this->assertNotNull($user->photo_path);
-        Storage::disk('avatars')->assertExists($user->photo_path);
+        Storage::assertExists($user->photo_path);
     }
 
     /** @test */
