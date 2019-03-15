@@ -179,13 +179,11 @@ class UsersController extends Controller
             'photo' => 'required|image|max:200',
         ]);
 
-        $storage = env('APP_ENV') == 'testing' ? 'avatars' : 'public';
-
-        if (Storage::disk($storage)->exists($user->photo_path)) {
-            Storage::disk($storage)->delete($user->photo_path);
+        if (Storage::exists($user->photo_path)) {
+            Storage::delete($user->photo_path);
         }
 
-        $user->photo_path = $request->photo->store('images', $storage);
+        $user->photo_path = $request->photo->store('images');
         $user->save();
 
         return back();
