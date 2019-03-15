@@ -137,6 +137,7 @@ class User extends Authenticatable
             $this->wifes()->save($wife, [
                 'id'            => Uuid::uuid4()->toString(),
                 'marriage_date' => $marriageDate,
+                'manager_id'    => auth()->id(),
             ]);
             return $wife;
         }
@@ -155,6 +156,7 @@ class User extends Authenticatable
             $this->husbands()->save($husband, [
                 'id'            => Uuid::uuid4()->toString(),
                 'marriage_date' => $marriageDate,
+                'manager_id'    => auth()->id(),
             ]);
             return $husband;
         }
