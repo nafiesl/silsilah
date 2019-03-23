@@ -48,6 +48,17 @@ This application uses Bahasa Indonesia and English based on `config.locale`.
 5. Address
 
 ## How to Install
+
+### Server Requirements
+
+This application can be installed on local server and online server with these specifications :
+
+1. PHP 7.1.3 (and meet [Laravel 5.8 server requirements](https://laravel.com/docs/5.8#server-requirements)),
+2. MySQL or MariaDB database,
+3. SQlite (for automated testing).
+
+### Installation Steps
+
 1. Clone the repo : `git clone https://github.com/nafiesl/silsilah.git`
 2. `cd silsilah`
 3. `composer install`
