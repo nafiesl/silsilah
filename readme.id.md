@@ -53,6 +53,17 @@ Aplikasi ini menggunakan Bahasa Indonesia dan Bahasa Inggris, diatur pada `confi
 5. Alamat
 
 ## Cara Install
+
+### Kebutuhan Server
+
+Aplikasi ini dapat dipasang pada server lokal dan onlne dengan spesifikasi berikut:
+
+1. PHP 7.1.3 (dan mengikuti [server requirements Laravel 5.8](https://laravel.com/docs/5.8#server-requirements)),
+2. Database MySQL atau MariaDB,
+3. SQlite (untuk automated testing).
+
+### Langka Instalasi
+
 1. Clone Repo, pada terminal : `git clone https://github.com/nafiesl/silsilah.git`
 2. `cd silsilah`
 3. `composer install`
