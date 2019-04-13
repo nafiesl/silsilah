@@ -62,7 +62,7 @@ Aplikasi ini dapat dipasang pada server lokal dan onlne dengan spesifikasi berik
 2. Database MySQL atau MariaDB,
 3. SQlite (untuk automated testing).
 
-### Langka Instalasi
+### Langkah Instalasi
 
 1. Clone Repo, pada terminal : `git clone https://github.com/nafiesl/silsilah.git`
 2. `cd silsilah`
