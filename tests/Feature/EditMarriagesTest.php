@@ -3,12 +3,12 @@
 namespace Tests\Feature;
 
 use App\Couple;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditMarriagesTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /** @test */
     public function user_can_visit_a_marriage_detail_page()
