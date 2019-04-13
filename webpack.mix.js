@@ -11,5 +11,15 @@ let mix = require('laravel-mix');
  |
  */
 
+var paths = {
+    'bootstrap': './node_modules/bootstrap-sass/assets/'
+}
+
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+    .sass('resources/assets/sass/app.scss', 'public/css', {
+        includePaths: [
+            paths.bootstrap + 'stylesheets/'
+        ]
+    }).options({
+        processCssUrls: false
+    }).copyDirectory( paths.bootstrap + 'fonts/bootstrap/', 'public/fonts/bootstrap' );
