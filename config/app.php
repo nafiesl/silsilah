@@ -166,9 +166,6 @@ return [
         /*
          * Package Service Providers...
          */
-        BackupManager\Laravel\Laravel55ServiceProvider::class,
-        Laravel\Tinker\TinkerServiceProvider::class,
-        Luthfi\FormField\FormFieldServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,10 +224,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-        'FormField' => Luthfi\FormField\FormFieldFacade::class,
-        'Form'      => Collective\Html\FormFacade::class,
-        'Html'      => Collective\Html\HtmlFacade::class,
 
     ],
 
