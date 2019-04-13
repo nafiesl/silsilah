@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<h2 class="page-header">
-
-    @can('edit', $couple)
+@can('edit', $couple)
     <div class="pull-right">
-        {{ link_to_route('couples.edit', trans('couple.edit'), [$couple], ['class' => 'btn btn-warning']) }}
+        {{ link_to_route('couples.edit', trans('couple.edit'), $couple, ['class' => 'btn btn-warning']) }}
     </div>
-    @endcan
-
+@endcan
+<h2 class="page-header">
     {{ $couple->husband->name }} & {{ $couple->wife->name }} <small>{{ trans('couple.detail') }}</small>
 </h2>
 
