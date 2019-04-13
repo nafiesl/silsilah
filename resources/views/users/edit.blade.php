@@ -51,10 +51,10 @@
         </div>
     @endcan
 @else
+    <div class="pull-right">
+        {{ link_to_route('users.show', trans('app.show_profile').' '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
+    </div>
     <h2 class="page-header">
-        <div class="pull-right">
-            {{ link_to_route('users.show', trans('app.show_profile').' '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
-        </div>
         {{ trans('user.edit') }} {{ $user->profileLink() }}
     </h2>
     <div class="row">
