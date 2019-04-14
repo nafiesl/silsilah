@@ -106,4 +106,5 @@ $ vendor/bin/phpunit
 ![Automated Testing](public/images/07-automated-testing.jpg "Automated Testing")
 
 ## License
-The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).
+
+Project Silsilah merupakan software open-source di bawah lisensi [Lisensi MIT](LICENSE).
