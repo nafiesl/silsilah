@@ -104,4 +104,5 @@ Feel free to submit Issue for bugs or sugestions and Pull Request.
 ![Automated Testing](public/images/07-automated-testing.jpg "Automated Testing")
 
 ## License
-The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).
+
+Silsilah project is open-sourced software licensed under the [MIT license](LICENSE).
