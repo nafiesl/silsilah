@@ -3,6 +3,7 @@
 <h1 align="center">Genealogy Application</h1>
 
 [![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
+[![Coverage Status](https://coveralls.io/repos/github/nafiesl/silsilah/badge.svg?branch=master)](https://coveralls.io/github/nafiesl/silsilah?branch=master)
 
 > **Development in progress**  
 > In development progress, any changes of table structure **will be updated** directly to corresponding **migration file**.
