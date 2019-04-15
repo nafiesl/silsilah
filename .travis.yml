@@ -5,13 +5,14 @@ php:
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+  - travis_retry composer install --prefer-source --no-interaction
+  - travis_retry composer require php-coveralls/php-coveralls
   - cp .env.example .env
   - php artisan key:generate
   - php artisan storage:link
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
-  - bin/php-coveralls -v --exclude-no-stmt
+  - vendor/bin/php-coveralls -v --exclude-no-stmt
