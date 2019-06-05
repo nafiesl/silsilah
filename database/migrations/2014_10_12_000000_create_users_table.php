@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->date('dob')->nullable();
             $table->unsignedTinyInteger('birth_order')->nullable();
             $table->date('dod')->nullable();
-            $table->date('yod')->nullable();
+            $table->year('yod')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
             $table->string('address')->nullable();
