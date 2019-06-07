@@ -38,6 +38,7 @@ return [
     'mother'   => 'Mother',
     'parent'   => 'Parent',
     'dob'      => 'Date of Birth',
+    'yob'      => 'Year of Birth',
     'dod'      => 'Date of Death',
     'yod'      => 'Year of Death',
     'email'    => 'Email',

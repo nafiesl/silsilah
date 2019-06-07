@@ -38,6 +38,7 @@ return [
     'mother'   => 'Ibu',
     'parent'   => 'Orang Tua',
     'dob'      => 'Tanggal Lahir',
+    'yob'      => 'Tahun Lahir',
     'dod'      => 'Tanggal Meninggal',
     'yod'      => 'Tahun Meninggal',
     'email'    => 'Email',
