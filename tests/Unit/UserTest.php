@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\User;
 use App\Couple;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Support\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -144,5 +145,30 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->managedCouples);
         $this->assertInstanceOf(Couple::class, $user->managedCouples->first());
+    }
+
+    /**
+     * @test
+     * @dataProvider userAgeDataProvider
+     */
+    public function user_has_age_attribute($now, $dob, $yob, $dod, $yod, $age)
+    {
+        Carbon::setTestNow($now);
+        $user = factory(User::class)->make([
+            'dob' => $dob, 'yob' => $yob, 'dod' => $dod, 'yod' => $yod,
+        ]);
+
+        $this->assertEquals($age, $user->age);
+
+        Carbon::setTestNow();
+    }
+
+    public function userAgeDataProvider()
+    {
+        // returning array of now, dob, yob, dod, yod, age.
+        return [
+            ['2018-02-02 01:00:00', '1997-01-01', '1997', null, null, 21],
+            ['2018-02-02 01:00:00', null, '1997', null, null, 22],
+        ];
     }
 }

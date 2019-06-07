@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -229,5 +230,18 @@ class User extends Authenticatable
     public function managedCouples()
     {
         return $this->hasMany(Couple::class, 'manager_id');
+    }
+
+    public function getAgeAttribute()
+    {
+        $age = null;
+
+        if ($this->dob) {
+            $age = Carbon::parse($this->dob)->diffInYears($this->dod);
+        } elseif (!$this->dob && $this->yob) {
+            $age = date('Y') - $this->yob;
+        }
+
+        return $age;
     }
 }
