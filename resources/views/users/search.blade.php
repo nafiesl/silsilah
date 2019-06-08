@@ -30,7 +30,7 @@
             <div class="panel-heading text-center">
                 {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
                 @if ($user->age)
-                    <div title="{{ $user->age_detail }}">{{ $user->age }} {{ trans_choice('user.age_years', $user->age) }}</div>
+                    {!! $user->age_string !!}
                 @endif
             </div>
             <div class="panel-body">

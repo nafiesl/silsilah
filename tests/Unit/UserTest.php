@@ -212,4 +212,17 @@ class UserTest extends TestCase
             ['2018-02-02', null, '1997', null, '2017', '20 tahun'],
         ];
     }
+
+    /** @test */
+    public function user_has_age_string_attribute()
+    {
+        $today = '2018-02-02';
+        Carbon::setTestNow($today);
+        $user = factory(User::class)->make(['dob' => '1997-01-01']);
+
+        $ageString = '<div title="21 tahun, 1 bulan, 1 hari">21 tahun</div>';
+        $this->assertEquals($ageString, $user->age_string);
+
+        Carbon::setTestNow();
+    }
 }

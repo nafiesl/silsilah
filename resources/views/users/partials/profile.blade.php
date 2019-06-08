@@ -33,7 +33,7 @@
             @endif
             <tr>
                 <th>{{ trans('user.age') }}</th>
-                <td><div title="{{ $user->age_detail }}">{{ $user->age }} {{ trans_choice('user.age_years', $user->age) }}</div></td>
+                <td>{!! $user->age_string !!}</td>
             </tr>
             @if ($user->email)
             <tr>

@@ -279,4 +279,9 @@ class User extends Authenticatable
 
         return $ageDetail;
     }
+
+    public function getAgeStringAttribute()
+    {
+        return '<div title="'.$this->age_detail.'">'.$this->age.' '.trans_choice('user.age_years', $this->age).'</div>';
+    }
 }
