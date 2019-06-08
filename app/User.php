@@ -235,18 +235,19 @@ class User extends Authenticatable
     public function getAgeAttribute()
     {
         $age = null;
+        $yearOnlySuffix = Carbon::now()->format('-m-d');
 
         if ($this->dob && !$this->dod) {
             $age = Carbon::parse($this->dob)->timespan();
         }
         if (!$this->dob && $this->yob) {
-            $age = (date('Y') - $this->yob).' tahun';
+            $age = Carbon::parse($this->yob.$yearOnlySuffix)->timespan();
         }
         if ($this->dob && $this->dod) {
             $age = Carbon::parse($this->dob)->timespan($this->dod);
         }
         if (!$this->dob && $this->yob && !$this->dod && $this->yod) {
-            $age = ($this->yod - $this->yob).' tahun';
+            $age = Carbon::parse($this->yob.$yearOnlySuffix)->timespan($this->yod.$yearOnlySuffix);
         }
         if ($this->dob && $this->yob && $this->dod && $this->yod) {
             $age = Carbon::parse($this->dob)->timespan($this->dod);

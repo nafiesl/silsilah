@@ -174,7 +174,7 @@ class UserTest extends TestCase
         return [
             ['2018-02-02', '1997-01-01', '1997', null, null, '21 tahun, 1 bulan, 1 hari'],
             ['2018-02-02', '1997-01-01', null, null, null, '21 tahun, 1 bulan, 1 hari'],
-            ['2018-02-02', null, '1997', null, null, '22 tahun'],
+            ['2018-02-02', null, '1997', null, null, '21 tahun'],
             ['2018-02-02', '1997-01-01', '1997', '2017-01-01', '2017', '20 tahun'],
             ['2018-02-02', null, '1997', null, '2017', '20 tahun'],
         ];
