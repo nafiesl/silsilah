@@ -18,6 +18,8 @@ return [
     'nieces'       => 'Nieces',
     'marriages'    => 'Marriages',
     'birth_order'  => 'Birth Order',
+    'age'          => 'Age',
+    'age_years'    => 'year|years',
 
     // Actions
     'edit'                            => 'Edit Profile',

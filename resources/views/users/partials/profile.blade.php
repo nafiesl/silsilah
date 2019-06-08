@@ -31,6 +31,10 @@
                 <td>{{ $user->dod }}</td>
             </tr>
             @endif
+            <tr>
+                <th>{{ trans('user.age') }}</th>
+                <td><div title="{{ $user->age_detail }}">{{ $user->age }} {{ trans_choice('user.age_years', $user->age) }}</div></td>
+            </tr>
             @if ($user->email)
             <tr>
                 <th>{{ trans('user.email') }}</th>

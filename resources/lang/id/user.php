@@ -18,6 +18,8 @@ return [
     'nieces'       => 'Keponakan',
     'marriages'    => 'Pernikahan',
     'birth_order'  => 'Anak ke',
+    'age'          => 'Usia',
+    'age_years'    => 'tahun',
 
     // Actions
     'edit'                            => 'Edit Profil',
