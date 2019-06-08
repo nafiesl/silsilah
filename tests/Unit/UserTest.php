@@ -149,6 +149,39 @@ class UserTest extends TestCase
 
     /**
      * @test
+     * @dataProvider userAgeDataProvider
+     */
+    public function user_has_age_attribute($today, $dob, $yob, $dod, $yod, $age)
+    {
+        Carbon::setTestNow($today);
+        $user = factory(User::class)->make([
+            'dob' => $dob, 'yob' => $yob, 'dod' => $dod, 'yod' => $yod,
+        ]);
+
+        $this->assertEquals($age, $user->age);
+
+        Carbon::setTestNow();
+    }
+
+    /**
+     * Provide data for calculating user age.
+     * Returning array of today, dob, yob, dod, yod, and age.
+     *
+     * @return array
+     */
+    public function userAgeDataProvider()
+    {
+        return [
+            ['2018-02-02', '1997-01-01', '1997', null, null, 21],
+            ['2018-02-02', '1997-01-01', null, null, null, 21],
+            ['2018-02-02', null, '1997', null, null, 21],
+            ['2018-02-02', '1997-01-01', '1997', '2017-01-01', '2017', 20],
+            ['2018-02-02', null, '1997', null, '2017', 20],
+        ];
+    }
+
+    /**
+     * @test
      * @dataProvider userAgeDetailDataProvider
      */
     public function user_has_age_detail_attribute($today, $dob, $yob, $dod, $yod, $age)
