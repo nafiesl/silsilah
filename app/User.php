@@ -232,27 +232,27 @@ class User extends Authenticatable
         return $this->hasMany(Couple::class, 'manager_id');
     }
 
-    public function getAgeAttribute()
+    public function getAgeDetailAttribute()
     {
-        $age = null;
+        $ageDetail = null;
         $yearOnlySuffix = Carbon::now()->format('-m-d');
 
         if ($this->dob && !$this->dod) {
-            $age = Carbon::parse($this->dob)->timespan();
+            $ageDetail = Carbon::parse($this->dob)->timespan();
         }
         if (!$this->dob && $this->yob) {
-            $age = Carbon::parse($this->yob.$yearOnlySuffix)->timespan();
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->timespan();
         }
         if ($this->dob && $this->dod) {
-            $age = Carbon::parse($this->dob)->timespan($this->dod);
+            $ageDetail = Carbon::parse($this->dob)->timespan($this->dod);
         }
         if (!$this->dob && $this->yob && !$this->dod && $this->yod) {
-            $age = Carbon::parse($this->yob.$yearOnlySuffix)->timespan($this->yod.$yearOnlySuffix);
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->timespan($this->yod.$yearOnlySuffix);
         }
         if ($this->dob && $this->yob && $this->dod && $this->yod) {
-            $age = Carbon::parse($this->dob)->timespan($this->dod);
+            $ageDetail = Carbon::parse($this->dob)->timespan($this->dod);
         }
 
-        return $age;
+        return $ageDetail;
     }
 }
