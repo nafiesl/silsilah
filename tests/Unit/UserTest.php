@@ -151,9 +151,9 @@ class UserTest extends TestCase
      * @test
      * @dataProvider userAgeDataProvider
      */
-    public function user_has_age_attribute($now, $dob, $yob, $dod, $yod, $age)
+    public function user_has_age_attribute($today, $dob, $yob, $dod, $yod, $age)
     {
-        Carbon::setTestNow($now);
+        Carbon::setTestNow($today);
         $user = factory(User::class)->make([
             'dob' => $dob, 'yob' => $yob, 'dod' => $dod, 'yod' => $yod,
         ]);
@@ -163,12 +163,20 @@ class UserTest extends TestCase
         Carbon::setTestNow();
     }
 
+    /**
+     * Provide data for calculating user age.
+     * Returning array of today, dob, yob, dod, yod, and age.
+     *
+     * @return array
+     */
     public function userAgeDataProvider()
     {
-        // returning array of now, dob, yob, dod, yod, age.
         return [
-            ['2018-02-02 01:00:00', '1997-01-01', '1997', null, null, 21],
-            ['2018-02-02 01:00:00', null, '1997', null, null, 22],
+            ['2018-02-02', '1997-01-01', '1997', null, null, '21 tahun, 1 bulan, 1 hari'],
+            ['2018-02-02', '1997-01-01', null, null, null, '21 tahun, 1 bulan, 1 hari'],
+            ['2018-02-02', null, '1997', null, null, '22 tahun'],
+            ['2018-02-02', '1997-01-01', '1997', '2017-01-01', '2017', '20 tahun'],
+            ['2018-02-02', null, '1997', null, '2017', '20 tahun'],
         ];
     }
 }

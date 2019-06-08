@@ -236,10 +236,20 @@ class User extends Authenticatable
     {
         $age = null;
 
-        if ($this->dob) {
-            $age = Carbon::parse($this->dob)->diffInYears($this->dod);
-        } elseif (!$this->dob && $this->yob) {
-            $age = date('Y') - $this->yob;
+        if ($this->dob && !$this->dod) {
+            $age = Carbon::parse($this->dob)->timespan();
+        }
+        if (!$this->dob && $this->yob) {
+            $age = (date('Y') - $this->yob).' tahun';
+        }
+        if ($this->dob && $this->dod) {
+            $age = Carbon::parse($this->dob)->timespan($this->dod);
+        }
+        if (!$this->dob && $this->yob && !$this->dod && $this->yod) {
+            $age = ($this->yod - $this->yob).' tahun';
+        }
+        if ($this->dob && $this->yob && $this->dod && $this->yod) {
+            $age = Carbon::parse($this->dob)->timespan($this->dod);
         }
 
         return $age;
