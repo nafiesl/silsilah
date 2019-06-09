@@ -18,6 +18,8 @@ return [
     'nieces'       => 'Keponakan',
     'marriages'    => 'Pernikahan',
     'birth_order'  => 'Anak ke',
+    'age'          => 'Usia',
+    'age_years'    => 'tahun',
 
     // Actions
     'edit'                            => 'Edit Profil',
@@ -38,6 +40,7 @@ return [
     'mother'   => 'Ibu',
     'parent'   => 'Orang Tua',
     'dob'      => 'Tanggal Lahir',
+    'yob'      => 'Tahun Lahir',
     'dod'      => 'Tanggal Meninggal',
     'yod'      => 'Tahun Meninggal',
     'email'    => 'Email',

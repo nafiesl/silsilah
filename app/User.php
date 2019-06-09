@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,7 +28,7 @@ class User extends Authenticatable
         'nickname', 'gender_id', 'name',
         'email', 'password',
         'address', 'phone',
-        'dob', 'dod', 'yod', 'city',
+        'dob', 'yob', 'dod', 'yod', 'city',
         'father_id', 'mother_id', 'parent_id',
     ];
 
@@ -229,5 +230,58 @@ class User extends Authenticatable
     public function managedCouples()
     {
         return $this->hasMany(Couple::class, 'manager_id');
+    }
+
+    public function getAgeAttribute()
+    {
+        $ageDetail = null;
+        $yearOnlySuffix = Carbon::now()->format('-m-d');
+
+        if ($this->dob && !$this->dod) {
+            $ageDetail = Carbon::parse($this->dob)->diffInYears();
+        }
+        if (!$this->dob && $this->yob) {
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->diffInYears();
+        }
+        if ($this->dob && $this->dod) {
+            $ageDetail = Carbon::parse($this->dob)->diffInYears($this->dod);
+        }
+        if (!$this->dob && $this->yob && !$this->dod && $this->yod) {
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->diffInYears($this->yod.$yearOnlySuffix);
+        }
+        if ($this->dob && $this->yob && $this->dod && $this->yod) {
+            $ageDetail = Carbon::parse($this->dob)->diffInYears($this->dod);
+        }
+
+        return $ageDetail;
+    }
+
+    public function getAgeDetailAttribute()
+    {
+        $ageDetail = null;
+        $yearOnlySuffix = Carbon::now()->format('-m-d');
+
+        if ($this->dob && !$this->dod) {
+            $ageDetail = Carbon::parse($this->dob)->timespan();
+        }
+        if (!$this->dob && $this->yob) {
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->timespan();
+        }
+        if ($this->dob && $this->dod) {
+            $ageDetail = Carbon::parse($this->dob)->timespan($this->dod);
+        }
+        if (!$this->dob && $this->yob && !$this->dod && $this->yod) {
+            $ageDetail = Carbon::parse($this->yob.$yearOnlySuffix)->timespan($this->yod.$yearOnlySuffix);
+        }
+        if ($this->dob && $this->yob && $this->dod && $this->yod) {
+            $ageDetail = Carbon::parse($this->dob)->timespan($this->dod);
+        }
+
+        return $ageDetail;
+    }
+
+    public function getAgeStringAttribute()
+    {
+        return '<div title="'.$this->age_detail.'">'.$this->age.' '.trans_choice('user.age_years', $this->age).'</div>';
     }
 }

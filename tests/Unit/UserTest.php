@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\User;
 use App\Couple;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Support\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -144,5 +145,84 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $user->managedCouples);
         $this->assertInstanceOf(Couple::class, $user->managedCouples->first());
+    }
+
+    /**
+     * @test
+     * @dataProvider userAgeDataProvider
+     */
+    public function user_has_age_attribute($today, $dob, $yob, $dod, $yod, $age)
+    {
+        Carbon::setTestNow($today);
+        $user = factory(User::class)->make([
+            'dob' => $dob, 'yob' => $yob, 'dod' => $dod, 'yod' => $yod,
+        ]);
+
+        $this->assertEquals($age, $user->age);
+
+        Carbon::setTestNow();
+    }
+
+    /**
+     * Provide data for calculating user age.
+     * Returning array of today, dob, yob, dod, yod, and age.
+     *
+     * @return array
+     */
+    public function userAgeDataProvider()
+    {
+        return [
+            ['2018-02-02', '1997-01-01', '1997', null, null, 21],
+            ['2018-02-02', '1997-01-01', null, null, null, 21],
+            ['2018-02-02', null, '1997', null, null, 21],
+            ['2018-02-02', '1997-01-01', '1997', '2017-01-01', '2017', 20],
+            ['2018-02-02', null, '1997', null, '2017', 20],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider userAgeDetailDataProvider
+     */
+    public function user_has_age_detail_attribute($today, $dob, $yob, $dod, $yod, $age)
+    {
+        Carbon::setTestNow($today);
+        $user = factory(User::class)->make([
+            'dob' => $dob, 'yob' => $yob, 'dod' => $dod, 'yod' => $yod,
+        ]);
+
+        $this->assertEquals($age, $user->age_detail);
+
+        Carbon::setTestNow();
+    }
+
+    /**
+     * Provide data for calculating user age detail.
+     * Returning array of today, dob, yob, dod, yod, and age.
+     *
+     * @return array
+     */
+    public function userAgeDetailDataProvider()
+    {
+        return [
+            ['2018-02-02', '1997-01-01', '1997', null, null, '21 tahun, 1 bulan, 1 hari'],
+            ['2018-02-02', '1997-01-01', null, null, null, '21 tahun, 1 bulan, 1 hari'],
+            ['2018-02-02', null, '1997', null, null, '21 tahun'],
+            ['2018-02-02', '1997-01-01', '1997', '2017-01-01', '2017', '20 tahun'],
+            ['2018-02-02', null, '1997', null, '2017', '20 tahun'],
+        ];
+    }
+
+    /** @test */
+    public function user_has_age_string_attribute()
+    {
+        $today = '2018-02-02';
+        Carbon::setTestNow($today);
+        $user = factory(User::class)->make(['dob' => '1997-01-01']);
+
+        $ageString = '<div title="21 tahun, 1 bulan, 1 hari">21 tahun</div>';
+        $this->assertEquals($ageString, $user->age_string);
+
+        Carbon::setTestNow();
     }
 }

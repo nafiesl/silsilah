@@ -67,12 +67,13 @@
                     {!! FormField::text('nickname', ['label' => trans('user.nickname')]) !!}
                     <div class="row">
                         <div class="col-md-6">{!! FormField::radios('gender_id', [1 => trans('app.male_code'), trans('app.female_code')], ['label' => trans('user.gender')]) !!}</div>
-                        <div class="col-md-6">{!! FormField::text('dob', ['label' => trans('user.dob'), 'placeholder' => trans('app.example').' 1959-07-20']) !!}</div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-4">
                             {!! FormField::text('birth_order', ['label' => trans('user.birth_order'), 'type' => 'number', 'min' => 1]) !!}
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">{!! FormField::text('yob', ['label' => trans('user.yob'), 'placeholder' => trans('app.example').' 1959']) !!}</div>
+                        <div class="col-md-6">{!! FormField::text('dob', ['label' => trans('user.dob'), 'placeholder' => trans('app.example').' 1959-07-20']) !!}</div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">{!! FormField::text('yod', ['label' => trans('user.yod'), 'placeholder' => trans('app.example').' 2003']) !!}</div>

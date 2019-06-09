@@ -27,8 +27,11 @@
     @foreach ($chunkedUser as $user)
     <div class="col-md-3">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading text-center">
                 {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
+                @if ($user->age)
+                    {!! $user->age_string !!}
+                @endif
             </div>
             <div class="panel-body">
                 <h3 class="panel-title">{{ $user->profileLink() }} ({{ $user->gender }})</h3>

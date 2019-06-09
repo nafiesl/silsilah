@@ -30,6 +30,7 @@ class UpdateRequest extends FormRequest
             'name'        => 'required|string|max:255',
             'gender_id'   => 'required|numeric',
             'dob'         => 'nullable|date|date_format:Y-m-d',
+            'yob'         => 'nullable|date_format:Y',
             'dod'         => 'nullable|date|date_format:Y-m-d',
             'yod'         => 'nullable|date_format:Y',
             'phone'       => 'nullable|string|max:255',
@@ -57,6 +58,12 @@ class UpdateRequest extends FormRequest
             $formData['yod'] = substr($formData['dod'], 0, 4);
         } else {
             $formData['yod'] = $formData['yod'];
+        }
+
+        if ($formData['dob']) {
+            $formData['yob'] = substr($formData['dob'], 0, 4);
+        } else {
+            $formData['yob'] = $formData['yob'];
         }
 
         if ($formData['password']) {
