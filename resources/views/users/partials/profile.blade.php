@@ -33,7 +33,11 @@
             @endif
             <tr>
                 <th>{{ trans('user.age') }}</th>
-                <td>{!! $user->age_string !!}</td>
+                <td>
+                    @if ($user->age)
+                        {!! $user->age_string !!}
+                    @endif
+                </td>
             </tr>
             @if ($user->email)
             <tr>
