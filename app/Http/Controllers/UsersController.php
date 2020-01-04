@@ -99,8 +99,9 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified User.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(User $user)
     {

@@ -284,4 +284,49 @@ class User extends Authenticatable
     {
         return '<div title="'.$this->age_detail.'">'.$this->age.' '.trans_choice('user.age_years', $this->age).'</div>';
     }
+
+    /**
+     * Get child count based on the level
+     *
+     * Example usage:
+     * $childCount = $user->getChildCount();
+     * $childCount[0]; // this indicate direct child
+     * $childCount[1]; // this indicate child of level 0
+     * $childCount[2]; // this indicate child of level 1
+     * and so on
+     *
+     * @param int $levelLimit
+     * @return array
+     */
+    public function getChildCount($levelLimit = -1)
+    {
+        $childCount = [];
+
+        $this->_getChildCount($this, 0, $childCount, $levelLimit);
+
+        return $childCount;
+    }
+
+    private function _getChildCount(User $user, $currentLevel, &$childCount, $levelLimit)
+    {
+        $affectedLevel = $this->getAffectedLevel($currentLevel, $levelLimit);
+        if(!isset($childCount[$affectedLevel])) {
+            $childCount[$affectedLevel]  = $user->childs->count();
+        } else {
+            $childCount[$affectedLevel] += $user->childs->count();
+        }
+
+        foreach ($user->childs as $child) {
+            $this->_getChildCount($child, $currentLevel + 1, $childCount, $levelLimit);
+        }
+    }
+
+    private function getAffectedLevel($currentLevel, $levelLimit)
+    {
+        if($levelLimit > 0 && $levelLimit < $currentLevel) {
+            return $levelLimit;
+        }
+
+        return $currentLevel;
+    }
 }
