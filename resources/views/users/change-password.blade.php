@@ -13,7 +13,7 @@
                             {{ session('success') ?: session('error')}}
                         </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('profile.change-password.update') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.change') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
                             <label for="old_password" class="col-md-4 control-label">{{ trans('auth.old_password') }}</label>
