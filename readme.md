@@ -54,7 +54,7 @@ This application uses Bahasa Indonesia and English based on `config.locale`.
 
 This application can be installed on local server and online server with these specifications :
 
-1. PHP 7.1.3 (and meet [Laravel 5.8 server requirements](https://laravel.com/docs/5.8#server-requirements)),
+1. PHP 7.2 (and meet other [Laravel 5.8 server requirements](https://laravel.com/docs/5.8#server-requirements)),
 2. MySQL or MariaDB database,
 3. SQlite (for automated testing).
 
