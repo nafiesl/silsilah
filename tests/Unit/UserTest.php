@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use App\User;
 use App\Couple;
+use App\User;
 use Carbon\Carbon;
-use Tests\TestCase;
-use Illuminate\Support\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Collection;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
@@ -224,5 +224,46 @@ class UserTest extends TestCase
         $this->assertEquals($ageString, $user->age_string);
 
         Carbon::setTestNow();
+    }
+
+    /** @test */
+    public function a_user_has_birthday_attribute()
+    {
+        $dateOfBirth = '1990-01-01';
+
+        $customer = factory(User::class)->create(['dob' => $dateOfBirth]);
+
+        $birthdayDate = date('Y').substr($dateOfBirth, 4);
+        $birthdayDateClass = Carbon::parse($birthdayDate);
+
+        if (Carbon::parse(date('Y-m-d').' 00:00:00')->gt($birthdayDateClass)) {
+            $currentYearBirthday = $birthdayDateClass->addYear();
+        } else {
+            $currentYearBirthday = $birthdayDateClass;
+        }
+
+        $this->assertEquals($currentYearBirthday, $customer->birthday);
+    }
+
+    /** @test */
+    public function a_user_has_birthday_remaining_attribute()
+    {
+        $dateOfBirth = '1990-01-01';
+
+        $customer = factory(User::class)->create(['dob' => $dateOfBirth]);
+
+        $birthdayDate = date('Y').substr($dateOfBirth, 4);
+        $birthdayDateClass = Carbon::parse($birthdayDate);
+
+        if (Carbon::now()->gt($birthdayDateClass)) {
+            $currentYearBirthday = $birthdayDateClass->addYear()->format('Y-m-d');
+        } else {
+            $currentYearBirthday = $birthdayDateClass->format('Y-m-d');
+        }
+
+        $this->assertEquals(
+            Carbon::now()->diffInDays($birthdayDateClass, false),
+            $customer->birthday_remaining
+        );
     }
 }
