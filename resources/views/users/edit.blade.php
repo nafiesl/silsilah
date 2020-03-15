@@ -95,7 +95,7 @@
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('app.login_account') }}</h3></div>
                 <div class="panel-body">
                     {!! FormField::email('email', ['label' => trans('auth.email'), 'placeholder' => trans('app.example').' nama@mail.com']) !!}
-                    {!! FormField::password('password', ['label' => trans('auth.old_password'), 'placeholder' => '******', 'value' => '']) !!}
+                    {!! FormField::password('password', ['label' => trans('auth.password'), 'placeholder' => '******', 'value' => '']) !!}
                 </div>
             </div>
             <div class="text-right">
@@ -133,7 +133,7 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('js/plugins/jquery.datetimepicker.js') }}"></script>jQuery('#datetimepicker').datetimepicker();
+<script src="{{ asset('js/plugins/jquery.datetimepicker.js') }}"></script>
 <script>
     (function() {
         $('#dob,#dod').datetimepicker({
