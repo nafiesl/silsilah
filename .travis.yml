@@ -6,7 +6,7 @@ php:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction
-  - travis_retry php -d memory_limit=-1 composer require php-coveralls/php-coveralls
+  - COMPOSER_MEMORY_LIMIT=-1 travis_retry composer require php-coveralls/php-coveralls
   - cp .env.example .env
   - php artisan key:generate
   - php artisan storage:link
