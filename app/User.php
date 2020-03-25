@@ -3,9 +3,9 @@
 namespace App;
 
 use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
@@ -283,5 +283,28 @@ class User extends Authenticatable
     public function getAgeStringAttribute()
     {
         return '<div title="'.$this->age_detail.'">'.$this->age.' '.trans_choice('user.age_years', $this->age).'</div>';
+    }
+
+    public function getBirthdayAttribute()
+    {
+        if (!$this->dob) {
+            return;
+        }
+
+        $birthdayDate = date('Y').substr($this->dob, 4);
+        $birthdayDateClass = Carbon::parse($birthdayDate);
+
+        if (Carbon::parse(date('Y-m-d').' 00:00:00')->gt($birthdayDateClass)) {
+            return $birthdayDateClass->addYear();
+        }
+
+        return $birthdayDateClass;
+    }
+
+    public function getBirthdayRemainingAttribute()
+    {
+        if ($this->dob) {
+            return Carbon::now()->diffInDays($this->birthday, false);
+        }
     }
 }

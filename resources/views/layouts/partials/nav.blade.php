@@ -19,13 +19,14 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('users.search') }}">{{ trans('app.search_your_family') }}</a></li>
+                <li><a href="{{ route('users.search') }}">{{ __('app.search_your_family') }}</a></li>
+                <li><a href="{{ route('birthdays.index') }}">{{ __('birthday.birthday') }}</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
-                <?php $mark = (preg_match('/\?/', url()->current())) ? '&' : '?'; ?>
+                <?php $mark = (preg_match('/\?/', url()->current())) ? '&' : '?';?>
                 <li><a href="{{ url(url()->current() . $mark . 'lang=en') }}">en</a></li>
                 <li><a href="{{ url(url()->current() . $mark . 'lang=id') }}">id</a></li>
                 @if (Auth::guest())
@@ -38,9 +39,9 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('backups.index') }}">{{ trans('backup.list') }}</a></li>
-                            <li><a href="{{ route('profile') }}">{{ trans('app.my_profile') }}</a></li>
-                            <li><a href="{{ route('password.change') }}">{{ trans('auth.change_password') }}</a></li>
+                            <li><a href="{{ route('backups.index') }}">{{ __('backup.list') }}</a></li>
+                            <li><a href="{{ route('profile') }}">{{ __('app.my_profile') }}</a></li>
+                            <li><a href="{{ route('password.change') }}">{{ __('auth.change_password') }}</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

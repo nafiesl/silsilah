@@ -40,6 +40,8 @@ Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
 
 Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
 
+Route::get('birthdays', 'BirthdayController@index')->name('birthdays.index');
+
 /**
  * Couple/Marriages Routes
  */
