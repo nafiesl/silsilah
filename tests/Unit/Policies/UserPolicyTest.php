@@ -28,7 +28,7 @@ class UserPolicyTest extends TestCase
     {
         $adminEmail = 'admin@example.net';
         $otherUserManagerId = Str::random();
-        putenv('SYSTEM_ADMIN_EMAILS='.$adminEmail);
+        config(['app.system_admin_emails' => $adminEmail]);
 
         $manager = factory(User::class)->create();
         $admin = factory(User::class)->create(['email' => $adminEmail]);
@@ -67,7 +67,7 @@ class UserPolicyTest extends TestCase
     {
         $adminEmail = 'admin@example.net';
         $otherUserManagerId = Str::random();
-        putenv('SYSTEM_ADMIN_EMAILS='.$adminEmail);
+        config(['app.system_admin_emails' => $adminEmail]);
 
         $manager = factory(User::class)->create();
         $admin = factory(User::class)->create(['email' => $adminEmail]);

@@ -29,6 +29,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | System Administrator Emails
+    |--------------------------------------------------------------------------
+    |
+    | This is config stores emails of users who have role of administrators.
+    | The user can edit and delete any users and marriages int he system.
+    |
+    */
+
+    'system_admin_emails' => env('SYSTEM_ADMIN_EMAILS'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |

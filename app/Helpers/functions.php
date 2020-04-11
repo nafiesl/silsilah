@@ -62,8 +62,8 @@ function userPhotoPath($photoPath, $genderId)
 function is_system_admin(User $user)
 {
     if ($user->email) {
-        if (env('SYSTEM_ADMIN_EMAILS')) {
-            $adminEmails = explode(';', env('SYSTEM_ADMIN_EMAILS'));
+        if (config('app.system_admin_emails')) {
+            $adminEmails = explode(';', config('app.system_admin_emails'));
             return in_array($user->email, $adminEmails);
         }
     }
