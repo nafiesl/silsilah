@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Storage;
-use App\User;
 use App\Couple;
-use Illuminate\Http\Request;
 use App\Http\Requests\Users\UpdateRequest;
+use App\User;
+use DB;
+use Illuminate\Http\Request;
+use Storage;
 
 class UsersController extends Controller
 {
@@ -216,9 +216,22 @@ class UsersController extends Controller
     private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
     {
         foreach (['husband_id', 'wife_id', 'manager_id'] as $field) {
-            DB::table('couples')->where($field, $oldUserId)->update([
-                $field => $replacementUserId,
-            ]);
+            if (in_array($field, ['husband_id', 'wife_id'])) {
+                $replacementUserCouples = Couple::where('husband_id', $replacementUserId)
+                    ->orWhere('wive_id', $replacementUserId)
+                    ->get();
+                if ($replacementUserCouples->isEmpty()) {
+                    DB::table('couples')->where($field, $oldUserId)->update([
+                        $field => $replacementUserId,
+                    ]);
+                } else {
+                    $replacementUserCouples->first()->delete();
+                }
+            } else {
+                DB::table('couples')->where($field, $oldUserId)->update([
+                    $field => $replacementUserId,
+                ]);
+            }
         }
     }
 
