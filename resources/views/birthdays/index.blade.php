@@ -35,7 +35,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4">{{ __('user.no_upcoming_birthday', ['days' => 60]) }}</td>
+                        <td colspan="4">{{ __('birthday.no_upcoming', ['days' => 60]) }}</td>
                     </tr>
                     @endforelse
                 </tbody>
