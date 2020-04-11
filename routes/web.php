@@ -50,9 +50,14 @@ Route::get('couples/{couple}/edit', ['as' => 'couples.edit', 'uses' => 'CouplesC
 Route::patch('couples/{couple}', ['as' => 'couples.update', 'uses' => 'CouplesController@update']);
 
 /**
- * Backup Restore Database Routes
+ * Admin only routes
  */
-Route::post('backups/upload', ['as' => 'backups.upload', 'uses' => 'BackupsController@upload']);
-Route::post('backups/{fileName}/restore', ['as' => 'backups.restore', 'uses' => 'BackupsController@restore']);
-Route::get('backups/{fileName}/dl', ['as' => 'backups.download', 'uses' => 'BackupsController@download']);
-Route::resource('backups', 'BackupsController');
+Route::group(['middleware' => 'admin'], function () {
+    /**
+     * Backup Restore Database Routes
+     */
+    Route::post('backups/upload', ['as' => 'backups.upload', 'uses' => 'BackupsController@upload']);
+    Route::post('backups/{fileName}/restore', ['as' => 'backups.restore', 'uses' => 'BackupsController@restore']);
+    Route::get('backups/{fileName}/dl', ['as' => 'backups.download', 'uses' => 'BackupsController@download']);
+    Route::resource('backups', 'BackupsController');
+});
