@@ -30,6 +30,6 @@ class UserPolicy
      */
     public function delete(User $user, User $editableUser)
     {
-        return $editableUser->manager_id == $user->id && $editableUser->id != $user->id;
+        return ($editableUser->manager_id == $user->id || is_system_admin($user)) && $editableUser->id != $user->id;
     }
 }

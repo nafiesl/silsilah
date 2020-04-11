@@ -53,10 +53,32 @@ class UserPolicyTest extends TestCase
     /** @test */
     public function manager_can_delete_a_user()
     {
+        $otherUserManagerId = Str::random();
         $manager = factory(User::class)->create();
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
+        $otherUser = factory(User::class)->create(['manager_id' => $otherUserManagerId]);
 
         $this->assertTrue($manager->can('delete', $user));
+        $this->assertFalse($manager->can('delete', $otherUser));
+    }
+
+    /** @test */
+    public function admins_can_delete_any_user()
+    {
+        $adminEmail = 'admin@example.net';
+        $otherUserManagerId = Str::random();
+        putenv('SYSTEM_ADMIN_EMAILS='.$adminEmail);
+
+        $manager = factory(User::class)->create();
+        $admin = factory(User::class)->create(['email' => $adminEmail]);
+        $user = factory(User::class)->create(['manager_id' => $manager->id]);
+        $otherUser = factory(User::class)->create(['manager_id' => $otherUserManagerId]);
+
+        $this->assertTrue($admin->can('delete', $user));
+        $this->assertTrue($admin->can('delete', $otherUser));
+
+        $this->assertTrue($manager->can('delete', $user));
+        $this->assertFalse($manager->can('delete', $otherUser));
     }
 
     /** @test */
