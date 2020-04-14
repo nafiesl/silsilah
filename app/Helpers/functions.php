@@ -58,3 +58,15 @@ function userPhotoPath($photoPath, $genderId)
 
     return asset('images/icon_user_'.$genderId.'.png');
 }
+
+function is_system_admin(User $user)
+{
+    if ($user->email) {
+        if (config('app.system_admin_emails')) {
+            $adminEmails = explode(';', config('app.system_admin_emails'));
+            return in_array($user->email, $adminEmails);
+        }
+    }
+
+    return false;
+}
