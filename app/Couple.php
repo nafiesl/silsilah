@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Ramsey\Uuid\Uuid;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Couple extends Model
 {
@@ -13,6 +13,13 @@ class Couple extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     public function husband()
     {
