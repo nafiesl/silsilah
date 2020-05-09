@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9414c56c74dfe94776dda88361836c7",
+    "content-hash": "5dc1d3b148993edc3a3b19f5107bd907",
     "packages": [
         {
             "name": "backup-manager/backup-manager",
@@ -80,25 +80,25 @@
         },
         {
             "name": "backup-manager/laravel",
-            "version": "dev-laravel_7_support",
+            "version": "2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nafiesl/backup-manager-laravel.git",
-                "reference": "d20a3af4cade05c826098745440a2ef3e39553a6"
+                "url": "https://github.com/backup-manager/laravel.git",
+                "reference": "58ccef9882f97240c86f6d747b240dc16b5c7060"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nafiesl/backup-manager-laravel/zipball/d20a3af4cade05c826098745440a2ef3e39553a6",
-                "reference": "d20a3af4cade05c826098745440a2ef3e39553a6",
+                "url": "https://api.github.com/repos/backup-manager/laravel/zipball/58ccef9882f97240c86f6d747b240dc16b5c7060",
+                "reference": "58ccef9882f97240c86f6d747b240dc16b5c7060",
                 "shasum": ""
             },
             "require": {
                 "backup-manager/backup-manager": "^1.0",
-                "illuminate/console": "^4.0||^5.0||^6.0||^7.0",
-                "illuminate/container": "^4.0||^5.0||^6.0||^7.0",
-                "illuminate/support": "^4.0||^5.0||^6.0||^7.0",
-                "php": ">=5.5.0",
-                "symfony/process": "^2.0||^3.0||^4.0||^5.0"
+                "illuminate/console": "^5.5||^6||^7",
+                "illuminate/container": "^5.5||^6||^7",
+                "illuminate/support": "^5.5||^6||^7",
+                "php": "^7.3||^7.4",
+                "symfony/process": "^3||^4||^5"
             },
             "require-dev": {
                 "mockery/mockery": "dev-master",
@@ -120,6 +120,7 @@
                     "BackupManager\\Laravel\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -127,19 +128,11 @@
                 {
                     "name": "Shawn McCool",
                     "email": "shawn@heybigname.com",
-                    "homepage": "http://heybigname.com/"
-                },
-                {
-                    "name": "Mitchell van Wijngaarden",
-                    "email": "mitchell@kooding.nl",
-                    "homepage": "http://heybigname.com/"
+                    "homepage": "https://shawnmc.cool"
                 }
             ],
             "description": "Database backup manager seamlessly integrated with Laravel 4 or 5 with user-definable procedures and support for S3, Dropbox, FTP, SFTP, and more.",
-            "support": {
-                "source": "https://github.com/nafiesl/backup-manager-laravel/tree/laravel_7_support"
-            },
-            "time": "2020-04-22T23:00:10+00:00"
+            "time": "2020-04-30T10:49:41+00:00"
         },
         {
             "name": "brick/math",
@@ -5479,7 +5472,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "backup-manager/laravel": 20,
         "luthfi/formfield": 20
     },
     "prefer-stable": true,
