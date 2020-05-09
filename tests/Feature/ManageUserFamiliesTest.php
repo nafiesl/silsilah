@@ -3,8 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ManageUserFamiliesTest extends TestCase
 {
@@ -312,7 +312,7 @@ class ManageUserFamiliesTest extends TestCase
         $marriageId = $husband->fresh()->wifes->first()->pivot->id;
 
         $this->visit(route('profile'));
-        $this->click('Set Orang Tua');
+        $this->click(__('user.set_parent'));
         $this->seeElement('select', ['name' => 'set_parent_id']);
 
         $this->submitForm('set_parent_button', [
