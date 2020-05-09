@@ -11,7 +11,7 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "luthfi/formfield": "dev-laravel_7_support"
+        "luthfi/formfield": "1.x-dev"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
