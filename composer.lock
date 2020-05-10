@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4cc4dfc00f9bfc24007bb377de2dfc0",
+    "content-hash": "855a92b096e44423052c5029608f90a3",
     "packages": [
         {
             "name": "backup-manager/backup-manager",
@@ -1007,21 +1007,21 @@
         },
         {
             "name": "luthfi/formfield",
-            "version": "1.x-dev",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nafiesl/FormField.git",
-                "reference": "dba77ff9f4a89d89f91c8fed3ca5439a1d421343"
+                "reference": "5e0f2548be09848065a3d8c71fc1545c05046e0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nafiesl/FormField/zipball/dba77ff9f4a89d89f91c8fed3ca5439a1d421343",
-                "reference": "dba77ff9f4a89d89f91c8fed3ca5439a1d421343",
+                "url": "https://api.github.com/repos/nafiesl/FormField/zipball/5e0f2548be09848065a3d8c71fc1545c05046e0e",
+                "reference": "5e0f2548be09848065a3d8c71fc1545c05046e0e",
                 "shasum": ""
             },
             "require": {
                 "laravelcollective/html": ">=5.3",
-                "php": ">=5.6.4"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "orchestra/testbench": ">=3.0 <3.8"
@@ -1055,7 +1055,7 @@
                 }
             ],
             "description": "Laravel Form Field the extension of Laravelcollective Form for Laravel 5.3 and newer with Twitter Bootstrap 3",
-            "time": "2020-05-09T10:42:47+00:00"
+            "time": "2020-05-10T01:59:48+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5471,9 +5471,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "luthfi/formfield": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
