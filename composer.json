@@ -5,20 +5,21 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.1.3",
-        "backup-manager/laravel": "^1.3",
+        "php": "^7.3",
+        "backup-manager/laravel": "^2.0",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.8.*",
-        "laravel/tinker": "~1.0",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^2.0",
         "luthfi/formfield": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
-        "laravel/browser-kit-testing": "^5.0",
+        "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.0",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "classmap": [

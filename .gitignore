@@ -9,4 +9,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
+.env.backup
+.phpunit.result.cache
+yarn-error.log
 /ftpsync.settings
