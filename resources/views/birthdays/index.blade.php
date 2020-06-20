@@ -26,7 +26,7 @@
                     @forelse($users as $key => $user)
                     <tr>
                         <td>{{ $no++ }}</td>
-                        <td class="text-left">{{ $user->name }}</td>
+                        <td class="text-left">{{ link_to_route('users.show', $user->name, $user->user_id) }}</td>
                         <td>
                             {{ $user->birthday->format('j M') }}
                             ({{ __('birthday.remaining', ['count' => $user->birthday_remaining]) }})
