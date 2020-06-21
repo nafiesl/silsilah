@@ -81,6 +81,10 @@
                     </div>
                 </div>
             </div>
+            <div class="text-right">
+                {{ Form::submit(__('app.update'), ['class' => 'btn btn-primary']) }}
+                {{ link_to_route('users.show', __('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
+            </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
@@ -97,10 +101,6 @@
                     {!! FormField::email('email', ['label' => __('auth.email'), 'placeholder' => __('app.example').' nama@mail.com']) !!}
                     {!! FormField::password('password', ['label' => __('auth.password'), 'placeholder' => '******', 'value' => '']) !!}
                 </div>
-            </div>
-            <div class="text-right">
-                {{ Form::submit(__('app.update'), ['class' => 'btn btn-primary']) }}
-                {{ link_to_route('users.show', __('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
             </div>
         </div>
         {{ Form::close() }}
