@@ -68,6 +68,8 @@ class UpdateRequest extends FormRequest
 
         if ($formData['password']) {
             $formData['password'] = bcrypt($formData['password']);
+        } else {
+            unset($formData['password']);
         }
 
         return $formData;
