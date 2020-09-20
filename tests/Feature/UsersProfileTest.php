@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Storage;
 use App\User;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Storage;
+use Tests\TestCase;
 
 class UsersProfileTest extends TestCase
 {
@@ -93,6 +93,29 @@ class UsersProfileTest extends TestCase
         $user = $user->fresh();
         $this->assertEquals('user@mail.com', $user->email);
         $this->assertNull($user->password);
+    }
+
+    /** @test */
+    public function empty_password_does_not_replace_existing()
+    {
+        $manager = $this->loginAsUser();
+        $user = factory(User::class)->create([
+            'manager_id' => $manager->id,
+            'password'   => 'some random string password',
+        ]);
+        $this->visit(route('users.edit', $user->id));
+        $this->seePageIs(route('users.edit', $user->id));
+
+        $this->submitForm(trans('app.update'), [
+            'email'    => 'user@mail.com',
+            'password' => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'         => $user->id,
+            'manager_id' => $manager->id,
+            'password'   => 'some random string password',
+        ]);
     }
 
     /** @test */
