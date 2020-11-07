@@ -74,7 +74,7 @@ class UserPhotoHelperTest extends TestCase
 
         $this->assertFileExists(storage_path('app/public/images/user_photo_path.jpg'));
         unlink(storage_path('app/public/images/user_photo_path.jpg'));
-        $this->assertFileNotExists(storage_path('app/public/images/user_photo_path.jpg'));
+        $this->assertFileDoesNotExist(storage_path('app/public/images/user_photo_path.jpg'));
     }
 
     /** @test */
