@@ -215,24 +215,22 @@ class UsersController extends Controller
      */
     private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
     {
-        foreach (['husband_id', 'wife_id', 'manager_id'] as $field) {
-            if (in_array($field, ['husband_id', 'wife_id'])) {
-                $replacementUserCouples = Couple::where('husband_id', $replacementUserId)
-                    ->orWhere('wive_id', $replacementUserId)
-                    ->get();
-                if ($replacementUserCouples->isEmpty()) {
-                    DB::table('couples')->where($field, $oldUserId)->update([
-                        $field => $replacementUserId,
-                    ]);
-                } else {
-                    $replacementUserCouples->first()->delete();
-                }
-            } else {
-                DB::table('couples')->where($field, $oldUserId)->update([
-                    $field => $replacementUserId,
-                ]);
-            }
+        $replacementUserCouples = Couple::where('husband_id', $replacementUserId)
+            ->orWhere('wife_id', $replacementUserId)
+            ->orWhere('manager_id', $replacementUserId)
+            ->get();
+        if (!$replacementUserCouples->isEmpty()) {
+            $replacementUserCouples->each->delete();
         }
+        DB::table('couples')->where('husband_id', $oldUserId)->update([
+            'husband_id' => $replacementUserId,
+        ]);
+        DB::table('couples')->where('wife_id', $oldUserId)->update([
+            'wife_id' => $replacementUserId,
+        ]);
+        DB::table('couples')->where('manager_id', $oldUserId)->update([
+            'manager_id' => $replacementUserId,
+        ]);
     }
 
     /**

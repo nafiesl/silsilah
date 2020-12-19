@@ -258,19 +258,16 @@ class UsersDeletionTest extends TestCase
     public function bugfix_handle_duplicated_couple_on_user_deletion()
     {
         $manager = $this->loginAsUser();
-        $oldUser = factory(User::class)->states('male')->create([
-            'manager_id' => $manager->id,
-        ]);
-        $replacementUser = factory(User::class)->states('male')->create([
-            'manager_id' => $manager->id,
-        ]);
+        $singleWife = factory(User::class)->states('female')->create(['manager_id' => $manager->id]);
+        $oldUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
+        $replacementUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
         $oldUserCouple = factory(Couple::class)->create([
             'husband_id' => $oldUser->id,
-            'wife_id'    => '999999',
+            'wife_id'    => $singleWife->id,
         ]);
         $duplicatedCouple = factory(Couple::class)->create([
             'husband_id' => $replacementUser->id,
-            'wife_id'    => '999999',
+            'wife_id'    => $singleWife->id,
         ]);
 
         $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
@@ -280,17 +277,14 @@ class UsersDeletionTest extends TestCase
             'replacement_user_id' => $replacementUser->id,
         ]);
 
-        $this->dontSeeInDatabase('users', [
-            'id' => $oldUser->id,
-        ]);
+        $this->dontSeeInDatabase('users', ['id' => $oldUser->id]);
 
-        $this->dontSeeInDatabase('couples', [
-            'husband_id' => $oldUser->id,
-        ]);
+        $this->dontSeeInDatabase('couples', ['husband_id' => $oldUser->id]);
 
         $this->seeInDatabase('couples', [
             'id'         => $oldUserCouple->id,
             'husband_id' => $replacementUser->id,
+            'wife_id'    => $singleWife->id,
         ]);
     }
 }
