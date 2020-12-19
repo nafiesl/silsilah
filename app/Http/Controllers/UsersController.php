@@ -148,6 +148,7 @@ class UsersController extends Controller
 
             DB::beginTransaction();
             $this->replaceUserOnUsersTable($user->id, $attributes['replacement_user_id']);
+            $this->removeDuplicatedCouples($user->id, $attributes['replacement_user_id']);
             $this->replaceUserOnCouplesTable($user->id, $attributes['replacement_user_id']);
             $user->delete();
             DB::commit();
@@ -215,13 +216,6 @@ class UsersController extends Controller
      */
     private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
     {
-        $replacementUserCouples = Couple::where('husband_id', $replacementUserId)
-            ->orWhere('wife_id', $replacementUserId)
-            ->orWhere('manager_id', $replacementUserId)
-            ->get();
-        if (!$replacementUserCouples->isEmpty()) {
-            $replacementUserCouples->each->delete();
-        }
         DB::table('couples')->where('husband_id', $oldUserId)->update([
             'husband_id' => $replacementUserId,
         ]);
@@ -231,6 +225,46 @@ class UsersController extends Controller
         DB::table('couples')->where('manager_id', $oldUserId)->update([
             'manager_id' => $replacementUserId,
         ]);
+    }
+
+    private function removeDuplicatedCouples($oldUserId, $replacementUserId)
+    {
+        $oldUser = User::find($oldUserId);
+        $replacementUser = User::find($replacementUserId);
+
+        if ($replacementUser->gender_id == 1) {
+            $replacementUserCouples = Couple::where('husband_id', $replacementUserId)->get();
+        } else {
+            $replacementUserCouples = Couple::where('wife_id', $replacementUserId)->get();
+        }
+        if ($oldUser->gender_id == 1) {
+            $oldUserCouples = Couple::where('husband_id', $oldUserId)->get();
+        } else {
+            $oldUserCouples = Couple::where('wife_id', $oldUserId)->get();
+        }
+
+        $couplesArray = [];
+        foreach ($replacementUserCouples as $replacementUserCouple) {
+            $couplesArray[$replacementUserCouple->id] = $replacementUserCouple->husband_id.'_'.$replacementUserCouple->wife_id;
+        }
+        foreach ($oldUserCouples as $oldUserCouple) {
+            $couplesArray[$oldUserCouple->id] = $oldUserCouple->husband_id.'_'.$oldUserCouple->wife_id;
+        }
+        $couplesArray = collect($couplesArray);
+        $deletableCouples = [];
+        if ($oldUser->gender_id == 1) {
+            foreach ($oldUserCouples as $oldUserCouple) {
+                $deletableCouples[] = $couplesArray->search($replacementUserId.'_'.$oldUserCouple->wife_id);
+            }
+        } else {
+            foreach ($oldUserCouples as $oldUserCouple) {
+                $deletableCouples[] = $couplesArray->search($oldUserCouple->husband_id.'_'.$replacementUserId);
+            }
+        }
+
+        if ($deletableCouples) {
+            Couple::whereIn('id', $deletableCouples)->delete();
+        }
     }
 
     /**
