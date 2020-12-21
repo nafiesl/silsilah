@@ -20,6 +20,16 @@ class CoupleTest extends TestCase
     }
 
     /** @test */
+    public function a_couples_husband_or_wife_has_a_default_name()
+    {
+        $couple = factory(Couple::class)->create();
+        $couple->husband->delete();
+        $couple->wife->delete();
+        $this->assertEquals($couple->fresh()->husband->name, 'N/A');
+        $this->assertEquals($couple->fresh()->wife->name, 'N/A');
+    }
+
+    /** @test */
     public function a_couple_can_have_many_childs()
     {
         $couple = factory(Couple::class)->create();
