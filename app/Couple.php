@@ -23,12 +23,12 @@ class Couple extends Model
 
     public function husband()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault(['name' => 'N/A']);
     }
 
     public function wife()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault(['name' => 'N/A']);
     }
 
     public function childs()

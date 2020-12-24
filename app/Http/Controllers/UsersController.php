@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Storage;
-use App\User;
 use App\Couple;
-use Illuminate\Http\Request;
 use App\Http\Requests\Users\UpdateRequest;
+use App\Jobs\Users\DeleteAndReplaceUser;
+use App\User;
+use Illuminate\Http\Request;
+use Storage;
 
 class UsersController extends Controller
 {
@@ -146,11 +146,7 @@ class UsersController extends Controller
                 'replacement_user_id.required' => __('validation.user.replacement_user_id.required'),
             ]);
 
-            DB::beginTransaction();
-            $this->replaceUserOnUsersTable($user->id, $attributes['replacement_user_id']);
-            $this->replaceUserOnCouplesTable($user->id, $attributes['replacement_user_id']);
-            $user->delete();
-            DB::commit();
+            $this->dispatchNow(new DeleteAndReplaceUser($user, $attributes['replacement_user_id']));
 
             return redirect()->route('users.show', $attributes['replacement_user_id']);
         }
@@ -187,39 +183,6 @@ class UsersController extends Controller
         $user->save();
 
         return back();
-    }
-
-    /**
-     * Replace User Ids on users table.
-     *
-     * @param  string  $oldUserId
-     * @param  string  $replacementUserId
-     * @return void
-     */
-    private function replaceUserOnUsersTable($oldUserId, $replacementUserId)
-    {
-        foreach (['father_id', 'mother_id', 'manager_id'] as $field) {
-            DB::table('users')->where($field, $oldUserId)->update([
-                $field => $replacementUserId,
-            ]);
-        }
-    }
-
-    /**
-     * Replace User Ids on couples table.
-     *
-     * @param string $oldUserId
-     * @param string $replacementUserId
-     *
-     * @return void
-     */
-    private function replaceUserOnCouplesTable($oldUserId, $replacementUserId)
-    {
-        foreach (['husband_id', 'wife_id', 'manager_id'] as $field) {
-            DB::table('couples')->where($field, $oldUserId)->update([
-                $field => $replacementUserId,
-            ]);
-        }
     }
 
     /**

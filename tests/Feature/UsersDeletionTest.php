@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\User;
 use App\Couple;
-use Tests\TestCase;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UsersDeletionTest extends TestCase
 {
@@ -252,5 +252,80 @@ class UsersDeletionTest extends TestCase
         $this->see(__('user.replace_delete_text'));
         $this->seeElement('option', ['value' => $replacementMaleUser->id]);
         $this->dontSeeElement('option', ['value' => $femaleUser->id]);
+    }
+
+    /** @test */
+    public function bugfix_handle_duplicated_couple_on_user_deletion()
+    {
+        $manager = $this->loginAsUser();
+        $singleWife = factory(User::class)->states('female')->create(['manager_id' => $manager->id]);
+        $oldUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
+        $replacementUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
+        $oldUserCouple = factory(Couple::class)->create([
+            'husband_id' => $oldUser->id,
+            'wife_id'    => $singleWife->id,
+        ]);
+        $duplicatedCouple = factory(Couple::class)->create([
+            'husband_id' => $replacementUser->id,
+            'wife_id'    => $singleWife->id,
+        ]);
+
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', ['id' => $oldUser->id]);
+
+        $this->dontSeeInDatabase('couples', ['husband_id' => $oldUser->id]);
+
+        $this->seeInDatabase('couples', [
+            'id'         => $oldUserCouple->id,
+            'husband_id' => $replacementUser->id,
+            'wife_id'    => $singleWife->id,
+        ]);
+    }
+
+    /** @test */
+    public function bugfix_handle_duplicated_couple_on_user_deletion_with_different_marriages()
+    {
+        $manager = $this->loginAsUser();
+        $oldUserWife = factory(User::class)->states('female')->create(['manager_id' => $manager->id]);
+        $replacementUserWife = factory(User::class)->states('female')->create(['manager_id' => $manager->id]);
+        $oldUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
+        $replacementUser = factory(User::class)->states('male')->create(['manager_id' => $manager->id]);
+        $oldUserCouple = factory(Couple::class)->create([
+            'husband_id' => $oldUser->id,
+            'wife_id'    => $oldUserWife->id,
+        ]);
+        $newUserCouple = factory(Couple::class)->create([
+            'husband_id' => $replacementUser->id,
+            'wife_id'    => $replacementUserWife->id,
+        ]);
+
+        $this->visit(route('users.edit', [$oldUser, 'action' => 'delete']));
+        $this->see(__('user.replace_delete_text'));
+
+        $this->submitForm(__('user.replace_delete_button'), [
+            'replacement_user_id' => $replacementUser->id,
+        ]);
+
+        $this->dontSeeInDatabase('users', ['id' => $oldUser->id]);
+
+        $this->dontSeeInDatabase('couples', ['husband_id' => $oldUser->id]);
+
+        $this->seeInDatabase('couples', [
+            'id'         => $oldUserCouple->id,
+            'husband_id' => $replacementUser->id,
+            'wife_id'    => $oldUserWife->id,
+        ]);
+
+        $this->seeInDatabase('couples', [
+            'id'         => $newUserCouple->id,
+            'husband_id' => $replacementUser->id,
+            'wife_id'    => $replacementUserWife->id,
+        ]);
     }
 }
