@@ -14,3 +14,6 @@
     </li>
 </ul>
 <br>
+@can('delete', $user)
+{{ link_to_route('users.edit', __('user.delete'), [$user, 'action' => 'delete'], ['class' => 'btn btn-danger', 'id' => 'del-user-'.$user->id]) }}
+@endcan
