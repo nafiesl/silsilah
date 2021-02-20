@@ -12,6 +12,21 @@ class UsersProfileTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function guest_can_search_users_profile()
+    {
+        $jono = factory(User::class)->create(['name' => 'Jono']);
+        $jeni = factory(User::class)->create(['name' => 'Jeni']);
+        $johan = factory(user::class)->create(['name' => 'Johan']);
+
+        $this->visitRoute('users.search', ['q' => 'jo']);
+        $this->seeRouteIs('users.search', ['q' => 'jo']);
+
+        $this->seeText('Jono');
+        $this->seeText('Johan');
+        $this->dontSeeText('Jeni');
+    }
+
+    /** @test */
     public function user_can_view_other_users_profile()
     {
         $user = factory(User::class)->create();
@@ -136,12 +151,5 @@ class UsersProfileTest extends TestCase
 
         $this->assertNotNull($user->photo_path);
         Storage::assertExists($user->photo_path);
-    }
-
-    /** @test */
-    public function guest_can_search_users_profile()
-    {
-        $this->visit(route('users.search'));
-        $this->seePageIs(route('users.search'));
     }
 }
