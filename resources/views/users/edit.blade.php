@@ -5,7 +5,7 @@
     @can('delete', $user)
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                    @include('users.partials.delete_confirmation')
+                @include('users.partials.delete_confirmation')
             </div>
         </div>
     @endcan
