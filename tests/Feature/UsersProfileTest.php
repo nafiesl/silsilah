@@ -47,13 +47,6 @@ class UsersProfileTest extends TestCase
             'gender_id'   => 1,
             'dob'         => '1959-06-09',
             'yob'         => '',
-            'dod'         => '2003-10-17',
-            'yod'         => '',
-            'address'     => 'Jln. Angkasa, No. 70',
-            'city'        => 'Nama Kota',
-            'phone'       => '081234567890',
-            'email'       => '',
-            'password'    => '',
             'birth_order' => 3,
         ]);
 
@@ -63,14 +56,66 @@ class UsersProfileTest extends TestCase
             'gender_id'   => 1,
             'dob'         => '1959-06-09',
             'yob'         => '1959',
-            'dod'         => '2003-10-17',
-            'yod'         => '2003',
-            'address'     => 'Jln. Angkasa, No. 70',
-            'city'        => 'Nama Kota',
-            'phone'       => '081234567890',
-            'email'       => null,
-            'password'    => null,
             'birth_order' => 3,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_contact_address()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'contact_address']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'contact_address']));
+
+        $this->submitForm(trans('app.update'), [
+            'address' => 'Jln. Angkasa, No. 70',
+            'city'    => 'Nama Kota',
+            'phone'   => '081234567890',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'      => $user->id,
+            'address' => 'Jln. Angkasa, No. 70',
+            'city'    => 'Nama Kota',
+            'phone'   => '081234567890',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_login_account()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
+
+        $this->submitForm(trans('app.update'), [
+            'email'    => '',
+            'password' => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'       => $user->id,
+            'email'    => null,
+            'password' => null,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_death()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod' => '2003-10-17',
+            'yod' => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => '2003-10-17',
+            'yod' => '2003',
         ]);
     }
 
@@ -79,8 +124,8 @@ class UsersProfileTest extends TestCase
     {
         $manager = $this->loginAsUser();
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
@@ -97,8 +142,8 @@ class UsersProfileTest extends TestCase
     {
         $manager = $this->loginAsUser();
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
@@ -118,8 +163,8 @@ class UsersProfileTest extends TestCase
             'manager_id' => $manager->id,
             'password'   => 'some random string password',
         ]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',

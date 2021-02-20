@@ -58,71 +58,30 @@
         {{ __('user.edit') }} {{ $user->profileLink() }}
     </h2>
     <div class="row">
-        {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">{{ __('user.edit') }}</h3></div>
-                <div class="panel-body">
-                    {!! FormField::text('name', ['label' => __('user.name')]) !!}
-                    {!! FormField::text('nickname', ['label' => __('user.nickname')]) !!}
-                    <div class="row">
-                        <div class="col-md-6">{!! FormField::radios('gender_id', [1 => __('app.male_code'), __('app.female_code')], ['label' => __('user.gender')]) !!}</div>
-                        <div class="col-md-4">
-                            {!! FormField::text('birth_order', ['label' => __('user.birth_order'), 'type' => 'number', 'min' => 1]) !!}
-                        </div>
+        <div class="col-md-2">@include('users.partials.edit_nav_tabs')</div>
+        <div class="col-md-10">
+            <div class="row">
+                {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
+                <div class="col-md-6">
+                    @includeWhen(request('tab') == null, 'users.partials.edit_profile')
+                    @includeWhen(request('tab') == 'death', 'users.partials.edit_death')
+                    @includeWhen(request('tab') == 'contact_address', 'users.partials.edit_contact_address')
+                    @includeWhen(request('tab') == 'login_account', 'users.partials.edit_login_account')
+                    <div class="text-right">
+                        {{ Form::submit(__('app.update'), ['class' => 'btn btn-primary']) }}
+                        {{ link_to_route('users.show', __('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">{!! FormField::text('yob', ['label' => __('user.yob'), 'placeholder' => __('app.example').' 1959']) !!}</div>
-                        <div class="col-md-6">{!! FormField::text('dob', ['label' => __('user.dob'), 'placeholder' => __('app.example').' 1959-07-20']) !!}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">{!! FormField::text('yod', ['label' => __('user.yod'), 'placeholder' => __('app.example').' 2003']) !!}</div>
-                        <div class="col-md-6">{!! FormField::text('dod', ['label' => __('user.dod'), 'placeholder' => __('app.example').' 2003-10-17']) !!}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-right">
-                {{ Form::submit(__('app.update'), ['class' => 'btn btn-primary']) }}
-                {{ link_to_route('users.show', __('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">{{ __('app.address') }} &amp; {{ __('app.contact') }}</h3></div>
-                <div class="panel-body">
-                    {!! FormField::textarea('address', ['label' => __('app.address')]) !!}
-                    {!! FormField::text('city', ['label' => __('app.city'), 'placeholder' => __('app.example').' Jakarta']) !!}
-                    {!! FormField::text('phone', ['label' => __('app.phone'), 'placeholder' => __('app.example').' 081234567890']) !!}
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">{{ __('app.login_account') }}</h3></div>
-                <div class="panel-body">
-                    {!! FormField::email('email', ['label' => __('auth.email'), 'placeholder' => __('app.example').' nama@mail.com']) !!}
-                    {!! FormField::password('password', ['label' => __('auth.password'), 'placeholder' => '******', 'value' => '']) !!}
-                </div>
-            </div>
-        </div>
-        {{ Form::close() }}
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">{{ __('user.update_photo') }}</h3></div>
-                {{ Form::open(['route' => ['users.photo-upload', $user], 'method' => 'patch', 'files' => true]) }}
-                <div class="panel-body text-center">
-                    {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
-                </div>
-                <div class="panel-body">
-                    {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => 'Format jpg, maks: 200 Kb.', 'class' => 'warning']]) !!}
-                </div>
-                <div class="panel-footer">
-                    {!! Form::submit(__('user.update_photo'), ['class' => 'btn btn-success']) !!}
-                    {{ link_to_route('users.show', __('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
                 </div>
                 {{ Form::close() }}
+                <div class="col-md-6">
+                    @includeWhen(request('tab') == null, 'users.partials.update_photo')
+                    @if (request('tab') == null)
+                        @can('delete', $user)
+                            {{ link_to_route('users.edit', __('user.delete'), [$user, 'action' => 'delete'], ['class' => 'btn btn-danger pull-right', 'id' => 'del-user-'.$user->id]) }}
+                        @endcan
+                    @endif
+                </div>
             </div>
-            @can('delete', $user)
-                {{ link_to_route('users.edit', __('user.delete'), [$user, 'action' => 'delete'], ['class' => 'btn btn-danger pull-right', 'id' => 'del-user-'.$user->id]) }}
-            @endcan
         </div>
     </div>
 @endif
