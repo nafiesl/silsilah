@@ -61,6 +61,25 @@ class UsersProfileTest extends TestCase
     }
 
     /** @test */
+    public function user_can_update_yob_only()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', $user->id));
+        $this->seePageIs(route('users.edit', $user->id));
+
+        $this->submitForm(trans('app.update'), [
+            'dob' => '',
+            'yob' => '2003',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dob' => null,
+            'yob' => '2003',
+        ]);
+    }
+
+    /** @test */
     public function user_can_edit_contact_address()
     {
         $user = $this->loginAsUser();
@@ -115,6 +134,25 @@ class UsersProfileTest extends TestCase
         $this->seeInDatabase('users', [
             'id'  => $user->id,
             'dod' => '2003-10-17',
+            'yod' => '2003',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_update_yod_only()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod' => '',
+            'yod' => '2003',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => null,
             'yod' => '2003',
         ]);
     }

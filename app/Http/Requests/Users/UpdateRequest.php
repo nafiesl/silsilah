@@ -54,21 +54,8 @@ class UpdateRequest extends FormRequest
     {
         $formData = parent::validated();
 
-        if (isset($formData['dod'])) {
-            if ($formData['dod']) {
-                $formData['yod'] = substr($formData['dod'], 0, 4);
-            } else {
-                $formData['yod'] = $formData['yod'];
-            }
-        }
-
-        if (isset($formData['dob'])) {
-            if ($formData['dob']) {
-                $formData['yob'] = substr($formData['dob'], 0, 4);
-            } else {
-                $formData['yob'] = $formData['yob'];
-            }
-        }
+        $formData['yod'] = $this->getYod($formData);
+        $formData['yob'] = $this->getYob($formData);
 
         if (isset($formData['password']) && $formData['password']) {
             $formData['password'] = bcrypt($formData['password']);
@@ -77,5 +64,31 @@ class UpdateRequest extends FormRequest
         }
 
         return $formData;
+    }
+
+    private function getYob($formData)
+    {
+        if (isset($formData['yob'])) {
+            return $formData['yob'];
+        }
+
+        if (isset($formData['dob']) && $formData['dob']) {
+            return substr($formData['dob'], 0, 4);
+        }
+
+        return;
+    }
+
+    private function getYod($formData)
+    {
+        if (isset($formData['yod'])) {
+            return $formData['yod'];
+        }
+
+        if (isset($formData['dod']) && $formData['dod']) {
+            return substr($formData['dod'], 0, 4);
+        }
+
+        return;
     }
 }
