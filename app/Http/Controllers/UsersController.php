@@ -111,7 +111,9 @@ class UsersController extends Controller
             $replacementUsers = $this->getPersonList($user->gender_id);
         }
 
-        return view('users.edit', compact('user', 'replacementUsers'));
+        $validTabs = ['death', 'contact_address', 'login_account'];
+
+        return view('users.edit', compact('user', 'replacementUsers', 'validTabs'));
     }
 
     /**
