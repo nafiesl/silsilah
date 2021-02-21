@@ -22,7 +22,7 @@
             <div class="row">
                 {{ Form::model($user, ['route' => ['users.update', $user->id], 'method' =>'patch', 'autocomplete' => 'off']) }}
                 <div class="col-md-6">
-                    @includeWhen(request('tab') == null, 'users.partials.edit_profile')
+                    @includeWhen(request('tab') == null || !in_array(request('tab'), ['death', 'contact_address', 'login_account',]), 'users.partials.edit_profile')
                     @includeWhen(request('tab') == 'death', 'users.partials.edit_death')
                     @includeWhen(request('tab') == 'contact_address', 'users.partials.edit_contact_address')
                     @includeWhen(request('tab') == 'login_account', 'users.partials.edit_login_account')
@@ -33,7 +33,7 @@
                 </div>
                 {{ Form::close() }}
                 <div class="col-md-6">
-                    @includeWhen(request('tab') == null, 'users.partials.update_photo')
+                    @includeWhen(request('tab') == null || !in_array(request('tab'), ['death', 'contact_address', 'login_account',]), 'users.partials.update_photo')
                 </div>
             </div>
         </div>

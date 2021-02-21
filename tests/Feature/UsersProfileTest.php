@@ -35,6 +35,16 @@ class UsersProfileTest extends TestCase
     }
 
     /** @test */
+    public function user_will_see_edit_profile_if_an_invalid_tab_selected()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'invalid_tab']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'invalid_tab']));
+        $this->seeElement('input', ['name' => 'nickname']);
+        $this->seeElement('input', ['name' => 'name']);
+    }
+
+    /** @test */
     public function user_can_edit_profile()
     {
         $user = $this->loginAsUser();
