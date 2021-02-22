@@ -12,6 +12,21 @@ class UsersProfileTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function guest_can_search_users_profile()
+    {
+        $jono = factory(User::class)->create(['name' => 'Jono']);
+        $jeni = factory(User::class)->create(['name' => 'Jeni']);
+        $johan = factory(user::class)->create(['name' => 'Johan']);
+
+        $this->visitRoute('users.search', ['q' => 'jo']);
+        $this->seeRouteIs('users.search', ['q' => 'jo']);
+
+        $this->seeText('Jono');
+        $this->seeText('Johan');
+        $this->dontSeeText('Jeni');
+    }
+
+    /** @test */
     public function user_can_view_other_users_profile()
     {
         $user = factory(User::class)->create();
@@ -32,13 +47,6 @@ class UsersProfileTest extends TestCase
             'gender_id'   => 1,
             'dob'         => '1959-06-09',
             'yob'         => '',
-            'dod'         => '2003-10-17',
-            'yod'         => '',
-            'address'     => 'Jln. Angkasa, No. 70',
-            'city'        => 'Nama Kota',
-            'phone'       => '081234567890',
-            'email'       => '',
-            'password'    => '',
             'birth_order' => 3,
         ]);
 
@@ -48,14 +56,104 @@ class UsersProfileTest extends TestCase
             'gender_id'   => 1,
             'dob'         => '1959-06-09',
             'yob'         => '1959',
-            'dod'         => '2003-10-17',
-            'yod'         => '2003',
-            'address'     => 'Jln. Angkasa, No. 70',
-            'city'        => 'Nama Kota',
-            'phone'       => '081234567890',
-            'email'       => null,
-            'password'    => null,
             'birth_order' => 3,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_update_yob_only()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', $user->id));
+        $this->seePageIs(route('users.edit', $user->id));
+
+        $this->submitForm(trans('app.update'), [
+            'dob' => '',
+            'yob' => '2003',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dob' => null,
+            'yob' => '2003',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_contact_address()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'contact_address']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'contact_address']));
+
+        $this->submitForm(trans('app.update'), [
+            'address' => 'Jln. Angkasa, No. 70',
+            'city'    => 'Nama Kota',
+            'phone'   => '081234567890',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'      => $user->id,
+            'address' => 'Jln. Angkasa, No. 70',
+            'city'    => 'Nama Kota',
+            'phone'   => '081234567890',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_login_account()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
+
+        $this->submitForm(trans('app.update'), [
+            'email'    => '',
+            'password' => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'       => $user->id,
+            'email'    => null,
+            'password' => null,
+        ]);
+    }
+
+    /** @test */
+    public function user_can_edit_death()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod' => '2003-10-17',
+            'yod' => '',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => '2003-10-17',
+            'yod' => '2003',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_update_yod_only()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod' => '',
+            'yod' => '2003',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => null,
+            'yod' => '2003',
         ]);
     }
 
@@ -64,8 +162,8 @@ class UsersProfileTest extends TestCase
     {
         $manager = $this->loginAsUser();
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
@@ -82,8 +180,8 @@ class UsersProfileTest extends TestCase
     {
         $manager = $this->loginAsUser();
         $user = factory(User::class)->create(['manager_id' => $manager->id]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
@@ -103,8 +201,8 @@ class UsersProfileTest extends TestCase
             'manager_id' => $manager->id,
             'password'   => 'some random string password',
         ]);
-        $this->visit(route('users.edit', $user->id));
-        $this->seePageIs(route('users.edit', $user->id));
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'login_account']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'login_account']));
 
         $this->submitForm(trans('app.update'), [
             'email'    => 'user@mail.com',
@@ -136,12 +234,5 @@ class UsersProfileTest extends TestCase
 
         $this->assertNotNull($user->photo_path);
         Storage::assertExists($user->photo_path);
-    }
-
-    /** @test */
-    public function guest_can_search_users_profile()
-    {
-        $this->visit(route('users.search'));
-        $this->seePageIs(route('users.search'));
     }
 }

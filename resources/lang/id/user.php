@@ -11,6 +11,7 @@ return [
     'grand_childs' => 'Cucu-cucu',
     'siblings'     => 'Saudara',
     'dead'         => 'Meninggal',
+    'death'        => 'Kematian',
     'child_name'   => 'Nama Anak',
     'child_gender' => 'Jenis Kelamin Anak',
     'grand_mother' => 'Nenek',

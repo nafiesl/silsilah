@@ -26,9 +26,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname'    => 'required|string|max:255',
-            'name'        => 'required|string|max:255',
-            'gender_id'   => 'required|numeric',
+            'nickname'    => 'sometimes|required|string|max:255',
+            'name'        => 'sometimes|required|string|max:255',
+            'gender_id'   => 'sometimes|required|numeric',
             'dob'         => 'nullable|date|date_format:Y-m-d',
             'yob'         => 'nullable|date_format:Y',
             'dod'         => 'nullable|date|date_format:Y-m-d',
@@ -54,24 +54,41 @@ class UpdateRequest extends FormRequest
     {
         $formData = parent::validated();
 
-        if ($formData['dod']) {
-            $formData['yod'] = substr($formData['dod'], 0, 4);
-        } else {
-            $formData['yod'] = $formData['yod'];
-        }
+        $formData['yod'] = $this->getYod($formData);
+        $formData['yob'] = $this->getYob($formData);
 
-        if ($formData['dob']) {
-            $formData['yob'] = substr($formData['dob'], 0, 4);
-        } else {
-            $formData['yob'] = $formData['yob'];
-        }
-
-        if ($formData['password']) {
+        if (isset($formData['password']) && $formData['password']) {
             $formData['password'] = bcrypt($formData['password']);
         } else {
             unset($formData['password']);
         }
 
         return $formData;
+    }
+
+    private function getYob($formData)
+    {
+        if (isset($formData['yob'])) {
+            return $formData['yob'];
+        }
+
+        if (isset($formData['dob']) && $formData['dob']) {
+            return substr($formData['dob'], 0, 4);
+        }
+
+        return;
+    }
+
+    private function getYod($formData)
+    {
+        if (isset($formData['yod'])) {
+            return $formData['yod'];
+        }
+
+        if (isset($formData['dod']) && $formData['dod']) {
+            return substr($formData['dod'], 0, 4);
+        }
+
+        return;
     }
 }
