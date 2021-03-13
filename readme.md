@@ -70,7 +70,11 @@ This application can be installed on local server and online server with these s
 8. `php artisan migrate`
 9. `php artisan storage:link`
 10. `php artisan serve`
-11. Done (Register as new user to start using the application).
+11. Register as new user to start using the application.
+12. Add the registered email address to the `.env` file:
+    ```
+    SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
+    ```
 
 ## Testing
 This application built with testing (TDD) using in-memory sqlite database.

@@ -75,7 +75,11 @@ Aplikasi ini dapat dipasang pada server lokal dan onlne dengan spesifikasi berik
 8. `php artisan migrate`
 9. `php artisan storage:link`
 10. `php artisan serve`
-11. Selesai (Register user baru untuk mulai mengisi silsilah).
+11. Register user baru untuk mulai mengisi silsilah.
+12. Tambahkan alamat email yang digunakan mendaftar pada file `.env`:
+    ```
+    SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
+    ```
 
 ## Testing
 Ingin mencoba automated testingnya? Silakan ketik perintah pada terminal: `vendor/bin/phpunit`
