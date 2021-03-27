@@ -30,6 +30,11 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals('Nama Ayah', $user->fresh()->father->nickname);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $user->fresh()->father->id,
+        ]);
     }
 
     /** @test */
@@ -53,6 +58,11 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals('Nama Ibu', $user->fresh()->mother->nickname);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $user->fresh()->mother->id,
+        ]);
     }
 
     /** @test */
@@ -79,6 +89,12 @@ class ManageUserFamiliesTest extends TestCase
             'mother_id'  => null,
             'parent_id'  => null,
             'manager_id' => $user->id,
+        ]);
+        $child = User::where('name', 'Nama Anak 1')->first();
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $child->id,
         ]);
     }
 
@@ -170,6 +186,11 @@ class ManageUserFamiliesTest extends TestCase
             'marriage_date' => '2010-01-01',
             'manager_id'    => $user->id,
         ]);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $wife->id,
+        ]);
     }
 
     /** @test */
@@ -203,6 +224,11 @@ class ManageUserFamiliesTest extends TestCase
             'marriage_date' => '2010-03-03',
             'manager_id'    => $user->id,
         ]);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $husband->id,
+        ]);
     }
 
     /** @test */
@@ -225,6 +251,11 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals($father->nickname, $user->fresh()->father->nickname);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $father->id,
+        ]);
     }
 
     /** @test */
@@ -247,6 +278,11 @@ class ManageUserFamiliesTest extends TestCase
         ]);
 
         $this->assertEquals($mother->nickname, $user->fresh()->mother->nickname);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $mother->id,
+        ]);
     }
 
     /** @test */
@@ -273,6 +309,11 @@ class ManageUserFamiliesTest extends TestCase
             'marriage_date' => '2010-01-01',
             'manager_id'    => $user->id,
         ]);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $wife->id,
+        ]);
     }
 
     /** @test */
@@ -298,6 +339,11 @@ class ManageUserFamiliesTest extends TestCase
             'wife_id'       => $user->id,
             'marriage_date' => '2010-03-03',
             'manager_id'    => $user->id,
+        ]);
+
+        $this->seeInDatabase('family_member_connections', [
+            'requester_id' => $user->id,
+            'requested_id' => $husband->id,
         ]);
     }
 
