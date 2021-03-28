@@ -285,4 +285,21 @@ class UserTest extends TestCase
 
         $this->assertTrue($john->hasFamilyConnectionRequestTo($jane));
     }
+
+    /** @test */
+    public function a_user_model_has_method_has_pending_family_connection_request_from()
+    {
+        $john = factory(User::class)->create();
+        $jane = factory(User::class)->create();
+
+        $this->assertFalse($jane->hasPendingFamilyConnectionRequestFrom($john));
+
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $john->id,
+            'requested_id' => $jane->id,
+        ]);
+
+        $this->assertTrue($jane->hasPendingFamilyConnectionRequestFrom($john));
+    }
 }

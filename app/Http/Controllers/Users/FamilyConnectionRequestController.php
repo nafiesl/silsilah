@@ -21,4 +21,31 @@ class FamilyConnectionRequestController extends Controller
 
         return back();
     }
+
+    public function update(Request $request, User $user)
+    {
+        $familyConnection = FamilyConnection::where([
+            'requester_id' => $user->id,
+            'requested_id' => auth()->id(),
+            'status_id'    => FamilyConnection::STATUS_WAITING,
+        ])->first();
+
+        $familyConnection->status_id = FamilyConnection::STATUS_APPROVED;
+        $familyConnection->save();
+
+        return back();
+    }
+
+    public function destroy(Request $request, User $user)
+    {
+        $familyConnection = FamilyConnection::where([
+            'requester_id' => $user->id,
+            'requested_id' => auth()->id(),
+            'status_id'    => FamilyConnection::STATUS_WAITING,
+        ])->first();
+
+        $familyConnection->delete();
+
+        return back();
+    }
 }

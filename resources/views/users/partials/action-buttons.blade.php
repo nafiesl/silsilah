@@ -8,9 +8,14 @@
     {{ link_to_route('users.marriages', trans('app.show_marriages'), [$user->id], ['class' => Request::segment(3) == 'marriages' ? 'btn btn-default active' : 'btn btn-default']) }}
     @auth
         @if (auth()->user()->hasFamilyConnectionRequestTo($user))
-            {!! FormField::formButton(['route' => ['users.family_connection_requests.delete', $user->id]], __('family_connection.cancel_request'), ['class' => 'btn btn-warning', 'id' => 'cancel_family_connection_request']) !!}
+            {!! FormField::formButton(['route' => ['users.family_connection_requests.destroy', $user->id]], __('family_connection.cancel_request'), ['class' => 'btn btn-warning', 'id' => 'cancel_family_connection_request']) !!}
         @else
             {!! FormField::formButton(['route' => ['users.family_connection_requests.store', $user->id]], __('family_connection.send_request'), ['class' => 'btn btn-success', 'id' => 'send_family_connection_request']) !!}
+        @endif
+
+        @if (auth()->user()->hasPendingFamilyConnectionRequestFrom($user))
+            {!! FormField::formButton(['route' => ['users.family_connection_requests.update', $user->id], 'method' => 'patch'], __('family_connection.accept_request'), ['class' => 'btn btn-success', 'id' => 'accept_family_connection_request']) !!}
+            {!! FormField::delete(['route' => ['users.family_connection_requests.destroy', $user->id]], __('family_connection.reject_request'), ['class' => 'btn btn-danger', 'id' => 'reject_family_connection_request']) !!}
         @endif
     @endauth
 </div>

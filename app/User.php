@@ -327,4 +327,15 @@ class User extends Authenticatable
 
         return !!$familyConnetction;
     }
+
+    public function hasPendingFamilyConnectionRequestFrom(User $user)
+    {
+        $familyConnetction = FamilyConnection::where([
+            'requester_id' => $user->id,
+            'requested_id' => $this->id,
+            'status_id'    => 0,
+        ])->count();
+
+        return !!$familyConnetction;
+    }
 }
