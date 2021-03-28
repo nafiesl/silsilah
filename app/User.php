@@ -5,7 +5,6 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
@@ -77,12 +76,6 @@ class User extends Authenticatable
             $this->father_id = $father->id;
             $this->save();
 
-            DB::table('family_member_connections')->insert([
-                'id'           => Uuid::uuid4()->toString(),
-                'requester_id' => $this->id,
-                'requested_id' => $father->id,
-            ]);
-
             return $father;
         }
 
@@ -99,12 +92,6 @@ class User extends Authenticatable
 
             $this->mother_id = $mother->id;
             $this->save();
-
-            DB::table('family_member_connections')->insert([
-                'id'           => Uuid::uuid4()->toString(),
-                'requester_id' => $this->id,
-                'requested_id' => $mother->id,
-            ]);
 
             return $mother;
         }
@@ -161,12 +148,6 @@ class User extends Authenticatable
                 'manager_id'    => auth()->id(),
             ]);
 
-            DB::table('family_member_connections')->insert([
-                'id'           => Uuid::uuid4()->toString(),
-                'requester_id' => $this->id,
-                'requested_id' => $wife->id,
-            ]);
-
             return $wife;
         }
 
@@ -185,12 +166,6 @@ class User extends Authenticatable
                 'id'            => Uuid::uuid4()->toString(),
                 'marriage_date' => $marriageDate,
                 'manager_id'    => auth()->id(),
-            ]);
-
-            DB::table('family_member_connections')->insert([
-                'id'           => Uuid::uuid4()->toString(),
-                'requester_id' => $this->id,
-                'requested_id' => $husband->id,
             ]);
 
             return $husband;

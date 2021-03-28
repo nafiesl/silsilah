@@ -42,6 +42,12 @@ class FamilyActionsController extends Controller
             $father->manager_id = auth()->id();
 
             $user->setFather($father);
+
+            DB::table('family_member_connections')->insert([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $father->id,
+            ]);
         }
 
         return back();
@@ -79,6 +85,12 @@ class FamilyActionsController extends Controller
             $mother->manager_id = auth()->id();
 
             $user->setMother($mother);
+
+            DB::table('family_member_connections')->insert([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $mother->id,
+            ]);
         }
 
         return back();
@@ -120,8 +132,20 @@ class FamilyActionsController extends Controller
         } else {
             if ($user->gender_id == 1) {
                 $child->setFather($user);
+
+                DB::table('family_member_connections')->insert([
+                    'id'           => Uuid::uuid4()->toString(),
+                    'requester_id' => $child->id,
+                    'requested_id' => $user->id,
+                ]);
             } else {
                 $child->setMother($user);
+
+                DB::table('family_member_connections')->insert([
+                    'id'           => Uuid::uuid4()->toString(),
+                    'requester_id' => $child->id,
+                    'requested_id' => $user->id,
+                ]);
             }
 
         }
@@ -159,6 +183,12 @@ class FamilyActionsController extends Controller
 
         $user->addWife($wife, $request->get('marriage_date'));
 
+        DB::table('family_member_connections')->insert([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $user->id,
+            'requested_id' => $wife->id,
+        ]);
+
         return back();
     }
 
@@ -189,6 +219,12 @@ class FamilyActionsController extends Controller
         }
 
         $user->addHusband($husband, $request->get('marriage_date'));
+
+        DB::table('family_member_connections')->insert([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $user->id,
+            'requested_id' => $husband->id,
+        ]);
 
         return back();
     }
