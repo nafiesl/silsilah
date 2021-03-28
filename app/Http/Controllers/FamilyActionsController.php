@@ -33,6 +33,7 @@ class FamilyActionsController extends Controller
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $request->get('set_father_id'),
+                'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
             ]);
         } else {
             $father = new User;
@@ -48,6 +49,7 @@ class FamilyActionsController extends Controller
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $father->id,
+                'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
             ]);
         }
 
@@ -76,6 +78,7 @@ class FamilyActionsController extends Controller
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $request->get('set_mother_id'),
+                'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
             ]);
         } else {
             $mother = new User;
@@ -91,6 +94,7 @@ class FamilyActionsController extends Controller
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $mother->id,
+                'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
             ]);
         }
 
@@ -138,6 +142,7 @@ class FamilyActionsController extends Controller
                     'id'           => Uuid::uuid4()->toString(),
                     'requester_id' => $user->id,
                     'requested_id' => $child->id,
+                    'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
                 ]);
             } else {
                 $child->setMother($user);
@@ -146,6 +151,7 @@ class FamilyActionsController extends Controller
                     'id'           => Uuid::uuid4()->toString(),
                     'requester_id' => $user->id,
                     'requested_id' => $child->id,
+                    'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
                 ]);
             }
 
@@ -188,6 +194,7 @@ class FamilyActionsController extends Controller
             'id'           => Uuid::uuid4()->toString(),
             'requester_id' => $user->id,
             'requested_id' => $wife->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
 
         return back();
@@ -225,6 +232,7 @@ class FamilyActionsController extends Controller
             'id'           => Uuid::uuid4()->toString(),
             'requester_id' => $user->id,
             'requested_id' => $husband->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
 
         return back();

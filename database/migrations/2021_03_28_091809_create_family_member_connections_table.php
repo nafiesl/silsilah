@@ -17,6 +17,7 @@ class CreateFamilyMemberConnectionsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('requester_id');
             $table->uuid('requested_id');
+            $table->unsignedTinyInteger('status_id')->default(0);
             $table->timestamps();
 
             $table->unique(['requester_id', 'requested_id']);

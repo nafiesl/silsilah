@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\FamilyMemberConnection;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -34,6 +35,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $user->fresh()->father->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -62,6 +64,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $user->fresh()->mother->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -95,6 +98,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $child->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -190,6 +194,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $wife->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -228,6 +233,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $husband->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -255,6 +261,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $father->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -282,6 +289,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $mother->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -313,6 +321,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $wife->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
@@ -344,6 +353,7 @@ class ManageUserFamiliesTest extends TestCase
         $this->seeInDatabase('family_member_connections', [
             'requester_id' => $user->id,
             'requested_id' => $husband->id,
+            'status_id'    => FamilyMemberConnection::STATUS_APPROVED,
         ]);
     }
 
