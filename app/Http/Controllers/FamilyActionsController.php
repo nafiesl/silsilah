@@ -135,16 +135,16 @@ class FamilyActionsController extends Controller
 
                 DB::table('family_member_connections')->insert([
                     'id'           => Uuid::uuid4()->toString(),
-                    'requester_id' => $child->id,
-                    'requested_id' => $user->id,
+                    'requester_id' => $user->id,
+                    'requested_id' => $child->id,
                 ]);
             } else {
                 $child->setMother($user);
 
                 DB::table('family_member_connections')->insert([
                     'id'           => Uuid::uuid4()->toString(),
-                    'requester_id' => $child->id,
-                    'requested_id' => $user->id,
+                    'requester_id' => $user->id,
+                    'requested_id' => $child->id,
                 ]);
             }
 
