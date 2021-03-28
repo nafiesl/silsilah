@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FamilyMemberConnection extends Model
+class FamilyConnection extends Model
 {
     const STATUS_WAITING = 0;
     const STATUS_APPROVED = 1;

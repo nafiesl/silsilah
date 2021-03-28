@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFamilyMemberConnectionsTable extends Migration
+class CreateFamilyConnectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFamilyMemberConnectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('family_member_connections', function (Blueprint $table) {
+        Schema::create('family_connections', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('requester_id');
             $table->uuid('requested_id');

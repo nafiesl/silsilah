@@ -16,7 +16,7 @@ class FamilyConnectionRequestTest extends TestCase
         $user = $this->loginAsUser();
         $otherPerson = factory(User::class)->create();
 
-        $this->dontSeeInDatabase('family_member_connections', [
+        $this->dontSeeInDatabase('family_connections', [
             'requester_id' => $user->id,
             'requested_id' => $otherPerson->id,
         ]);
@@ -26,7 +26,7 @@ class FamilyConnectionRequestTest extends TestCase
         $this->press('send_family_connection_request');
         $this->seeRouteIs('users.show', $otherPerson);
 
-        $this->seeInDatabase('family_member_connections', [
+        $this->seeInDatabase('family_connections', [
             'requester_id' => $user->id,
             'requested_id' => $otherPerson->id,
         ]);
