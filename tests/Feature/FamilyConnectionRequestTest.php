@@ -36,6 +36,28 @@ class FamilyConnectionRequestTest extends TestCase
     }
 
     /** @test */
+    public function user_can_cancel_family_connection_request_to_other_user()
+    {
+        $user = $this->loginAsUser();
+        $otherPerson = factory(User::class)->create();
+
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $user->id,
+            'requested_id' => $otherPerson->id,
+        ]);
+
+        $this->visitRoute('users.show', $otherPerson);
+        $this->seeElement('button', ['id' => 'cancel_family_connection_request']);
+        $this->press('cancel_family_connection_request');
+
+        $this->dontSeeInDatabase('family_connections', [
+            'requester_id' => $otherPerson->id,
+            'requested_id' => $user->id,
+        ]);
+    }
+
+    /** @test */
     public function user_can_accept_family_connection_request_from_other_user()
     {
         $user = $this->loginAsUser();

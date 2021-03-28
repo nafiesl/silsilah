@@ -42,6 +42,10 @@ class FamilyConnectionRequestController extends Controller
             'requester_id' => $user->id,
             'requested_id' => auth()->id(),
             'status_id'    => FamilyConnection::STATUS_WAITING,
+        ])->orWhere([
+            'requester_id' => auth()->id(),
+            'requested_id' => $user->id,
+            'status_id'    => FamilyConnection::STATUS_WAITING,
         ])->first();
 
         $familyConnection->delete();
