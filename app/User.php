@@ -147,6 +147,7 @@ class User extends Authenticatable
                 'marriage_date' => $marriageDate,
                 'manager_id'    => auth()->id(),
             ]);
+
             return $wife;
         }
 
@@ -166,6 +167,7 @@ class User extends Authenticatable
                 'marriage_date' => $marriageDate,
                 'manager_id'    => auth()->id(),
             ]);
+
             return $husband;
         }
 
@@ -313,5 +315,27 @@ class User extends Authenticatable
         if ($this->dob) {
             return Carbon::now()->diffInDays($this->birthday, false);
         }
+    }
+
+    public function hasFamilyConnectionRequestTo(User $user)
+    {
+        $familyConnetction = FamilyConnection::where([
+            'requester_id' => $this->id,
+            'requested_id' => $user->id,
+            'status_id'    => 0,
+        ])->count();
+
+        return !!$familyConnetction;
+    }
+
+    public function hasPendingFamilyConnectionRequestFrom(User $user)
+    {
+        $familyConnetction = FamilyConnection::where([
+            'requester_id' => $user->id,
+            'requested_id' => $this->id,
+            'status_id'    => 0,
+        ])->count();
+
+        return !!$familyConnetction;
     }
 }
