@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Couple;
+use App\FamilyMemberConnection;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class FamilyActionsController extends Controller
             $user->father_id = $request->get('set_father_id');
             $user->save();
 
-            DB::table('family_member_connections')->insert([
+            FamilyMemberConnection::create([
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $request->get('set_father_id'),
@@ -43,7 +44,7 @@ class FamilyActionsController extends Controller
 
             $user->setFather($father);
 
-            DB::table('family_member_connections')->insert([
+            FamilyMemberConnection::create([
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $father->id,
@@ -71,7 +72,7 @@ class FamilyActionsController extends Controller
             $user->mother_id = $request->get('set_mother_id');
             $user->save();
 
-            DB::table('family_member_connections')->insert([
+            FamilyMemberConnection::create([
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $request->get('set_mother_id'),
@@ -86,7 +87,7 @@ class FamilyActionsController extends Controller
 
             $user->setMother($mother);
 
-            DB::table('family_member_connections')->insert([
+            FamilyMemberConnection::create([
                 'id'           => Uuid::uuid4()->toString(),
                 'requester_id' => $user->id,
                 'requested_id' => $mother->id,
@@ -133,7 +134,7 @@ class FamilyActionsController extends Controller
             if ($user->gender_id == 1) {
                 $child->setFather($user);
 
-                DB::table('family_member_connections')->insert([
+                FamilyMemberConnection::create([
                     'id'           => Uuid::uuid4()->toString(),
                     'requester_id' => $user->id,
                     'requested_id' => $child->id,
@@ -141,7 +142,7 @@ class FamilyActionsController extends Controller
             } else {
                 $child->setMother($user);
 
-                DB::table('family_member_connections')->insert([
+                FamilyMemberConnection::create([
                     'id'           => Uuid::uuid4()->toString(),
                     'requester_id' => $user->id,
                     'requested_id' => $child->id,
@@ -183,7 +184,7 @@ class FamilyActionsController extends Controller
 
         $user->addWife($wife, $request->get('marriage_date'));
 
-        DB::table('family_member_connections')->insert([
+        FamilyMemberConnection::create([
             'id'           => Uuid::uuid4()->toString(),
             'requester_id' => $user->id,
             'requested_id' => $wife->id,
@@ -220,7 +221,7 @@ class FamilyActionsController extends Controller
 
         $user->addHusband($husband, $request->get('marriage_date'));
 
-        DB::table('family_member_connections')->insert([
+        FamilyMemberConnection::create([
             'id'           => Uuid::uuid4()->toString(),
             'requester_id' => $user->id,
             'requested_id' => $husband->id,
