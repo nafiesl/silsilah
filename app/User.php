@@ -316,4 +316,15 @@ class User extends Authenticatable
             return Carbon::now()->diffInDays($this->birthday, false);
         }
     }
+
+    public function hasFamilyConnectionRequestTo(User $user)
+    {
+        $familyConnetction = FamilyConnection::where([
+            'requester_id' => $this->id,
+            'requested_id' => $user->id,
+            'status_id'    => 0,
+        ])->count();
+
+        return !!$familyConnetction;
+    }
 }

@@ -25,6 +25,7 @@ class FamilyConnectionRequestTest extends TestCase
         $this->seeElement('button', ['id' => 'send_family_connection_request']);
         $this->press('send_family_connection_request');
         $this->seeRouteIs('users.show', $otherPerson);
+        $this->seeElement('button', ['id' => 'cancel_family_connection_request']);
 
         $this->seeInDatabase('family_connections', [
             'requester_id' => $user->id,

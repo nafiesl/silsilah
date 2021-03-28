@@ -7,6 +7,10 @@
     {{ link_to_route('users.tree', trans('app.show_family_tree'), [$user->id], ['class' => Request::segment(3) == 'tree' ? 'btn btn-default active' : 'btn btn-default']) }}
     {{ link_to_route('users.marriages', trans('app.show_marriages'), [$user->id], ['class' => Request::segment(3) == 'marriages' ? 'btn btn-default active' : 'btn btn-default']) }}
     @auth
-    {!! FormField::formButton(['route' => ['users.family_connection_requests.store', $user->id]], __('family_connection.send_request'), ['class' => 'btn btn-success', 'id' => 'send_family_connection_request']) !!}
+        @if (auth()->user()->hasFamilyConnectionRequestTo($user))
+            {!! FormField::formButton(['route' => ['users.family_connection_requests.delete', $user->id]], __('family_connection.cancel_request'), ['class' => 'btn btn-warning', 'id' => 'cancel_family_connection_request']) !!}
+        @else
+            {!! FormField::formButton(['route' => ['users.family_connection_requests.store', $user->id]], __('family_connection.send_request'), ['class' => 'btn btn-success', 'id' => 'send_family_connection_request']) !!}
+        @endif
     @endauth
 </div>

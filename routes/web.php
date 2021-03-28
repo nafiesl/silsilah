@@ -21,6 +21,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('users/{user}/send_family_connection_request', 'Users\FamilyConnectionRequestController@store')
         ->name('users.family_connection_requests.store');
+
+    Route::delete('users/{user}/cancel_family_connection_request', 'Users\FamilyConnectionRequestController@store')
+        ->name('users.family_connection_requests.delete');
 });
 
 Route::get('home', 'HomeController@index')->name('home');
