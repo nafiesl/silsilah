@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Couple;
-use Ramsey\Uuid\Uuid;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class FamilyActionsController extends Controller
 {
@@ -26,6 +27,12 @@ class FamilyActionsController extends Controller
         if ($request->get('set_father_id')) {
             $user->father_id = $request->get('set_father_id');
             $user->save();
+
+            DB::table('family_member_connections')->insert([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $request->get('set_father_id'),
+            ]);
         } else {
             $father = new User;
             $father->id = Uuid::uuid4()->toString();
@@ -57,6 +64,12 @@ class FamilyActionsController extends Controller
         if ($request->get('set_mother_id')) {
             $user->mother_id = $request->get('set_mother_id');
             $user->save();
+
+            DB::table('family_member_connections')->insert([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $request->get('set_mother_id'),
+            ]);
         } else {
             $mother = new User;
             $mother->id = Uuid::uuid4()->toString();

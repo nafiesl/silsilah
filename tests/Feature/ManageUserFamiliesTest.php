@@ -93,8 +93,8 @@ class ManageUserFamiliesTest extends TestCase
         $child = User::where('name', 'Nama Anak 1')->first();
 
         $this->seeInDatabase('family_member_connections', [
-            'requester_id' => $user->id,
-            'requested_id' => $child->id,
+            'requester_id' => $child->id,
+            'requested_id' => $user->id,
         ]);
     }
 
