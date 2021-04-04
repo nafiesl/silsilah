@@ -6,7 +6,9 @@ use App\Couple;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Jobs\Users\DeleteAndReplaceUser;
 use App\User;
+use App\UserMetadata;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 use Storage;
 
 class UsersController extends Controller
@@ -125,7 +127,21 @@ class UsersController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $userAttributes = $request->validated();
+        $user->update($userAttributes);
+        $userAttributes = collect($userAttributes);
+        foreach (['cemetery_location_name', 'cemetery_location_address', 'cemetery_location_latitude', 'cemetery_location_longitude'] as $key) {
+            if ($userAttributes->has($key)) {
+                $userMeta = UserMetadata::where('name', $key)->firstOrNew();
+                if (!$userMeta->exists) {
+                    $userMeta->id = Uuid::uuid4()->toString();
+                    $userMeta->user_id = $user->id;
+                    $userMeta->name = $key;
+                }
+                $userMeta->value = $userAttributes->get($key);
+                $userMeta->save();
+            }
+        }
 
         return redirect()->route('users.show', $user->id);
     }

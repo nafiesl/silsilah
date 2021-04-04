@@ -168,6 +168,53 @@ class UsersProfileTest extends TestCase
     }
 
     /** @test */
+    public function user_can_update_died_person_cemetary_location()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod'                         => '',
+            'yod'                         => '2003',
+            'cemetery_location_name'      => 'Some name',
+            'cemetery_location_address'   => 'Some address',
+            'cemetery_location_latitude'  => '-3.333333',
+            'cemetery_location_longitude' => '114.583333',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => null,
+            'yod' => '2003',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'name'    => 'cemetery_location_name',
+            'value'   => 'Some name',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'name'    => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'name'    => 'cemetery_location_latitude',
+            'value'   => '-3.333333',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'name'    => 'cemetery_location_longitude',
+            'value'   => '114.583333',
+        ]);
+    }
+
+    /** @test */
     public function manager_can_add_login_account_on_a_user()
     {
         $manager = $this->loginAsUser();

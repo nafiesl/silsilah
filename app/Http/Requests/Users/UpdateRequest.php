@@ -39,6 +39,11 @@ class UpdateRequest extends FormRequest
             'email'       => 'nullable|string|max:255',
             'password'    => 'nullable|min:6|max:15',
             'birth_order' => 'nullable|numeric|min:1',
+
+            'cemetery_location_name'      => 'nullable|string|max:255',
+            'cemetery_location_address'   => 'nullable|string|max:255',
+            'cemetery_location_latitude'  => 'required_with:cemetery_location_longitude|nullable|string|max:255',
+            'cemetery_location_longitude' => 'required_with:cemetery_location_latitude|nullable|string|max:255',
         ];
     }
 
