@@ -320,9 +320,18 @@ class User extends Authenticatable
         return $this->hasMany(UserMetadata::class, 'user_id', 'id');
     }
 
-    public function getMetadata($key)
+    public function getMetadata($key = null)
     {
         $metadata = $this->metadata;
+
+        if (is_null($key)) {
+            $metadataCollection = [];
+            foreach ($metadata as $metaKey => $metaValue) {
+                $metadataCollection[$metaKey] = $metaValue;
+            }
+
+            return collect($metadataCollection);
+        }
 
         $meta = $metadata->filter(function ($meta) use ($key) {
             return $meta->key == $key;

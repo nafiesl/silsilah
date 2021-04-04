@@ -141,6 +141,24 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function user_model_get_metadata_method_returns_all_metadata_if_key_is_null()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEmpty($user->getMetadata());
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertCount(1, $user->getMetadata());
+    }
+
+    /** @test */
     public function user_have_mother_link_method()
     {
         $mother = factory(User::class)->create();
