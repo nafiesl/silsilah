@@ -17,7 +17,7 @@ class CreateUserMetadataTable extends Migration
             $table->uuid('id')->primary();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('key')->index();
-            $table->text('value');
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }
