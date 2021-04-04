@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 use Storage;
 use Tests\TestCase;
 
@@ -211,6 +213,25 @@ class UsersProfileTest extends TestCase
             'user_id' => $user->id,
             'key'     => 'cemetery_location_longitude',
             'value'   => '114.583333',
+        ]);
+    }
+
+    /** @test */
+    public function user_metadata_can_be_prefilled_on_the_edit_form()
+    {
+        $user = $this->loginAsUser();
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_name',
+            'value'   => 'Some place name',
+        ]);
+
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seeElement('input', [
+            'name'  => 'cemetery_location_name',
+            'value' => 'Some place name',
         ]);
     }
 

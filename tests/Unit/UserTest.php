@@ -4,9 +4,12 @@ namespace Tests\Unit;
 
 use App\Couple;
 use App\User;
+use App\UserMetadata;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Nonstandard\Uuid;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -107,6 +110,34 @@ class UserTest extends TestCase
         $user = factory(User::class)->create(['father_id' => $father->id]);
 
         $this->assertEquals($father->profileLink(), $user->fatherLink());
+    }
+
+    /** @test */
+    public function a_user_has_many_metadata_relation()
+    {
+        $user = factory(User::class)->create();
+        $metadata = factory(UserMetadata::class)->create(['user_id' => $user->id]);
+
+        $this->assertInstanceOf(Collection::class, $user->metadata);
+        $this->assertInstanceOf(UserMetadata::class, $user->metadata->first());
+    }
+
+    /** @test */
+    public function user_model_has_get_metadata_method()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertNull($user->getMetadata('cemetery_location_address'));
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertEquals('Some address', $user->getMetadata('cemetery_location_address'));
     }
 
     /** @test */

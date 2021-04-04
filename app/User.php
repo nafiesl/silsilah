@@ -314,4 +314,22 @@ class User extends Authenticatable
             return Carbon::now()->diffInDays($this->birthday, false);
         }
     }
+
+    public function metadata()
+    {
+        return $this->hasMany(UserMetadata::class, 'user_id', 'id');
+    }
+
+    public function getMetadata($key)
+    {
+        $metadata = $this->metadata;
+
+        $meta = $metadata->filter(function ($meta) use ($key) {
+            return $meta->key == $key;
+        })->first();
+
+        if ($meta) {
+            return $meta->value;
+        }
+    }
 }
