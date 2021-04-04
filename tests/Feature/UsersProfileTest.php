@@ -191,25 +191,25 @@ class UsersProfileTest extends TestCase
 
         $this->seeInDatabase('user_metadata', [
             'user_id' => $user->id,
-            'name'    => 'cemetery_location_name',
+            'key'     => 'cemetery_location_name',
             'value'   => 'Some name',
         ]);
 
         $this->seeInDatabase('user_metadata', [
             'user_id' => $user->id,
-            'name'    => 'cemetery_location_address',
+            'key'     => 'cemetery_location_address',
             'value'   => 'Some address',
         ]);
 
         $this->seeInDatabase('user_metadata', [
             'user_id' => $user->id,
-            'name'    => 'cemetery_location_latitude',
+            'key'     => 'cemetery_location_latitude',
             'value'   => '-3.333333',
         ]);
 
         $this->seeInDatabase('user_metadata', [
             'user_id' => $user->id,
-            'name'    => 'cemetery_location_longitude',
+            'key'     => 'cemetery_location_longitude',
             'value'   => '114.583333',
         ]);
     }

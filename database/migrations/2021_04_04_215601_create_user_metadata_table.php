@@ -16,7 +16,7 @@ class CreateUserMetadataTable extends Migration
         Schema::create('user_metadata', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('name')->index();
+            $table->string('key')->index();
             $table->text('value');
             $table->timestamps();
         });
