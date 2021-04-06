@@ -159,6 +159,24 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function user_model_get_metadata_method_accepts_a_default_value()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEquals('Default value', $user->getMetadata('some_missing_key', 'Default value'));
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'some_missing_key',
+            'value'   => 'Some value',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertEquals('Some value', $user->getMetadata('some_missing_key', 'Default value'));
+    }
+
+    /** @test */
     public function user_have_mother_link_method()
     {
         $mother = factory(User::class)->create();

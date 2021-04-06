@@ -320,7 +320,7 @@ class User extends Authenticatable
         return $this->hasMany(UserMetadata::class, 'user_id', 'id');
     }
 
-    public function getMetadata($key = null)
+    public function getMetadata($key = null, $defaultValue = null)
     {
         $metadata = $this->metadata;
 
@@ -340,5 +340,7 @@ class User extends Authenticatable
         if ($meta) {
             return $meta->value;
         }
+
+        return $defaultValue;
     }
 }
