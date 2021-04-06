@@ -115,7 +115,18 @@ class UsersController extends Controller
 
         $validTabs = ['death', 'contact_address', 'login_account'];
 
-        return view('users.edit', compact('user', 'replacementUsers', 'validTabs'));
+        $mapZoomLevel = 4;
+        $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
+        $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
+        if ($mapCenterLatitude && $mapCenterLongitude) {
+            $mapZoomLevel = 18;
+            $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
+            $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
+        }
+
+        return view('users.edit', compact(
+            'user', 'replacementUsers', 'validTabs', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'
+        ));
     }
 
     /**
@@ -132,7 +143,7 @@ class UsersController extends Controller
         $userAttributes = collect($userAttributes);
         foreach (['cemetery_location_name', 'cemetery_location_address', 'cemetery_location_latitude', 'cemetery_location_longitude'] as $key) {
             if ($userAttributes->has($key)) {
-                $userMeta = UserMetadata::where('key', $key)->firstOrNew();
+                $userMeta = UserMetadata::where('user_id', $user->id)->where('key', $key)->firstOrNew();
                 if (!$userMeta->exists) {
                     $userMeta->id = Uuid::uuid4()->toString();
                     $userMeta->user_id = $user->id;
