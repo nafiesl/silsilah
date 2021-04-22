@@ -99,6 +99,26 @@ class UsersController extends Controller
     }
 
     /**
+     * Show user death info.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
+     */
+    public function death(User $user)
+    {
+        $mapZoomLevel = 4;
+        $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
+        $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
+        if ($mapCenterLatitude && $mapCenterLongitude) {
+            $mapZoomLevel = 18;
+        }
+        $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
+        $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
+
+        return view('users.death', compact('user', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'));
+    }
+
+    /**
      * Show the form for editing the specified User.
      *
      * @param  \App\User  $user
@@ -120,9 +140,9 @@ class UsersController extends Controller
         $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
         if ($mapCenterLatitude && $mapCenterLongitude) {
             $mapZoomLevel = 18;
-            $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
-            $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
         }
+        $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
+        $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
 
         return view('users.edit', compact(
             'user', 'replacementUsers', 'validTabs', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'
