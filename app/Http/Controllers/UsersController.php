@@ -106,7 +106,7 @@ class UsersController extends Controller
      */
     public function death(User $user)
     {
-        $mapZoomLevel = 18;
+        $mapZoomLevel = config('leaflet.detail_zoom_level');
         $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
         $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
 
@@ -130,14 +130,14 @@ class UsersController extends Controller
 
         $validTabs = ['death', 'contact_address', 'login_account'];
 
-        $mapZoomLevel = 4;
+        $mapZoomLevel = config('leaflet.zoom_level');
         $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
         $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
         if ($mapCenterLatitude && $mapCenterLongitude) {
-            $mapZoomLevel = 18;
+            $mapZoomLevel = config('leaflet.detail_zoom_level');
         }
-        $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
-        $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
+        $mapCenterLatitude = $mapCenterLatitude ?: config('leaflet.map_center_latitude');
+        $mapCenterLongitude = $mapCenterLongitude ?: config('leaflet.map_center_longitude');
 
         return view('users.edit', compact(
             'user', 'replacementUsers', 'validTabs', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'
