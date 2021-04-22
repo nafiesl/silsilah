@@ -41,8 +41,16 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading"><h3 class="panel-title">{{ __('user.cemetery_location') }}</h3></div>
-            <div class="panel-body">
-                <div id="mapid"></div>
+            <div class="panel-body"><div id="mapid"></div></div>
+            <div class="panel-footer">
+                @php
+                    $locationCoordinate = $mapCenterLatitude.','.$mapCenterLongitude.'/@'.$mapCenterLatitude.','.$mapCenterLongitude.','.$mapZoomLevel.'z';
+                @endphp
+                {{ link_to(
+                    'https://www.google.com/maps/place/'.$locationCoordinate,
+                    __('app.open_in_google_map'),
+                    ['class' => 'btn btn-default btn-block', 'target' => '_blank']
+                ) }}
             </div>
         </div>
     </div>

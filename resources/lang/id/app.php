@@ -39,4 +39,6 @@ return [
     'download'          => 'Download',
     'delete'            => 'Hapus',
     'cancel'            => 'Batal',
+
+    'open_in_google_map' => 'Buka di Google Map',
 ];
