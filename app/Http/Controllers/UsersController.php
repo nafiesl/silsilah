@@ -106,14 +106,9 @@ class UsersController extends Controller
      */
     public function death(User $user)
     {
-        $mapZoomLevel = 4;
+        $mapZoomLevel = 18;
         $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
         $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
-        if ($mapCenterLatitude && $mapCenterLongitude) {
-            $mapZoomLevel = 18;
-        }
-        $mapCenterLatitude = $mapCenterLatitude ?: '-0.87887';
-        $mapCenterLongitude = $mapCenterLongitude ?: '117.4863';
 
         return view('users.death', compact('user', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'));
     }
