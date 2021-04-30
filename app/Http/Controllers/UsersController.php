@@ -8,6 +8,7 @@ use App\Jobs\Users\DeleteAndReplaceUser;
 use App\User;
 use App\UserMetadata;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
 use Storage;
 
@@ -156,18 +157,8 @@ class UsersController extends Controller
         $userAttributes = $request->validated();
         $user->update($userAttributes);
         $userAttributes = collect($userAttributes);
-        foreach (['cemetery_location_name', 'cemetery_location_address', 'cemetery_location_latitude', 'cemetery_location_longitude'] as $key) {
-            if ($userAttributes->has($key)) {
-                $userMeta = UserMetadata::where('user_id', $user->id)->where('key', $key)->firstOrNew();
-                if (!$userMeta->exists) {
-                    $userMeta->id = Uuid::uuid4()->toString();
-                    $userMeta->user_id = $user->id;
-                    $userMeta->key = $key;
-                }
-                $userMeta->value = $userAttributes->get($key);
-                $userMeta->save();
-            }
-        }
+
+        $this->updateUserMetadata($user, $userAttributes);
 
         return redirect()->route('users.show', $user->id);
     }
@@ -273,5 +264,22 @@ class UsersController extends Controller
         }
 
         return $allMariageList;
+    }
+
+    private function updateUserMetadata(User $user, Collection $userAttributes)
+    {
+        foreach (User::METADATA_KEYS as $key) {
+            if ($userAttributes->has($key) == false) {
+                continue;
+            }
+            $userMeta = UserMetadata::where('user_id', $user->id)->where('key', $key)->firstOrNew();
+            if (!$userMeta->exists) {
+                $userMeta->id = Uuid::uuid4()->toString();
+                $userMeta->user_id = $user->id;
+                $userMeta->key = $key;
+            }
+            $userMeta->value = $userAttributes->get($key);
+            $userMeta->save();
+        }
     }
 }

@@ -11,6 +11,13 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const METADATA_KEYS = [
+        'cemetery_location_name',
+        'cemetery_location_address',
+        'cemetery_location_latitude',
+        'cemetery_location_longitude',
+    ];
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
