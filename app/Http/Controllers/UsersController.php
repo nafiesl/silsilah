@@ -272,11 +272,9 @@ class UsersController extends Controller
             if ($userAttributes->has($key) == false) {
                 continue;
             }
-            $userMeta = UserMetadata::where('user_id', $user->id)->where('key', $key)->firstOrNew();
+            $userMeta = UserMetadata::firstOrNew(['user_id' => $user->id, 'key' => $key]);
             if (!$userMeta->exists) {
                 $userMeta->id = Uuid::uuid4()->toString();
-                $userMeta->user_id = $user->id;
-                $userMeta->key = $key;
             }
             $userMeta->value = $userAttributes->get($key);
             $userMeta->save();
