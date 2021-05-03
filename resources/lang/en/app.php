@@ -39,4 +39,7 @@ return [
     'download'          => 'Download',
     'delete'            => 'Delete',
     'cancel'            => 'Cancel',
+
+    'open_in_google_map' => 'Open in Google Map',
+    'data_not_available' => 'Data not available.',
 ];

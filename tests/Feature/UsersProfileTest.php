@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 use Storage;
 use Tests\TestCase;
 
@@ -164,6 +166,72 @@ class UsersProfileTest extends TestCase
             'id'  => $user->id,
             'dod' => null,
             'yod' => '2003',
+        ]);
+    }
+
+    /** @test */
+    public function user_can_update_died_person_cemetary_location()
+    {
+        $user = $this->loginAsUser();
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+
+        $this->submitForm(trans('app.update'), [
+            'dod'                         => '',
+            'yod'                         => '2003',
+            'cemetery_location_name'      => 'Some name',
+            'cemetery_location_address'   => 'Some address',
+            'cemetery_location_latitude'  => '-3.333333',
+            'cemetery_location_longitude' => '114.583333',
+        ]);
+
+        $this->seeInDatabase('users', [
+            'id'  => $user->id,
+            'dod' => null,
+            'yod' => '2003',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_name',
+            'value'   => 'Some name',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_latitude',
+            'value'   => '-3.333333',
+        ]);
+
+        $this->seeInDatabase('user_metadata', [
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_longitude',
+            'value'   => '114.583333',
+        ]);
+    }
+
+    /** @test */
+    public function user_metadata_can_be_prefilled_on_the_edit_form()
+    {
+        $user = $this->loginAsUser();
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_name',
+            'value'   => 'Some place name',
+        ]);
+
+        $this->visit(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seePageIs(route('users.edit', [$user->id, 'tab' => 'death']));
+        $this->seeElement('input', [
+            'name'  => 'cemetery_location_name',
+            'value' => 'Some place name',
         ]);
     }
 

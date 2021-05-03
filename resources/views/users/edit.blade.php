@@ -34,6 +34,9 @@
                 {{ Form::close() }}
                 <div class="col-md-6">
                     @includeWhen(request('tab') == null || !in_array(request('tab'), $validTabs), 'users.partials.update_photo')
+                    @if (request('tab') == 'death')
+                        <div id="mapid"></div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -43,10 +46,26 @@
 
 @section('ext_css')
 <link href="{{ asset('css/plugins/jquery.datetimepicker.css') }}" rel="stylesheet">
+
+@if (request('tab') == 'death')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""/>
+
+    <style>
+        #mapid { height: 300px; }
+    </style>
+@endif
 @endsection
 
 @section('script')
 <script src="{{ asset('js/plugins/jquery.datetimepicker.js') }}"></script>
+@if (request('tab') == 'death')
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+@endif
+
 <script>
     (function() {
         $('#dob,#dod').datetimepicker({
@@ -56,5 +75,37 @@
             scrollInput: false
         });
     })();
+
+    @if (request('tab') == 'death')
+        var mapCenter = [{{ $mapCenterLatitude }}, {{ $mapCenterLongitude }}];
+        var map = L.map('mapid').setView(mapCenter, {{ $mapZoomLevel }});
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker(mapCenter).addTo(map);
+        function updateMarker(lat, lng) {
+            marker
+            .setLatLng([lat, lng])
+            .bindPopup("Your location :  " + marker.getLatLng().toString())
+            .openPopup();
+            return false;
+        };
+
+        map.on('click', function(e) {
+            let latitude = e.latlng.lat.toString().substring(0, 15);
+            let longitude = e.latlng.lng.toString().substring(0, 15);
+            $('#cemetery_location_latitude').val(latitude);
+            $('#cemetery_location_longitude').val(longitude);
+            updateMarker(latitude, longitude);
+        });
+
+        var updateMarkerByInputs = function() {
+            return updateMarker( $('#cemetery_location_latitude').val() , $('#cemetery_location_longitude').val());
+        }
+        $('#cemetery_location_latitude').on('input', updateMarkerByInputs);
+        $('#cemetery_location_longitude').on('input', updateMarkerByInputs);
+    @endif
 </script>
 @endsection

@@ -51,6 +51,8 @@ return [
     'phone'    => 'Phone',
     'manager'  => 'Manager',
 
+    'cemetery_location' => 'Cemetary Location',
+
     // Photo
     'reupload_photo' => 'Re-upload Photo',
     'update_photo'   => 'Update Photo',

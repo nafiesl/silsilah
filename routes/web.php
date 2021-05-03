@@ -35,6 +35,7 @@ Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
+Route::get('users/{user}/death', 'UsersController@death')->name('users.death');
 Route::patch('users/{user}/photo-upload', 'UsersController@photoUpload')->name('users.photo-upload');
 Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
 
