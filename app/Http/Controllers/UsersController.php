@@ -6,7 +6,10 @@ use App\Couple;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Jobs\Users\DeleteAndReplaceUser;
 use App\User;
+use App\UserMetadata;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Ramsey\Uuid\Uuid;
 use Storage;
 
 class UsersController extends Controller
@@ -97,6 +100,21 @@ class UsersController extends Controller
     }
 
     /**
+     * Show user death info.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
+     */
+    public function death(User $user)
+    {
+        $mapZoomLevel = config('leaflet.detail_zoom_level');
+        $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
+        $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
+
+        return view('users.death', compact('user', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'));
+    }
+
+    /**
      * Show the form for editing the specified User.
      *
      * @param  \App\User  $user
@@ -113,7 +131,18 @@ class UsersController extends Controller
 
         $validTabs = ['death', 'contact_address', 'login_account'];
 
-        return view('users.edit', compact('user', 'replacementUsers', 'validTabs'));
+        $mapZoomLevel = config('leaflet.zoom_level');
+        $mapCenterLatitude = $user->getMetadata('cemetery_location_latitude');
+        $mapCenterLongitude = $user->getMetadata('cemetery_location_longitude');
+        if ($mapCenterLatitude && $mapCenterLongitude) {
+            $mapZoomLevel = config('leaflet.detail_zoom_level');
+        }
+        $mapCenterLatitude = $mapCenterLatitude ?: config('leaflet.map_center_latitude');
+        $mapCenterLongitude = $mapCenterLongitude ?: config('leaflet.map_center_longitude');
+
+        return view('users.edit', compact(
+            'user', 'replacementUsers', 'validTabs', 'mapZoomLevel', 'mapCenterLatitude', 'mapCenterLongitude'
+        ));
     }
 
     /**
@@ -125,7 +154,11 @@ class UsersController extends Controller
      */
     public function update(UpdateRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $userAttributes = $request->validated();
+        $user->update($userAttributes);
+        $userAttributes = collect($userAttributes);
+
+        $this->updateUserMetadata($user, $userAttributes);
 
         return redirect()->route('users.show', $user->id);
     }
@@ -231,5 +264,20 @@ class UsersController extends Controller
         }
 
         return $allMariageList;
+    }
+
+    private function updateUserMetadata(User $user, Collection $userAttributes)
+    {
+        foreach (User::METADATA_KEYS as $key) {
+            if ($userAttributes->has($key) == false) {
+                continue;
+            }
+            $userMeta = UserMetadata::firstOrNew(['user_id' => $user->id, 'key' => $key]);
+            if (!$userMeta->exists) {
+                $userMeta->id = Uuid::uuid4()->toString();
+            }
+            $userMeta->value = $userAttributes->get($key);
+            $userMeta->save();
+        }
     }
 }

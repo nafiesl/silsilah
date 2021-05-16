@@ -11,6 +11,13 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const METADATA_KEYS = [
+        'cemetery_location_name',
+        'cemetery_location_address',
+        'cemetery_location_latitude',
+        'cemetery_location_longitude',
+    ];
+
     /**
      * Indicates if the IDs are auto-incrementing.
      *
@@ -337,5 +344,34 @@ class User extends Authenticatable
         ])->count();
 
         return !!$familyConnetction;
+    }
+
+    public function metadata()
+    {
+        return $this->hasMany(UserMetadata::class, 'user_id', 'id');
+    }
+
+    public function getMetadata($key = null, $defaultValue = null)
+    {
+        $metadata = $this->metadata;
+
+        if (is_null($key)) {
+            $metadataCollection = [];
+            foreach ($metadata as $metaKey => $metaValue) {
+                $metadataCollection[$metaKey] = $metaValue;
+            }
+
+            return collect($metadataCollection);
+        }
+
+        $meta = $metadata->filter(function ($meta) use ($key) {
+            return $meta->key == $key;
+        })->first();
+
+        if ($meta) {
+            return $meta->value;
+        }
+
+        return $defaultValue;
     }
 }

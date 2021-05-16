@@ -18,4 +18,7 @@
             {!! FormField::delete(['route' => ['users.family_connection_requests.destroy', $user->id]], __('family_connection.reject_request'), ['class' => 'btn btn-danger', 'id' => 'reject_family_connection_request']) !!}
         @endif
     @endauth
+    @if ($user->yod)
+        {{ link_to_route('users.death', trans('user.death'), [$user->id], ['class' => Request::segment(3) == 'death' ? 'btn btn-default active' : 'btn btn-default']) }}
+    @endif
 </div>

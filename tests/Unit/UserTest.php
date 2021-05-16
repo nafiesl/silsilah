@@ -5,9 +5,11 @@ namespace Tests\Unit;
 use App\Couple;
 use App\FamilyConnection;
 use App\User;
+use App\UserMetadata;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
@@ -109,6 +111,70 @@ class UserTest extends TestCase
         $user = factory(User::class)->create(['father_id' => $father->id]);
 
         $this->assertEquals($father->profileLink(), $user->fatherLink());
+    }
+
+    /** @test */
+    public function a_user_has_many_metadata_relation()
+    {
+        $user = factory(User::class)->create();
+        $metadata = factory(UserMetadata::class)->create(['user_id' => $user->id]);
+
+        $this->assertInstanceOf(Collection::class, $user->metadata);
+        $this->assertInstanceOf(UserMetadata::class, $user->metadata->first());
+    }
+
+    /** @test */
+    public function user_model_has_get_metadata_method()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertNull($user->getMetadata('cemetery_location_address'));
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertEquals('Some address', $user->getMetadata('cemetery_location_address'));
+    }
+
+    /** @test */
+    public function user_model_get_metadata_method_returns_all_metadata_if_key_is_null()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEmpty($user->getMetadata());
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'cemetery_location_address',
+            'value'   => 'Some address',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertCount(1, $user->getMetadata());
+    }
+
+    /** @test */
+    public function user_model_get_metadata_method_accepts_a_default_value()
+    {
+        $user = factory(User::class)->create();
+
+        $this->assertEquals('Default value', $user->getMetadata('some_missing_key', 'Default value'));
+
+        DB::table('user_metadata')->insert([
+            'id'      => Uuid::uuid4()->toString(),
+            'user_id' => $user->id,
+            'key'     => 'some_missing_key',
+            'value'   => 'Some value',
+        ]);
+        $user = $user->fresh();
+
+        $this->assertEquals('Some value', $user->getMetadata('some_missing_key', 'Default value'));
     }
 
     /** @test */

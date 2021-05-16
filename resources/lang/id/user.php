@@ -51,6 +51,8 @@ return [
     'phone'    => 'Telp.',
     'manager'  => 'Pengelola',
 
+    'cemetery_location' => 'Lokasi Makam',
+
     // Photo
     'reupload_photo' => 'Upload ulang Foto',
     'update_photo'   => 'Update Foto',
