@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "php": "^7.3",
-        "backup-manager/laravel": "dev-laravel_8_support",
+        "php": "^7.3 || ^8.0",
+        "backup-manager/laravel": "dev-php_8_support",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^8.0",
         "laravel/legacy-factories": "^1.0",
@@ -23,7 +23,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "^2.0",
-        "fzaninotto/faker": "^1.4",
+        "fakerphp/faker": "^1.4",
         "laravel/browser-kit-testing": "^6.0",
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^9.0"
