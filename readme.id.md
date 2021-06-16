@@ -89,6 +89,8 @@ Ingin mencoba automated testingnya? Silakan ketik perintah pada terminal: `vendo
 #### Pohon Keluarga
 ![Pohon Keluarga](public/images/02-pohon-keluarga.jpg "Pohon Keluarga")
 
+Tampilan pohon keluarga ini menggunakan [Horizontal Family Tree CSS](https://codepen.io/P233/pen/Kzbsi), terima kasih kepada [Peiwen Lu](https://codepen.io/P233/pen/Kzbsi).
+
 #### Bagan Keluarga
 ![Bagan Keluarga](public/images/03-bagan-keluarga.jpg "Bagan Keluarga")
 
