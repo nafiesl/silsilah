@@ -90,6 +90,8 @@ Feel free to submit Issue for bugs or sugestions and Pull Request.
 #### Family Tree
 ![Family Tree](public/images/02-pohon-keluarga.jpg "Family Tree")
 
+This family tree view is using the [Horizontal Family Tree CSS](https://codepen.io/P233/pen/Kzbsi), thanks to [Peiwen Lu](https://codepen.io/P233/pen/Kzbsi).
+
 #### Family Chart
 ![Family Chart](public/images/03-bagan-keluarga.jpg "Family Chart")
 
