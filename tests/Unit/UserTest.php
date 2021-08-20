@@ -3,13 +3,14 @@
 namespace Tests\Unit;
 
 use App\Couple;
+use App\FamilyConnection;
 use App\User;
 use App\UserMetadata;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
-use Ramsey\Uuid\Nonstandard\Uuid;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -332,5 +333,39 @@ class UserTest extends TestCase
             Carbon::now()->diffInDays($birthdayDateClass, false),
             $customer->birthday_remaining
         );
+    }
+
+    /** @test */
+    public function a_user_model_has_method_has_family_connection_request_to()
+    {
+        $john = factory(User::class)->create();
+        $jane = factory(User::class)->create();
+
+        $this->assertFalse($john->hasFamilyConnectionRequestTo($jane));
+
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $john->id,
+            'requested_id' => $jane->id,
+        ]);
+
+        $this->assertTrue($john->hasFamilyConnectionRequestTo($jane));
+    }
+
+    /** @test */
+    public function a_user_model_has_method_has_pending_family_connection_request_from()
+    {
+        $john = factory(User::class)->create();
+        $jane = factory(User::class)->create();
+
+        $this->assertFalse($jane->hasPendingFamilyConnectionRequestFrom($john));
+
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $john->id,
+            'requested_id' => $jane->id,
+        ]);
+
+        $this->assertTrue($jane->hasPendingFamilyConnectionRequestFrom($john));
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Couple;
-use Ramsey\Uuid\Uuid;
+use App\FamilyConnection;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class FamilyActionsController extends Controller
 {
@@ -26,6 +28,13 @@ class FamilyActionsController extends Controller
         if ($request->get('set_father_id')) {
             $user->father_id = $request->get('set_father_id');
             $user->save();
+
+            FamilyConnection::create([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $request->get('set_father_id'),
+                'status_id'    => FamilyConnection::STATUS_APPROVED,
+            ]);
         } else {
             $father = new User;
             $father->id = Uuid::uuid4()->toString();
@@ -35,6 +44,13 @@ class FamilyActionsController extends Controller
             $father->manager_id = auth()->id();
 
             $user->setFather($father);
+
+            FamilyConnection::create([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $father->id,
+                'status_id'    => FamilyConnection::STATUS_APPROVED,
+            ]);
         }
 
         return back();
@@ -57,6 +73,13 @@ class FamilyActionsController extends Controller
         if ($request->get('set_mother_id')) {
             $user->mother_id = $request->get('set_mother_id');
             $user->save();
+
+            FamilyConnection::create([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $request->get('set_mother_id'),
+                'status_id'    => FamilyConnection::STATUS_APPROVED,
+            ]);
         } else {
             $mother = new User;
             $mother->id = Uuid::uuid4()->toString();
@@ -66,6 +89,13 @@ class FamilyActionsController extends Controller
             $mother->manager_id = auth()->id();
 
             $user->setMother($mother);
+
+            FamilyConnection::create([
+                'id'           => Uuid::uuid4()->toString(),
+                'requester_id' => $user->id,
+                'requested_id' => $mother->id,
+                'status_id'    => FamilyConnection::STATUS_APPROVED,
+            ]);
         }
 
         return back();
@@ -107,8 +137,22 @@ class FamilyActionsController extends Controller
         } else {
             if ($user->gender_id == 1) {
                 $child->setFather($user);
+
+                FamilyConnection::create([
+                    'id'           => Uuid::uuid4()->toString(),
+                    'requester_id' => $user->id,
+                    'requested_id' => $child->id,
+                    'status_id'    => FamilyConnection::STATUS_APPROVED,
+                ]);
             } else {
                 $child->setMother($user);
+
+                FamilyConnection::create([
+                    'id'           => Uuid::uuid4()->toString(),
+                    'requester_id' => $user->id,
+                    'requested_id' => $child->id,
+                    'status_id'    => FamilyConnection::STATUS_APPROVED,
+                ]);
             }
 
         }
@@ -146,6 +190,13 @@ class FamilyActionsController extends Controller
 
         $user->addWife($wife, $request->get('marriage_date'));
 
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $user->id,
+            'requested_id' => $wife->id,
+            'status_id'    => FamilyConnection::STATUS_APPROVED,
+        ]);
+
         return back();
     }
 
@@ -176,6 +227,13 @@ class FamilyActionsController extends Controller
         }
 
         $user->addHusband($husband, $request->get('marriage_date'));
+
+        FamilyConnection::create([
+            'id'           => Uuid::uuid4()->toString(),
+            'requester_id' => $user->id,
+            'requested_id' => $husband->id,
+            'status_id'    => FamilyConnection::STATUS_APPROVED,
+        ]);
 
         return back();
     }
