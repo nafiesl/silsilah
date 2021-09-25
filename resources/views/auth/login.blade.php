@@ -59,6 +59,8 @@
                                 </a>
                             </div>
                         </div>
+
+                        <x-recaptcha-v3 />
                     </form>
                 </div>
             </div>

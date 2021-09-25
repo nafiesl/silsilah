@@ -105,6 +105,10 @@ return [
         ],
     ],
 
+    'g_recaptcha_response' => [
+        'failed' => 'Recaptcha gagal. Silahkan coba lagi.',
+    ],
+
     /*
     |---------------------------------------------------------------------------------------
     | Kustom Validasi Atribut
