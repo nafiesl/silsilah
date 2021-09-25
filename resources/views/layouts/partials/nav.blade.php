@@ -43,7 +43,7 @@
                                 <li><a href="{{ route('backups.index') }}">{{ __('backup.list') }}</a></li>
                             @endif
                             <li><a href="{{ route('profile') }}">{{ __('app.my_profile') }}</a></li>
-                            <li><a href="{{ route('password.change') }}">{{ __('auth.change_password') }}</a></li>
+                            <li><a href="{{ route('password_change') }}">{{ __('auth.change_password') }}</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

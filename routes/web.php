@@ -16,8 +16,8 @@ Route::get('/', 'UsersController@search');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('password/change', 'Auth\ChangePasswordController@show')->name('password.change');
-    Route::post('password/change', 'Auth\ChangePasswordController@update')->name('password.change');
+    Route::get('password/change', 'Auth\ChangePasswordController@show')->name('password_change');
+    Route::post('password/change', 'Auth\ChangePasswordController@update')->name('password_update');
 });
 
 Route::get('home', 'HomeController@index')->name('home');
