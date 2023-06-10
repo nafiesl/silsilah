@@ -19,6 +19,22 @@ class CouplePolicy
      */
     public function edit(User $user, Couple $couple)
     {
-        return $couple->manager_id == $user->id || $couple->husband_id == $user->id || $couple->wife_id == $user->id || is_system_admin($user);
+        if (is_system_admin($user)) {
+            return true;
+        }
+
+        if ($couple->manager_id == $user->id) {
+            return true;
+        }
+
+        if ($couple->husband_id == $user->id) {
+            return true;
+        }
+
+        if ($couple->wife_id == $user->id) {
+            return true;
+        }
+
+        return false;
     }
 }
