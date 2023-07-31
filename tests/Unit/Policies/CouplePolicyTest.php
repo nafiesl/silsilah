@@ -44,15 +44,22 @@ class CouplePolicyTest extends TestCase
     }
 
     /** @test */
-    public function husband_and_wife_can_edit_their_couple_data()
+    public function husband_can_edit_their_couple_data()
     {
         $couple = factory(Couple::class)->create();
         $otherCouple = factory(Couple::class)->create();
 
         $this->assertTrue($couple->husband->can('edit', $couple));
-        $this->assertTrue($couple->wife->can('edit', $couple));
-        
         $this->assertFalse($otherCouple->husband->can('edit', $couple));
+    }
+
+    /** @test */
+    public function wife_can_edit_their_couple_data()
+    {
+        $couple = factory(Couple::class)->create();
+        $otherCouple = factory(Couple::class)->create();
+
+        $this->assertTrue($couple->wife->can('edit', $couple));
         $this->assertFalse($otherCouple->wife->can('edit', $couple));
     }
 }

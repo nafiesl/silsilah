@@ -18,18 +18,15 @@ class UserPolicy
      */
     public function edit(User $user, User $editableUser)
     {
-        if ($editableUser->id == $user->father_id || $editableUser->id == $user->mother_id) return true; //parent
-        if ($editableUser->father_id == $user->id || $editableUser->mother_id == $user->id) return true; //child
-
-        foreach ($user->husbands as $husband) {
-            if ($editableUser->id == $husband->id) return true;
-        }
-
-        foreach ($user->wifes as $wife) {
-            if ($editableUser->id == $wife->id) return true;
-        }
-
-        return $editableUser->id == $user->id || $editableUser->manager_id == $user->id || is_system_admin($user);
+        return $editableUser->id == $user->id
+        || $editableUser->manager_id == $user->id
+        || is_system_admin($user)
+        || $editableUser->id == $user->father_id
+        || $editableUser->id == $user->mother_id
+        || $editableUser->father_id == $user->id
+        || $editableUser->mother_id == $user->id
+        || $user->husbands->pluck('id')->contains($editableUser->id)
+        || $user->wifes->pluck('id')->contains($editableUser->id);
     }
 
     /**
