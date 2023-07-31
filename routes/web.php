@@ -3,7 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\ChangePasswordController;
-use App\Http\Controllers\{HomeController, UsersController, BirthdayController, CouplesController, FamilyActionsController, UserMarriagesController};
+use App\Http\Controllers\BackupsController;
+use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\CouplesController;
+use App\Http\Controllers\FamilyActionsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserMarriagesController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
