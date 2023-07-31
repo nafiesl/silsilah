@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BirthdayController;
-use App\Http\Controllers\UserMarriagesController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\{HomeController, UsersController, BirthdayController, CouplesController, FamilyActionsController, UserMarriagesController};
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +20,6 @@ use App\Http\Controllers\UserMarriagesController;
 Route::get('/', [UsersController::class, 'search']);
 
 Auth::routes();
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('password/change', 'Auth\ChangePasswordController@show')->name('password_change');
-    Route::post('password/change', 'Auth\ChangePasswordController@update')->name('password_update');
-});
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('home', 'index')->name('home');
@@ -64,6 +60,11 @@ Route::controller(CouplesController::class)->group(function () {
     Route::patch('couples/{couple}', 'update')->name('couples.update');
 });
 
+
+Route::controller(ChangePasswordController::class)->middleware('auth')->group( function () {
+    Route::get('password/change', 'show')->name('password_change');
+    Route::post('password/change', 'update')->name('password_update');
+});
 /**
  * Admin only routes
  */
@@ -76,5 +77,5 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('backups/{fileName}/restore', 'restore')->name('backups.restore');
         Route::get('backups/{fileName}/dl', 'download')->name('backups.download');
     });
-    Route::resource('backups',BackupsController::class );
+    Route::resource('backups', BackupsController::class);
 });
