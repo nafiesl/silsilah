@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Policies;
 
-use App\User;
 use App\Couple;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
