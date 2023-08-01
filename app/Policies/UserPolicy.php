@@ -18,7 +18,15 @@ class UserPolicy
      */
     public function edit(User $user, User $editableUser)
     {
-        return $editableUser->id == $user->id || $editableUser->manager_id == $user->id || is_system_admin($user);
+        return $editableUser->id == $user->id
+        || $editableUser->manager_id == $user->id
+        || is_system_admin($user)
+        || $editableUser->id == $user->father_id
+        || $editableUser->id == $user->mother_id
+        || $editableUser->father_id == $user->id
+        || $editableUser->mother_id == $user->id
+        || $user->husbands->pluck('id')->contains($editableUser->id)
+        || $user->wifes->pluck('id')->contains($editableUser->id);
     }
 
     /**
