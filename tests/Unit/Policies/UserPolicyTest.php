@@ -4,7 +4,6 @@ namespace Tests\Unit\Policies;
 
 use App\Couple;
 use App\User;
-use App\Couple;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -103,17 +102,6 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function father_can_edit_their_child_profile()
-    {
-        $father = factory(User::class)->create();
-        $child = factory(User::class)->create(['father_id' => $father->id]);
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($father->can('edit', $child));
-        $this->assertFalse($anotherPerson->can('edit', $father));
-    }
-
-    /** @test */
     public function mother_can_edit_their_childs_profile()
     {
         $mother = factory(User::class)->states('female')->create();
@@ -122,17 +110,6 @@ class UserPolicyTest extends TestCase
 
         $this->assertTrue($mother->can('edit', $child));
         $this->assertFalse($otherUser->can('edit', $child));
-    }
-
-    /** @test */
-    public function mother_can_edit_their_child_profile()
-    {
-        $mother = factory(User::class)->create();
-        $child = factory(User::class)->create(['mother_id' => $mother->id]);
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($mother->can('edit', $child));
-        $this->assertFalse($anotherPerson->can('edit', $mother));
     }
 
     /** @test */
@@ -147,17 +124,6 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function child_can_edit_their_father_profile()
-    {
-        $father = factory(User::class)->state('male')->create();
-        $child = factory(User::class)->create(['father_id' => $father->id]);
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($child->can('edit', $father));
-        $this->assertFalse($anotherPerson->can('edit', $father));
-    }
-
-    /** @test */
     public function child_can_edit_their_mothers_profile()
     {
         $mother = factory(User::class)->states('female')->create();
@@ -166,17 +132,6 @@ class UserPolicyTest extends TestCase
 
         $this->assertTrue($child->can('edit', $mother));
         $this->assertFalse($otherUser->can('edit', $mother));
-    }
-
-    /** @test */
-    public function child_can_edit_their_mother_profile()
-    {
-        $mother = factory(User::class)->state('female')->create();
-        $child = factory(User::class)->create(['mother_id' => $mother->id]);
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($child->can('edit', $mother));
-        $this->assertFalse($anotherPerson->can('edit', $mother));
     }
 
     /** @test */
@@ -190,16 +145,6 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function husband_can_edit_their_wifes_data()
-    {
-        $couple = factory(Couple::class)->create();
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($couple->wife->can('edit', $couple->wife->husbands->first()));
-        $this->assertFalse($anotherPerson->can('edit', $couple->wife->husbands->first()));
-    }
-
-    /** @test */
     public function wife_can_edit_their_husbands_profile()
     {
         $couple = factory(Couple::class)->create();
@@ -207,15 +152,5 @@ class UserPolicyTest extends TestCase
 
         $this->assertTrue($couple->wife->can('edit', $couple->wife->husbands->first()));
         $this->assertFalse($otherUser->can('edit', $couple->wife->husbands->first()));
-    }
-
-    /** @test */
-    public function wife_can_edit_their_husbands_data()
-    {
-        $couple = factory(Couple::class)->create();
-        $anotherPerson = factory(User::class)->create();
-
-        $this->assertTrue($couple->husband->can('edit', $couple->husband->wifes->first()));
-        $this->assertFalse($anotherPerson->can('edit', $couple->husband->wifes->first()));
     }
 }
