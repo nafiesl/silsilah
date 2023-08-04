@@ -33,4 +33,5 @@ return [
     'send_reset_password_link'  => 'Kirim Link Reset Password',
     'change_password_success'   => 'Password Anda sudah berhasil di ubah.',
     'change_password_error'     => 'Awww, sistem gagal merubah password Anda',
+    'login_google'              => 'Masuk dengan Google',
 ];

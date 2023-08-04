@@ -85,3 +85,10 @@ Route::group(['middleware' => 'admin'], function () {
     });
     Route::resource('backups', BackupsController::class);
 });
+
+/**
+ * Socialite routes
+ */
+//Google
+Route::get('/auth/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/auth/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);

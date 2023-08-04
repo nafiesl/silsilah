@@ -16,6 +16,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^8.0",
         "laravel/legacy-factories": "^1.0",
+        "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
         "luthfi/formfield": "^1.0"
