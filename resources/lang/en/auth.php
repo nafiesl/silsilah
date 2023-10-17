@@ -32,5 +32,6 @@ return [
     'new_password_confirmation' => 'Repeat New Password',
     'send_reset_password_link'  => 'Send Reset Password Link',
     'change_password_success'   => 'Your password has changed',
-    'change_password_error'    => 'Uh-oh, change password failed',
+    'change_password_error'     => 'Uh-oh, change password failed',
+    'login_google'              => 'Login with Google',
 ];

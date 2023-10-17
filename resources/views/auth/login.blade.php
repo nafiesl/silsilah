@@ -59,6 +59,14 @@
                                 </a>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-md-offset-4">
+                                @if (config('services.google.client_id'))
+                                    <a href="{{route('login.google')}}" class="btn btn-danger btn-block">{{ trans('auth.login_google') }}</a>
+                                @endif
+                            </div>
+                        </div> 
                     </form>
                 </div>
             </div>
