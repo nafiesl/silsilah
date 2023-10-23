@@ -239,4 +239,18 @@ return [
 
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Google Recaptcha v3
+    |--------------------------------------------------------------------------
+    |
+    | Google Recaptcha v3 site key and secret key to protect auth forms
+    |
+    */    
+
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+    ],
+
 ];

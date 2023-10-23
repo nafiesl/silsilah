@@ -105,6 +105,10 @@ return [
         ],
     ],
 
+    'g_recaptcha_response' => [
+        'failed' => 'Recaptcha failed. Please try again.',
+    ],
+    
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
