@@ -45,6 +45,16 @@ $udhegTotal = 0;
                                         @foreach($ggc->childs as $ggcc)
                                         <div class="entry {{ $ggccCount == 1 ? 'sole' : '' }}">
                                             <span class="label">{{ link_to_route('users.tree', $ggcc->name, [$ggcc->id], ['title' => $ggcc->name.' ('.$ggcc->gender.')']) }}</span>
+                                            @if ($udhegCount = $ggcc->childs->count())
+                                            <?php $udhegTotal += $udhegCount ?>
+                                            <div class="branch lv6">
+                                                @foreach($ggcc->childs as $udheg)
+                                                <div class="entry {{ $udhegCount == 1 ? 'sole' : '' }}">
+                                                    <span class="label">{{ link_to_route('users.tree', $udheg->name, [$udheg->id], ['title' => $udheg->name.' ('.$udheg->gender.')']) }}</span>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                            @endif
                                         </div>
                                         @endforeach
                                     </div>
@@ -69,7 +79,6 @@ $udhegTotal = 0;
 <div class="container">
 <hr>
 <div class="row">
-    <div class="col-md-1">&nbsp;</div>
     @if ($childsTotal)
     <div class="col-md-1 text-right">{{ trans('app.child_count') }}</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $childsTotal }}</strong></div>
@@ -90,7 +99,10 @@ $udhegTotal = 0;
     <div class="col-md-1 text-right">Jumlah Wareng</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $ggccTotal }}</strong></div>
     @endif
-    <div class="col-md-1">&nbsp;</div>
+    @if ($udhegTotal)
+    <div class="col-md-1 text-right">Jumlah Udheg2</div>
+    <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $udhegTotal }}</strong></div>
+    @endif
 </div>
 @endsection
 
