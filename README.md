@@ -66,58 +66,53 @@ This application can be installed on local server and online server with these s
 
 ### Manual Installation
 
-Clone the repo:
+1. Clone the repo and move to the application directory.
 
-```bash
-git clone https://github.com/nafiesl/silsilah.git
-```
+    ```bash
+    git clone https://github.com/nafiesl/silsilah.git
+    cd silsilah
+    ```
 
-Move to the application directory:
+2. Install dependencies:
 
-```bash
-cd silsilah
-```
+    ```bash
+    composer install
+    ```
 
-Install dependencies:
+3. Create `.env` file:
 
-```bash
-composer install
-```
+    ```bash
+    cp .env.example .env
+    ```
 
-Create `.env` file:
+4. Generate application key:
 
-```bash
-cp .env.example .env
-```
+    ```bash
+    php artisan key:generate
+    ```
 
-Generate application key:
+5. Setup database and adjust other environment variables configuration in the `.env` file.
 
-```bash
-php artisan key:generate
-```
+6. Add admin email to the `.env` file (Optional):
 
-Add admin email to the `.env` file (Optional):
+    ```bash
+    SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
+    ```
 
-```bash
-SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
-```
+7. Migrate database and link storage:
 
-Setup database and adjust other environment variables configuration in the `.env` file.
+    ```bash
+    php artisan migrate
+    php artisan storage:link
+    ```
 
-Migrate database and link storage:
+8. Run the application:
 
-```bash
-php artisan migrate
-php artisan storage:link
-```
+    ```bash
+    php artisan serve --host 0.0.0.0  --port=8000
+    ```
 
-Run the application:
-
-```bash
-php artisan serve --host 0.0.0.0  --port=8000
-```
-
-Open the application in the browser at `http://localhost:8000`.
+Open the application in the browser at <http://localhost:8000>.
 
 ### Install with Docker
 
@@ -133,7 +128,7 @@ or
 docker-compose up -d
 ```
 
-Open the application in the browser at `http://localhost:8000`.
+Open the application in the browser at <http://localhost:8000>.
 
 ## Testing
 

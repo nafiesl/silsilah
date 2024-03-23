@@ -74,56 +74,53 @@ Aplikasi ini dapat dipasang pada server lokal dan onlne dengan spesifikasi berik
 
 ### Instalasi Manual
 
-Clone repo:
+1. Clone repo dan pindah ke direktori aplikasi:
 
-```bash
-git clone https://github.com/nafiesl/silsilah.git
-```
+    ```bash
+    git clone https://github.com/nafiesl/silsilah.git
+    cd silsilah
+    ```
 
-Pindah ke direktori aplikasi:
+2. Instal dependensi:
 
-```bash
-cd silsilah
-```
+    ```bash
+    composer install
+    ```
 
-Instal dependensi:
+3. Buat file `.env`:
 
-```bash
-composer install
-```
+    ```bash
+    cp .env.example .env
+    ```
 
-Buat file `.env`:
+4. Generate key aplikasi:
 
-```bash
-cp .env.example .env
-```
+    ```bash
+    php artisan key:generate
+    ```
 
-Generate key aplikasi:
+5. Setup database dan sesuaikan konfigurasi *environment variable* lainnya pada file `.env`.
 
-```bash
-php artisan key:generate
-```
+6. Tambahkan email admin pada file `.env` (Opsional):
 
-Tambahkan email admin pada file `.env`:
+    ```bash
+    SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
+    ```
 
-```bash
-SYSTEM_ADMIN_EMAILS=admin@email.com;other_admin@email.com
-```
+7. Migrate database dan link storage:
 
-Setup database dan sesuaikan konfigurasi *environment variable* lainnya pada file `.env`.
+    ```bash
+    php artisan migrate
+    php artisan storage:link
+    ```
 
-Migrate database dan link storage:
+8. Jalankan aplikasi:
 
-```bash
-php artisan migrate
-php artisan storage:link
-```
+    ```bash
+    php artisan serve --host 0.0.0.0  --port=8000
+    ```
 
-Jalankan aplikasi:
-
-```bash
-php artisan serve --host 0.0.0.0  --port=8000
-```
+Buka aplikasi pada browser dengan alamat <http://localhost:8000>.
 
 ### Instalasi Menggunakan Docker
 
@@ -139,7 +136,7 @@ or
 docker-compose up -d
 ```
 
-Buka aplikasi pada browser dengan alamat `http://localhost:8000`.
+Buka aplikasi pada browser dengan alamat <http://localhost:8000>.
 
 ### Testing
 
