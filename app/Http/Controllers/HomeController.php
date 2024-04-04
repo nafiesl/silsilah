@@ -34,9 +34,9 @@ class HomeController extends Controller
         $femalePersonList = User::where('gender_id', 2)->pluck('nickname', 'id');
 
         return view('users.show', [
-            'user'             => $user,
+            'user' => $user,
             'usersMariageList' => $usersMariageList,
-            'malePersonList'   => $malePersonList,
+            'malePersonList' => $malePersonList,
             'femalePersonList' => $femalePersonList,
         ]);
     }
