@@ -16,6 +16,8 @@ class UsersProfileTest extends TestCase
     /** @test */
     public function guest_can_search_users_profile()
     {
+        $user = $this->loginAsUser();
+
         $jono = factory(User::class)->create(['name' => 'Jono']);
         $jeni = factory(User::class)->create(['name' => 'Jeni']);
         $johan = factory(user::class)->create(['name' => 'Johan']);
@@ -31,7 +33,7 @@ class UsersProfileTest extends TestCase
     /** @test */
     public function user_can_view_other_users_profile()
     {
-        $user = factory(User::class)->create();
+        $user = $this->loginAsUser();
         $this->visit(route('users.show', $user->id));
         $this->see($user->name);
     }

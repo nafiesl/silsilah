@@ -13,6 +13,7 @@ class EditMarriagesTest extends TestCase
     /** @test */
     public function user_can_visit_a_marriage_detail_page()
     {
+        $user = $this->loginAsUser();
         $couple = factory(Couple::class)->create();
 
         $this->visit(route('couples.show', $couple));
