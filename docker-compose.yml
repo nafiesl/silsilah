@@ -1,0 +1,36 @@
+version: "2.4"
+services:
+  # Web Server
+  app:
+    build:
+      dockerfile: ./Dockerfile
+    depends_on: 
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8000:80"
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=silsilah
+      - DB_USERNAME=root1234
+      - DB_PASSWORD=test1234
+
+  # Database
+  mysql:
+    # use bitnami/mysql:5.7 because it has arm version image
+    image: bitnami/mysql:5.7
+    ports:
+      - 3314:3306
+    healthcheck:
+      test: mysqladmin ping -h localhost
+    environment:
+      - MYSQL_USER=root1234
+      - MYSQL_PASSWORD=test1234
+      - MYSQL_ROOT_PASSWORD=test1234
+      - MYSQL_DATABASE=silsilah
+    volumes:
+      - ./docs/db:/docker-entrypoint-initdb.d
+    logging:
+      driver: none
