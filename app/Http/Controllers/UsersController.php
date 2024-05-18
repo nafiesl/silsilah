@@ -89,14 +89,25 @@ class UsersController extends Controller
     }
 
     /**
-     * Show user family tree.
+     * Show user family tree vertically.
      *
      * @param  \App\User  $user
      * @return \Illuminate\View\View
      */
-    public function tree(User $user)
+    public function treeVertical(User $user)
     {
-        return view('users.tree', compact('user'));
+        return view('users.tree-vertical', compact('user'));
+    }
+
+    /**
+     * Show user family tree horizontally.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\View\View
+     */
+    public function treeHorizontal(User $user)
+    {
+        return view('users.tree-horizontal', compact('user'));
     }
 
     /**
