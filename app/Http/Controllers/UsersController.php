@@ -208,7 +208,7 @@ class UsersController extends Controller
     public function photoUpload(Request $request, User $user)
     {
         $request->validate([
-            'photo' => 'required|image|max:200',
+            'photo' => 'required|image|max:10000',
         ]);
 
         if (Storage::exists($user->photo_path)) {
