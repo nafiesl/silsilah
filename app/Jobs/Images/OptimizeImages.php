@@ -10,13 +10,15 @@ class OptimizeImages implements ShouldQueue
 {
     use Dispatchable, Queueable;
 
-    public function __construct()
+    private $imagePaths;
+
+    public function __construct(array $imagePaths)
     {
-        //
+        $this->imagePaths = $imagePaths;
     }
 
     public function handle()
     {
-        //
+        dump($this->imagePaths);
     }
 }
