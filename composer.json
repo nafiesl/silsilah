@@ -14,6 +14,7 @@
         "php": "^7.3 || ^8.0",
         "backup-manager/laravel": "dev-php_8_support",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.7",
         "laravel/framework": "^8.0",
         "laravel/legacy-factories": "^1.0",
         "laravel/tinker": "^2.0",
