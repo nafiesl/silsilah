@@ -5,6 +5,7 @@ namespace App\Jobs\Images;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Intervention\Image\Laravel\Facades\Image;
 
 class OptimizeImages implements ShouldQueue
 {
@@ -19,6 +20,11 @@ class OptimizeImages implements ShouldQueue
 
     public function handle()
     {
-        dump($this->imagePaths);
+        $convertedImagesCount = 0;
+        foreach ($this->imagePaths as $imagePath) {
+            $image = Image::read($imagePath);
+            $image->scale(1000, 1000);
+            $image->save();
+        }
     }
 }
