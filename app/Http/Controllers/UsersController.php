@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Couple;
 use App\Http\Requests\Users\UpdateRequest;
+use App\Jobs\Images\OptimizeImages;
 use App\Jobs\Users\DeleteAndReplaceUser;
 use App\User;
 use App\UserMetadata;
@@ -50,11 +51,11 @@ class UsersController extends Controller
         $femalePersonList = $this->getPersonList(2);
 
         return view('users.show', [
-            'user'             => $user,
+            'user' => $user,
             'usersMariageList' => $usersMariageList,
-            'malePersonList'   => $malePersonList,
+            'malePersonList' => $malePersonList,
             'femalePersonList' => $femalePersonList,
-            'allMariageList'   => $allMariageList,
+            'allMariageList' => $allMariageList,
         ]);
     }
 
@@ -207,7 +208,7 @@ class UsersController extends Controller
     public function photoUpload(Request $request, User $user)
     {
         $request->validate([
-            'photo' => 'required|image|max:200',
+            'photo' => 'required|image|max:10000',
         ]);
 
         if (Storage::exists($user->photo_path)) {
@@ -216,6 +217,8 @@ class UsersController extends Controller
 
         $user->photo_path = $request->photo->store('images');
         $user->save();
+
+        OptimizeImages::dispatch([$user->photo_path]);
 
         return back();
     }

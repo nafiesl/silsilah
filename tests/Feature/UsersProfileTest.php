@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\Images\OptimizeImages;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 use Storage;
@@ -299,6 +301,7 @@ class UsersProfileTest extends TestCase
     /** @test */
     public function user_can_upload_their_own_photo()
     {
+        Bus::fake();
         Storage::fake(config('filesystems.default'));
 
         $user = $this->loginAsUser();
@@ -313,6 +316,7 @@ class UsersProfileTest extends TestCase
         $user = $user->fresh();
 
         $this->assertNotNull($user->photo_path);
+        Bus::assertDispatched(OptimizeImages::class);
         Storage::assertExists($user->photo_path);
     }
 }
