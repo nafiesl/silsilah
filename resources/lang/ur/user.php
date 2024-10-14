@@ -56,6 +56,7 @@ return [
     // Photo
     'reupload_photo' => 'تصویر دوبارہ اپ لوڈ کریں',
     'update_photo'   => 'تصویر اپ ڈیٹ کریں',
+    'upload_photo_notes' => 'Format jpg, max: 10MB.',
 
     // Deletion confirm attributes
     'delete'                => 'صارف کو حذف کریں',

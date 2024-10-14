@@ -56,6 +56,7 @@ return [
     // Photo
     'reupload_photo' => 'Re-upload Photo',
     'update_photo'   => 'Update Photo',
+    'upload_photo_notes' => 'Format jpg, max: 10MB.',
 
     // Deletion confirm attributes
     'delete'                => 'Delete User',

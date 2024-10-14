@@ -5,7 +5,7 @@
         {{ userPhoto($user, ['style' => 'width:100%;max-width:300px']) }}
     </div>
     <div class="panel-body">
-        {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => 'Format jpg, maks: 10MB.', 'class' => 'warning']]) !!}
+        {!! FormField::file('photo', ['required' => true, 'label' => __('user.reupload_photo'), 'info' => ['text' => __('user.upload_photo_notes'), 'class' => 'warning']]) !!}
     </div>
     <div class="panel-footer">
         {!! Form::submit(__('user.update_photo'), ['class' => 'btn btn-success']) !!}
