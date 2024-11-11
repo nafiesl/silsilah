@@ -1,5 +1,5 @@
 # use bullseye variant because it doesn't have network issue in m1 mac & intel
-FROM php:7.4-fpm-bullseye
+FROM php:8.1-fpm-bullseye
 
 # Install dependencies
 RUN apt-get update
