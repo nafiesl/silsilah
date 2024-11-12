@@ -30,6 +30,8 @@ return [
     'show_profile'      => 'پروفائل دیکھیں',
     'show_family_chart' => 'خاندان کا چارٹ دیکھیں',
     'show_family_tree'  => 'شجرہ نصب دیکھیں',
+    'horizontal'  => 'أفقياً',
+    'vertical'  => 'عموديًا',
     'show_marriages'    => 'شادیاں دیکھیں',
     'enter_new_name'    => 'نیا نام درج کریں۔۔۔',
     'select_from_existing_males'   => 'موجودہ مردوں میں سے منتخب کریں',
